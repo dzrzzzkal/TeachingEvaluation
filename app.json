@@ -5,7 +5,11 @@
     "pages/schedule/schedule",
     "pages/news/news",
     "pages/my/my",
-    "pages/test/test"
+    "pages/test/test",
+    "pages/evaluationInput/evaluationInput",
+    "pages/annualReport/annualReport",
+    "pages/unitsInfo/unitsInfo",
+    "pages/evaluationRecord/evaluationRecord"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -14,6 +18,9 @@
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
+    "color": "#7F8389",
+    "selectedColor": "#FF6000",
+    "borderStyle": "black",
     "list": [
       {
         "pagePath": "pages/index/index",

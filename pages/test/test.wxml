@@ -9,4 +9,11 @@
 
   <switch wx:for="{{numberArray}}" wx:key="*this" > {{item}} </switch>
   <button bindtap="addNumberToFront"> Add Number to the front </button>
+
+  <view class="data">展示数据</view>
+  <view wx:for="{{list}}" wx:key="index">
+    {{year}}: {{item.year}}
+    {{xAxis}}: {{item.xAxis}}
+    {{yAxis}}: {{item.yAxis}}
+</view>
 </view>

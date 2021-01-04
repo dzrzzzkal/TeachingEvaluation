@@ -1,21 +1,101 @@
 /**index.wxss**/
-.userinfo {
+
+/* 主题栏样式 */
+.theme-container {
+  width: 100%;
+  height: 200rpx;
+  display: inline-flex;
+  background-color: #fff;
+  justify-content: space-evenly;
+  margin: 10rpx 0;
+  border-radius: 15rpx;
+}
+
+.theme-item {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  /* margin: 10rpx; */
 }
 
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+.theme-item image {
+  width: 80%;
+  height: 80rpx;
 }
 
-.userinfo-nickname {
-  color: #aaa;
+.theme-item text {
+  height: 30rpx;
+  font-size: 32rpx;
+  color: rgba(83, 82, 83, 1);
+  margin-top: 8rpx;
 }
 
-.usermotto {
-  margin-top: 200px;
+/* module-container样式 */
+.module-container {
+  /* width: 100%; */
+  min-height: 250rpx;
+  border-radius: 15rpx;
+  padding: 30rpx;
+  background-color: #fff;
+  color: rgba(83, 82, 83, 1);
+}
+
+.module-title {
+  font-size: 30rpx;
+  height: 55rpx;
+  line-height: 55rpx;
+  border-bottom: #f2f2f2 1rpx solid;
+}
+
+.module-content {
+  font-size: 28rpx;
+  margin: 35rpx 15rpx;
+}
+
+/* 今日评估课程栏样式 */  /* today-evaluation-courses */
+/* 包含了下面 听课任务情况栏 中的 待提交报告课程 的一些样式 */
+.today-ec-container {
+  margin-bottom: 10rpx;
+}
+
+.today-ec {
+  margin: 10rpx 0;
+}
+
+.today-ec image {
+  display: inline-block;
+
+  width: 30rpx;
+  height: 30rpx;
+  margin: 0 10rpx 3rpx;
+}
+
+.today-ec text, .tobeSubmitted-ec text {
+  display: inline-block;
+  
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ec-name {
+  width: 230rpx;
+}
+
+.ec-time, .ec-teacher {
+  width: 150rpx;
+}
+
+.ec-location, .tobeSubmitted-ec-process {
+  width: 200rpx;
+}
+
+/* 听课任务情况栏样式 */
+.tobeSubmitted-ec-box {
+  margin: 25rpx 0;
+}
+
+.tobeSubmitted-ec {
+  margin: 10rpx 0;
 }

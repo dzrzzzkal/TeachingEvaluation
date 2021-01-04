@@ -15,7 +15,12 @@ Page({
       {id: 1, unique: 'unique_1'},
       {id: 0, unique: 'unique_0'},
     ],
-    numberArray: [1, 2, 3, 4]
+    numberArray: [1, 2, 3, 4],
+
+    data:"数据展示",
+    xAxis:"月份",
+    yAxis:"统计量",
+    list: JSON
   },
 
   switch: function(e) {
@@ -49,7 +54,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var that = this
+    wx.request({
+      url: 'http://localhost:3000/users',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function(res) {
+        // console.log(res.data.result)
+        // that.setData({
+        //   list: res.data.result
+        // })
+        console.log(res.data)
+      }
+    })
   },
 
   /**

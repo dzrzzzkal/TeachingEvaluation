@@ -1,2 +1,55 @@
 <!--pages/my/my.wxml-->
-<text>pages/my/my.wxml</text>
+<view class="container">
+  <!-- <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{user.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{user.nickName}}</text>
+    </block>
+  </view> -->
+
+  <!-- user-info -->
+  <view class="user-info module-container">
+      <image src="{{avatarUrl}}"></image>
+    <view class="user-info-name">
+      {{userInfo.name}}
+    </view>
+    <view>
+      {{userInfo.college}}
+      <text style="color: #a8acb3;">  |  </text>
+      {{userInfo.department}}
+    </view>
+    <view>{{userInfo.role}}</view>
+    <view>{{userInfo.isDean}}</view>
+  </view>
+
+  <!-- evaluation-record-wrapper -->
+  <view class="evaluation-record-container module-container">
+    <view class="module-title">
+      <text>评估记录</text>
+    </view>
+    <view class="themes-container">
+      <block wx:for="{{themes}}" wx:key="index">
+        <view class="theme-box" data-themetype="{{item.theme_id}}" bind:tap="themeNavigation">
+          <view class="theme-icon">
+            <image src="{{item.theme_icon}}"></image>
+          </view>
+          <text>{{item.theme_name}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+  <!-- my-setting -->
+  <view class="my-setting module-container">
+    <block wx:for="{{['系统设置', '清除缓存', '版本日志','关于我们', '……']}}" wx:key="index">
+      <view class="my-setting-item">
+        {{item}}
+        <view class="split-line" wx:if="{{index != 2}}"></view>
+      </view>
+    </block>
+  </view>
+  <!-- logout-button -->
+  <view class="button-sp-area">
+    <button type="warn" id="logout-button">退出当前账号</button>
+  </view>
+</view>
