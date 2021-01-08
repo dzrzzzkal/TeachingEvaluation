@@ -1,0 +1,15 @@
+<!--pages/login/login.wxml-->
+<view class="container">
+
+  <mp-toptips msg="{{error}}" ext-class="toptips" show="{{error}}"></mp-toptips>
+  <mp-form id="form" rules="{{rules}}" models="{{formData}}">
+    <!-- <mp-cell prop="username" title="username" ext-class=""> -->
+      <input bind:input="formInputChange" data-field="username" class="weui-input" placeholder="username" type="text" />
+      <input bind:input="formInputChange" data-field="password" class="weui-input" placeholder="password" type="password" />
+    <!-- </mp-cell> -->
+  </mp-form>
+  <view class="weui-btn-area">
+    <button bind:tap="submitForm" class="weui-btn" type="primary">确定</button>
+  </view>
+
+</view>

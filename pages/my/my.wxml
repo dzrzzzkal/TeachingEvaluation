@@ -1,13 +1,5 @@
 <!--pages/my/my.wxml-->
 <view class="container">
-  <!-- <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{user.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{user.nickName}}</text>
-    </block>
-  </view> -->
-
   <!-- user-info -->
   <view class="user-info module-container">
       <image src="{{avatarUrl}}"></image>
@@ -30,7 +22,7 @@
     </view>
     <view class="themes-container">
       <block wx:for="{{themes}}" wx:key="index">
-        <view class="theme-box" data-themetype="{{item.theme_id}}" bind:tap="themeNavigation">
+        <view class="theme-box" data-themeid="{{item.theme_id}}" bind:tap="themeNavigation">
           <view class="theme-icon">
             <image src="{{item.theme_icon}}"></image>
           </view>

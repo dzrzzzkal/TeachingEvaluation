@@ -1,1 +1,91 @@
 /* pages/schedule/schedule.wxss */
+
+/* 目前关于边框有bug，为了让width、height为100%，所以设置边框为内边框
+  但是这样的话，会出现部分边界左右的边框较多，因此较宽的情况，待改进
+ */
+
+page {
+  height: 100%;
+}
+
+.container {
+  height: 100%;
+  padding: 0;
+  background-color: #fff;
+}
+
+.schedule {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  grid-template-rows: [blank] 4% [date-bar] 96%;
+  grid-template-columns: [section-bar] 6% [courses-container] 94%;
+}
+
+/* 设置边框，待改 */
+.schedule view {
+  box-sizing: border-box;
+  border: 1rpx solid white;
+}
+
+.blank {
+  background-color: rgb(247, 244, 194);
+}
+
+.date-bar, .section-bar {
+  background-color: rgb(210, 226, 181);
+  display: flex;
+  flex-direction: row;  /* .date-bar才用row，下面.section-bar会用column覆盖 */
+  /* justify-content: space-evenly; */
+  /* align-items: center; */
+}
+
+.date, .section {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  /* vertical-align: middle; */
+}
+
+.section-bar {
+  flex-direction: column;
+  background-color: rgb(173, 221, 216);
+}
+
+/* .courses-container {
+  background-color: rgb(209, 173, 209);
+  display: grid;
+  height: 100%;
+  width: 100%;
+  grid-template-columns: repeat(7, calc(100% / 7));
+  grid-template-rows: repeat(13, calc(100% / 13));
+  text-align: center;
+} */
+/* .white {
+  background-color: #fff;
+} */
+
+.courses-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  text-align: center;
+}
+
+.axisY {
+  width: 100%;
+  /* height: 100%; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  /* justify-items: center; */
+  /* align-items: center; */
+  background-color: cornsilk;
+}
+
+.axisX {
+  width: 100%;
+  height: 100%;
+}

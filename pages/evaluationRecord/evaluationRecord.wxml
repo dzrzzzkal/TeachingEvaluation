@@ -1,2 +1,18 @@
 <!--pages/evaluationRecord/evaluationRecord.wxml-->
-<text>pages/evaluationRecord/evaluationRecord.wxml</text>
+<view class="container">
+  <view class="tab-control">
+    <block wx:for="{{tab_control_item}}" wx:key="index">
+      <view class="tab-control-item {{currentTabid === index ? 'tab-control-item-selected' : ''}}" data-tabid="{{index}}" bind:tap="tabClick">
+        {{item}}
+      </view>
+    </block>
+  </view>
+  <view class="content">
+    <view wx:if="{{ec_records[0] == null}}">没有记录喔</view>
+    <view wx:else>
+      <block wx:for="{{ec_records}}" wx:key="index" >
+        <view class="box">{{item.content}}</view>
+      </block>
+    </view>
+  </view>
+</view>

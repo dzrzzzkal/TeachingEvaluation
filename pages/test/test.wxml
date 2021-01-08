@@ -15,5 +15,5 @@
     {{year}}: {{item.year}}
     {{xAxis}}: {{item.xAxis}}
     {{yAxis}}: {{item.yAxis}}
-</view>
+  </view>
 </view>

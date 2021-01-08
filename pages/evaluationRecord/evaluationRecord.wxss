@@ -1,1 +1,41 @@
 /* pages/evaluationRecord/evaluationRecord.wxss */
+.container {
+  padding: 0;
+}
+
+/* tab-control样式 */
+.tab-control {
+  display: flex;
+  /* justify-content: space-around; */
+  /* align-items: center; */
+  height: 70rpx;
+  width: 100%;
+  background-color: #fff;
+  font-size: 30rpx;
+  font-size: #7F8389;
+}
+
+.tab-control-item {
+  display: block;
+  height: 70rpx;
+  line-height: 70rpx;
+  width: 33.3%;
+  text-align: center;
+  border-bottom: 1rpx solid transparent;
+}
+
+.tab-control-item-selected {
+  border-bottom: 1rpx solid var(--theme-orange);
+}
+
+/* content样式 */
+.content {
+  padding: 3rpx 5rpx;
+}
+
+.box {
+  height: 200rpx;
+  margin: 7rpx 0;
+  background-color: #fff;
+  border-radius: 10rpx;
+}

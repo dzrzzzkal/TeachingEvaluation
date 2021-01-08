@@ -1,0 +1,13 @@
+<!--pages/news/news.wxml-->
+<view class="container">
+  <view class="content">
+    <view wx:if="{{notice[0] == null}}">没有消息喔</view>
+    <view wx:else>
+      <block wx:for="{{notice}}" wx:key="index">
+        <view class="box" bind:tap="noticeJump" data-noticeid="{{item.id}}">
+          {{item.content}}
+        </view>
+      </block>
+    </view>
+  </view>
+</view>

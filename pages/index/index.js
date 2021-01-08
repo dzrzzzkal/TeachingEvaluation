@@ -38,10 +38,10 @@ Page({
     wx.navigateTo({
       url: toUrl,
       success: res => {
-        console.log(res)
+        // console.log(res)
       },
       fail: res => {
-        console.log(res)
+        // console.log(res)
       },
       complete: res => {
         // console.log(res)

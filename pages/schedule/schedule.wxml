@@ -1,2 +1,39 @@
 <!--pages/schedule/schedule.wxml-->
-<text>pages/schedule/schedule.wxml</text>
+<view class="container">
+  <view class="schedule">
+    <!-- <block wx:for="abbbbbbbccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" wx:key="index">
+      <text>{{item}}</text>
+    </block> -->
+    <view class="blank"></view>
+    <view class="date-bar">
+      <block wx:for="1234567" wx:key="index">
+        <view class="date">{{item}}</view>
+      </block>
+    </view>
+    <view class="section-bar">
+      <block wx:for="1234567890ABC" wx:key="index">
+        <view class="section">{{item}}</view>
+      </block>
+    </view>
+    <view class="courses-container">
+
+      <!-- ↓想用网格布局，但是hidden的话，网格布局里面该格直接没了，失败了 -->
+      <!-- <block wx:for="{{boxes}}" wx:key="index">
+        <view hidden="{{item === 'a'}}" class="course" bind:tap="boxClick" data-boxindex="{{index}}">{{item}}</view>
+      </block> -->
+      <!-- ↓用的网页布局，通过修改样式来假装不存在，暂时弃用 -->
+      <!-- <block wx:for="{{boxes}}" wx:key="index">
+        <view class="course {{item === 'a' || item === 'f' || item === 'k' ? 'white' : ''}}" bind:tap="boxClick" data-boxindex="{{index}}">{{item}}</view>
+      </block> -->
+
+      <!-- ↓用二维数组，暂定这种方法 -->
+      <!-- 这里bind:tap要绑定在外循环中，此时e.target为内循环，e.currentTarget为外循环 -->
+      <view class="axisY" wx:for="{{courses}}" wx:for-item="axisY" wx:key="index" data-yid="{{index}}" bind:tap="courseClick" >
+          <view class="axisX" wx:for="{{axisY}}" wx:key="index" data-xid="{{index}}">
+            {{item}}
+          </view>
+      </view>
+
+    </view>
+  </view>
+</view>

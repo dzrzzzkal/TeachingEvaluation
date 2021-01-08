@@ -5,21 +5,105 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // tab-control
+    tab_control_item: ['待评估', '已评估','年度报告'],
+    currentTabid: 0,
 
+    // 请求返回的内容
+    // issuccess: true,
+    ec_records: '',
+    tobe_ec: [
+      {
+        id: 0,
+        content: 'tobe_ec_record0',
+      },
+      {
+        id: 1,
+        content: 'tobe_ec_record1',
+      },
+      {
+        id: 2,
+        content: 'tobe_ec_record2',
+      },
+    ],
+    submitted_ec: [
+      {
+        id: 0,
+        content: 'submitted_record0',
+      },
+      {
+        id: 1,
+        content: 'submitted_record1',
+      },
+      {
+        id: 2,
+        content: 'submitted_record2',
+      },
+    ],
+    annual_report: [
+      {
+        id: 0,
+        content: 'annual_report_record0',
+      },
+      {
+        id: 1,
+        content: 'annual_report_record1',
+      },
+      {
+        id: 2,
+        content: 'annual_report_record2',
+      },
+    ],
+  },
+
+  // 点击tab-control
+  tabClick: function(e) {
+    let tabid = e.target.dataset.tabid
+    if(tabid === this.data.currentTabid) {
+      return
+    }
+    this.setData({
+      currentTabid: tabid
+    })
+    this.getRecords(tabid)
+  },
+
+  // 根据不同的tabid获取不同的记录内容
+  getRecords: function(tabid) {
+    switch (tabid) {
+      case 0:
+        this.setData({
+          ec_records: this.data.tobe_ec
+        })
+        break;
+      case 1:
+        this.setData({
+          ec_records: this.data.submitted_ec
+        })
+        break;
+      case 2:
+        this.setData({
+          ec_records: this.data.annual_report
+        })
+        break;
+    }
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.setData({
+      currentTabid: parseInt(options.theme_id)  // 因为传入的theme_id是字符串类型，所以parseInt()成数字类型
+    })
+    this.getRecords(this.data.currentTabid)
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    
   },
 
   /**

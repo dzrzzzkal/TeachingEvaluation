@@ -1,0 +1,13 @@
+/* pages/news/news.wxss */
+
+/* content样式 */
+.content {
+  padding: 3rpx 5rpx;
+}
+
+.box {
+  height: 200rpx;
+  margin: 7rpx 0;
+  background-color: #fff;
+  border-radius: 10rpx;
+}

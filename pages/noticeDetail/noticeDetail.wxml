@@ -1,0 +1,8 @@
+<!--pages/noticeDetail/noticeDetail.wxml-->
+
+<!--这个东西一开始被创建时是组件，后来把json的component:true删了，改了js，目前没有问题，不知道以后有没有  -->
+
+<view class="container">
+  <view class="title">{{notice.title}}</view>
+  <view class="content">{{notice.content}}</view>
+</view>

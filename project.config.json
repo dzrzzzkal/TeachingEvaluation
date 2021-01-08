@@ -21,7 +21,7 @@
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
-    "useMultiFrameRuntime": false,
+    "useMultiFrameRuntime": true,
     "useApiHook": true,
     "babelSetting": {
       "ignore": [],
@@ -36,7 +36,8 @@
     "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
-    "minifyWXSS": true
+    "minifyWXSS": true,
+    "useApiHostProcess": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.14.1",
@@ -76,6 +77,42 @@
         {
           "name": "pages/my/my",
           "pathName": "pages/my/my",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/evaluationRecord/evaluationRecord",
+          "pathName": "pages/evaluationRecord/evaluationRecord",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/notice/notice",
+          "pathName": "pages/notice/notice",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/schedule/schedule",
+          "pathName": "pages/schedule/schedule",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/login/login",
+          "pathName": "pages/login/login",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/logs/logs",
+          "pathName": "pages/logs/logs",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/getUserInfo/getUserInfo",
+          "pathName": "pages/getUserInfo/getUserInfo",
           "scene": null
         }
       ]

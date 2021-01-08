@@ -3,13 +3,15 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/schedule/schedule",
-    "pages/news/news",
+    "pages/notice/notice",
     "pages/my/my",
     "pages/test/test",
     "pages/evaluationInput/evaluationInput",
     "pages/annualReport/annualReport",
     "pages/unitsInfo/unitsInfo",
-    "pages/evaluationRecord/evaluationRecord"
+    "pages/evaluationRecord/evaluationRecord",
+    "pages/login/login",
+    "pages/getUserInfo/getUserInfo"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -35,9 +37,9 @@
         "text": "课表"
       },
       {
-        "pagePath": "pages/news/news",
-        "iconPath": "images/tabBar/news.png",
-        "selectedIconPath": "images/tabBar/news@select.png",
+        "pagePath": "pages/notice/notice",
+        "iconPath": "images/tabBar/notice.png",
+        "selectedIconPath": "images/tabBar/notice@select.png",
         "text": "消息"
       },
       {
@@ -53,5 +55,8 @@
     ]
   },
   "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "useExtendedLib": {
+    "weui": true
+  }
 }
