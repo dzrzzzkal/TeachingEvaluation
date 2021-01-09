@@ -1,5 +1,7 @@
 // pages/login/login.js
 
+const $api = require('../../api/api')
+
 Component({
   data: {
     showTopTips: false,
@@ -69,21 +71,26 @@ Component({
         success(res) {
           if(res.code) {
             console.log('res.code: ' + res.code)
-            wx.request({
-              url: 'http://localhost:3000/wxdoLogin',
-              // url: 'http://localhost:3000/test',
-              method: 'POST',
-              data: {
-                code: res.code,
-                user: that.data.formData.username,
-                pass: that.data.formData.password,
-              },
-              success(res) {
-                console.log(res)
-              },
-              fail(err) {
-                console.log(err)
+            $api.doLogin({
+              code: res.code, // 将code发送给服务器
+              user: that.data.formData.username,
+              pass: that.data.formData.password,
+            }).then(res => {
+              console.log(res)
+              let {user, token} = res.data
+              try {
+                wx.setStorageSync('user', user)
+                wx.setStorageSync('token', token)
+              } catch (error) {
+                wx.showToast({
+                  title: error,
+                })
               }
+            }).catch(err => {
+              console.log(err)
+              wx.showToast({
+                title: err,
+              })
             })
           } else {
             console.log('登录失败。')
