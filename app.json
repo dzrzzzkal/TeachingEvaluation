@@ -1,6 +1,8 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/index/index",
+    
     "pages/logs/logs",
     "pages/schedule/schedule",
     "pages/notice/notice",
@@ -10,7 +12,6 @@
     "pages/annualReport/annualReport",
     "pages/unitsInfo/unitsInfo",
     "pages/evaluationRecord/evaluationRecord",
-    "pages/login/login",
     "pages/getUserInfo/getUserInfo"
   ],
   "window": {

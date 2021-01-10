@@ -2,33 +2,43 @@
 // https://www.jianshu.com/p/da32d38962e7（目前按这个
 // https://www.cnblogs.com/wangdashi/p/11585820.html
 
-// 等下重新封装一下，按这个↓
-// https://blog.csdn.net/w001yy/article/details/89361729
-
-function request(method, url, data) {
+function request(method, url, data, header) {
   return new Promise(function(resolve, reject) {
     let baseURL = 'http://localhost:3000/api'
     let token = wx.getStorageSync('token')
-    let header = {
-      'Authorization': token ? 'Bearer ' + token : '',
+    let defaultHeader = {
+      'Authorization': token ? 'Bearer ' + token : null,
       'content-type': 'application/json'
     }
+    if(header) {
+      if(!header['Authorization']) header['Authorization'] = defaultHeader['Authorization']
+    }
+    wx.showLoading({
+      title: 'Loading',
+    })
     wx.request({
       url: baseURL + url,
       method: method,
-      data: method === 'POST' ? JSON.stringify(data) : data,
-      header: header, // 默认json，不知道后面会不会自己根据method改，再说吧
+      // data: method === 'POST' ? JSON.stringify(data) : data, // 这个和'content-type'只能改一个
+      data: data,
+      header: header || defaultHeader, // 默认json
       success: (res) => {
         //请求成功
+        wx.hideLoading({
+          // success: (res) => {},
+        })
         //判断状态码---errCode状态根据后端定义来判断
         if (!res.data.errCode || res.data.errCode === 0) {
-          resolve(res);
+          resolve(res.data);  // 返回res.data，而不是res
         } else {
           //其他异常
           reject('运行时错误,请稍后再试');
         }
       },
       fail: (err) => {
+        wx.hideLoading({
+          // success: (res) => {},
+        })
         reject(err)
       }
     })

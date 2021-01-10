@@ -1,8 +1,10 @@
 //index.js
 // //获取应用实例
-// const app = getApp()
 
-Page({
+const filter = require('../../utils/filter').identityFilter
+
+Page(filter({
+// Page({
   data: {
     themes: [
       { theme_id: 0, theme_icon: 'images/theme@1.png', theme_name: '听课表录入'},
@@ -48,8 +50,6 @@ Page({
       }
     })
   },
-
-  onLoad: function () {
-
-  },
-})
+  
+// })
+}))

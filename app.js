@@ -32,8 +32,58 @@ App({
         }
       }
     })
+
+    /**
+     * 路由拦截 （PS：这里真不懂，以后待搞懂：https://segmentfault.com/a/1190000011044371）
+     * promise来防止页面比异步更早执行
+     */
+    // 经测试，用了Page(filter({}))，还是有时会先返回 app.js中的let p 中的请求结果之后才执行'/index'中的onLoad()，有时又会先onLoad '/index'再返回app.js中let p的请求结果，可能跟requet()返回时间有关，但是filter.js中设置的是onShow，onShow没有测试
+    // 暂时先这样叭
+    let p = new Promise(function(resolve, reject) {
+      // 好像是对自己后台的校验接口的包装，检查登录该页面是否需要系统角色
+      // service.identityCheck(resolve, reject) 
+
+      const $api = require('./api/api')
+      let token = wx.getStorageSync('token')
+      if(!token) {
+        console.log('no token')
+        wx.reLaunch({
+          url: '/pages/login/login',
+        })
+      } else {
+        // 待区分token过期和token未过期，并进行处理
+        wx.reLaunch({
+          url: '/pages/index/index',
+        })
+      }
+
+      // checkToken 跳转login，三种token，待确定
+      // if(!token) {
+      //   console.log('no token')
+      //   wx.reLaunch({
+      //     url: '/pages/login/login',
+      //   })
+      // } else {
+      //   $api.checkToken(token)
+      //     .then(res => {
+      //       if(!res.status) {
+      //         console.log('token过期')
+      //         wx.reLaunch({
+      //           url: '/pages/login/login',
+      //         })
+      //       } else {
+      //         console.log('token有效')
+      //         console.log(res)
+      //       }
+      //     })
+      //     .catch(err => console.log(err))
+      // }
+    })
+    this.globalData.promise = p
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+
+    promise: null,
   }
 })

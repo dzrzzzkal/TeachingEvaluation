@@ -77,10 +77,16 @@ Component({
               pass: that.data.formData.password,
             }).then(res => {
               console.log(res)
-              let {user, token} = res.data
+              let {user, token} = res
               try {
                 wx.setStorageSync('user', user)
                 wx.setStorageSync('token', token)
+                wx.showToast({
+                  title: '登录成功',
+                })
+                wx.switchTab({
+                  url: '../index/index',
+                })
               } catch (error) {
                 wx.showToast({
                   title: error,
@@ -103,4 +109,20 @@ Component({
     },
     
   },
+  // lifetimes: {
+  //   attached: function() {
+  //     wx.showLoading({
+  //       title: 'ing',
+  //     })
+  //     console.log('login-begin')
+  //     wx.reLaunch({
+  //       url: '/pages/index/index',
+  //     })
+  //     console.log('login-end')
+  //     wx.hideLoading({
+  //       success: (res) => {console.log('hideLoading')},
+  //     })
+  //   }
+  // }
+
 })

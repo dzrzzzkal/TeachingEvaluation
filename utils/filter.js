@@ -1,0 +1,38 @@
+// https://segmentfault.com/a/1190000011044371 （目前用这个）
+// https://www.jianshu.com/p/8f33a38a671a?from=groupmessage
+
+const appData = getApp().globalData
+
+// 原本叫这个名，之后我应该改成tokenCheck之类的，我好像是没必要添加identityFilter()的
+exports.identityFilter = identityFilter 
+
+function identityFilter(pageObj) {
+  if(pageObj.onShow) {
+    let _onShow = pageObj.onShow
+    pageObj.onShow = function() {
+      appData.promise.then(() => {
+        // 跳转到登录页
+        wx.redirectTo({
+          url: '/pages/login/login ',
+        })
+      }, 
+      // service.identityCheck(() => {
+      //   // 跳转到登录页
+      //   wx.redirectTo({
+      //     url: '/pages/login/login',
+      //   })
+      // },
+      () => {
+        // 获取页面实例，防止this劫持
+        let currentInstance = getPageInstance()
+        _onShow.call(currentInstance) // ?
+      })
+    }
+  }
+  return pageObj
+}
+
+function getPageInstance() {
+  var pages = getCurrentPages()
+  return pages[pages.length - 1]
+}
