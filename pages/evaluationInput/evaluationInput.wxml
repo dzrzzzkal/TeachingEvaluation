@@ -1,4 +1,16 @@
 <!--pages/evaluationInput/evaluationInput.wxml-->
 <view class="container">
-
+  <input type="search" bind:input="searchInput" name="" id="input-box" placeholder="搜索课程"/>
+  <button bind:tap="search" id="search-button" type="primary">确定</button>
+  <view class="search-content">
+    <view wx:if="{{class[0] == null}}"></view>
+    <view wx:else>
+      <block wx:for="{{class}}" wx:key="index">
+        <view class="box" bind:tap="classClick" data-classid="{{item.id}}">
+          {{item.course.name}}
+          <button id="evaluation-button" bind:tap="evaluationInput">听课表录入</button>
+        </view>
+      </block>
+    </view>
+  </view>
 </view>

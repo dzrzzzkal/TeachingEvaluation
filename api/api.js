@@ -12,5 +12,7 @@ api.post = (url, data) => request('POST', url, data, {'content-type': 'applicati
 // api.doLogin = (data, header) => request('POST', '/doLogin', data, header)
 api.doLogin = (data) => api.post('/doLogin', data)
 api.checkToken = (data) => api.post('/checkToken', data)
+api.getCourses = () => api.get('/getCourses')
+api.searchClass = (name) => api.get(`/class?name=${name}`)
 
 module.exports = api

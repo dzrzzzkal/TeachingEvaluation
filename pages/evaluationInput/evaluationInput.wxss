@@ -1,1 +1,33 @@
 /* pages/evaluationInput/evaluationInput.wxss */
+
+#input-box {
+  background-color: rgb(224, 191, 191);
+  border: 1rpx solid whitesmoke;
+  width: 400rpx;
+}
+
+#search-button {
+  background-color: rgba(255, 96, 0, .7);
+  height:60rpx;
+  /* line-height: 60rpx; */
+  width: 170rpx;
+  color: white;
+  font-size: 30rpx;
+  border-radius: 15rpx;
+}
+
+.search-content {
+  padding: 3rpx 5rpx;
+}
+
+.box {
+  height: 200rpx;
+  margin: 7rpx 0;
+  background-color: #fff;
+  border-radius: 10rpx;
+}
+
+#evaluation-button {
+  width: 300rpx;
+  font-size: 30rpx;
+}

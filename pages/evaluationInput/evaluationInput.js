@@ -1,11 +1,38 @@
 // pages/evaluationInput/evaluationInput.js
+
+const $api = require('../../api/api')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    classname: '',
+    class: [],
+  },
 
+  searchInput: function(e) {
+    this.setData({
+      classname: e.detail.value
+    })
+  },
+
+  search: function() {
+    var that = this
+    $api.searchClass(this.data.classname)
+      .then(res => {
+        that.setData({
+          class: res
+        })
+        console.log(that.data.class)
+      })
+      .catch(err => console.log(err))
+  },
+
+  evaluationInput: function() {
+    wx.navigateTo({
+      url: '/pages/evaluationSheet/evaluationSheet',
+    })
   },
 
   /**

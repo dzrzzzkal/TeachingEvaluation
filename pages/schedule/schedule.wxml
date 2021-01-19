@@ -6,7 +6,7 @@
     </block> -->
     <view class="blank"></view>
     <view class="date-bar">
-      <block wx:for="1234567" wx:key="index">
+      <block wx:for="日一二三四五六" wx:key="index">
         <view class="date">{{item}}</view>
       </block>
     </view>
@@ -28,10 +28,28 @@
 
       <!-- ↓用二维数组，暂定这种方法 -->
       <!-- 这里bind:tap要绑定在外循环中，此时e.target为内循环，e.currentTarget为外循环 -->
-      <view class="axisY" wx:for="{{courses}}" wx:for-item="axisY" wx:key="index" data-yid="{{index}}" bind:tap="courseClick" >
-          <view class="axisX" wx:for="{{axisY}}" wx:key="index" data-xid="{{index}}">
-            {{item}}
+      <view class="axisY" id="axisY" wx:for="{{courses}}" wx:for-item="axisY" wx:key="index" data-yid="{{index}}" bind:tap="courseClick" >
+        <view class="axisY-item" id="axisY-item" hidden="{{axisY.length === 0}}">
+          <!-- <view class="axisX" id="axisX" wx:for="{{axisY}}" wx:for-item="axisX" wx:key="index" >
+            <view class="axisX-item" style="height: {{axisX ? '200%' : ''}};" id="axisX-item" hidden="{{!axisX}}" data-xid="{{index}}">
+              {{axisX}}
+            </view>
+          </view> -->
+
+
+          <!-- ing，实现方法是js中的setCourse1()，目前是想：先按周一到周日分类，然后例如周一有N节课，则设置N个循环，每个循环包括两个块，一个是空白块，用于调整位置，一个是课程块。
+          目前未成功 -->
+          <view wx:for="{{c}}" wx:key="index" style="width: 100%; background-color: gray;">
+            <view style="height: calc(100% / 13); background-color: blue; width:100%; display: block;">
+              
+            </view>
+            <view style="height: calc(100% / 13 * {{clength * 2}}); background-color: pink; width: 100%; display: block;">
+              {{item}}
+            </view>
           </view>
+          
+        </view>
+          
       </view>
 
     </view>

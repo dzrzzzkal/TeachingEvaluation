@@ -77,9 +77,16 @@ Component({
               pass: that.data.formData.password,
             }).then(res => {
               console.log(res)
-              let {user, token} = res
+              let {userinfo, token} = res
               try {
-                wx.setStorageSync('user', user)
+                if(!(userinfo && token)) {
+                  wx.showToast({
+                    title: '验证失败。',
+                    icon: 'none',
+                  })
+                  return
+                }
+                wx.setStorageSync('userinfo', userinfo)
                 wx.setStorageSync('token', token)
                 wx.showToast({
                   title: '登录成功',
@@ -109,6 +116,18 @@ Component({
     },
     
   },
+
+  lifetimes: {
+    // 后面待改
+    created: function() {
+      if(wx.getStorageSync('token')) {
+        wx.reLaunch({
+          url: '/pages/index/index',
+        })
+      }
+    },
+  },
+
   // lifetimes: {
   //   attached: function() {
   //     wx.showLoading({
@@ -124,5 +143,6 @@ Component({
   //     })
   //   }
   // }
+
 
 })

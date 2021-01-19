@@ -1,35 +1,11 @@
-// pages/news/news.js
+// pages/evaluationSheet/evaluationSheet.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    // 请求返回的消息
-    notice: [
-      {
-        id: 0,
-        content: 'notice0',
-      },
-      {
-        id: 1,
-        content: 'notice1',
-      },
-      {
-        id: 2,
-        content: 'notice2',
-      },
-    ],
 
-
-  },
-
-  // 点击notice-box，传参id，跳转对应详情页noticeDetail
-  noticeClick: function(e) {
-    let noticeid = e.currentTarget.dataset.noticeid
-    wx.navigateTo({
-      url: `../noticeDetail/noticeDetail?id=${noticeid}`,
-    })
   },
 
   /**

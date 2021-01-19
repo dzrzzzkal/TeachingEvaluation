@@ -1,7 +1,4 @@
 // pages/my/my.js
-//获取应用实例
-const app = getApp()
-
 Page({
 
   /**
@@ -14,14 +11,15 @@ Page({
       { theme_icon: 'images/theme@2.png', theme_name: '已评估', theme_id: 1 },
       { theme_icon: 'images/theme@3.png', theme_name: '年度报告', theme_id: 2 }
     ],
-    userInfo: {
-      // avatarUrl: '',
-      name: '用户',
-      college: '工学院',
-      department: '计算机系',
-      role: '督导',
-      isDean: '系主任'
-    },
+    // userinfo: {
+    //   // avatarUrl: '',
+    //   name: '用户',
+    //   college: '工学院',
+    //   department: '计算机系',
+    //   role: '督导',
+    //   isDean: '系主任'
+    // },
+    userinfo: {},
   },
   // 事件处理函数
   themeNavigation: function(e) {
@@ -30,16 +28,25 @@ Page({
       url: `../evaluationRecord/evaluationRecord?theme_id=${theme_id}`,
     })
   },
-  onLoad: function() {
-    
+  logout: function() {
+    console.log('logout')
+    wx.removeStorageSync('token')
+    wx.removeStorageSync('userinfo')
+    wx.showToast({
+      title: '登出成功',
+    })
+    wx.reLaunch({
+      url: '/pages/login/login',
+    })
   },
-
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    this.setData({
+      userinfo: wx.getStorageSync('userinfo') || {}
+    })
   },
 
   /**

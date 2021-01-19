@@ -3,7 +3,7 @@
 
 const appData = getApp().globalData
 
-// 原本叫这个名，之后我应该改成tokenCheck之类的，我好像是没必要添加identityFilter()的
+// 原本叫这个名，之后我应该改成tokenCheck之类的，这个identityFilter()暂时是没起作用的，因为没用到onShow
 exports.identityFilter = identityFilter 
 
 function identityFilter(pageObj) {

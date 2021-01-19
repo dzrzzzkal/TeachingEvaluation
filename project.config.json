@@ -113,6 +113,12 @@
         {
           "name": "pages/getUserInfo/getUserInfo",
           "pathName": "pages/getUserInfo/getUserInfo",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/evaluationInput/evaluationInput",
+          "pathName": "pages/evaluationInput/evaluationInput",
           "scene": null
         }
       ]

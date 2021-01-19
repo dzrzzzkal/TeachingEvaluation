@@ -4,15 +4,15 @@
   <view class="user-info module-container">
       <image src="{{avatarUrl}}"></image>
     <view class="user-info-name">
-      {{userInfo.name}}
+      {{userinfo.name}}
     </view>
     <view>
-      {{userInfo.college}}
+      {{userinfo.college}}
       <text style="color: #a8acb3;">  |  </text>
-      {{userInfo.department}}
+      {{userinfo.dept}}
     </view>
-    <view>{{userInfo.role}}</view>
-    <view>{{userInfo.isDean}}</view>
+    <view>{{userinfo.role}}</view>
+    <view>{{userinfo.dean ? '系主任' : ''}}</view>
   </view>
 
   <!-- evaluation-record-wrapper -->
@@ -42,6 +42,6 @@
   </view>
   <!-- logout-button -->
   <view class="button-sp-area">
-    <button type="warn" id="logout-button">退出当前账号</button>
+    <button type="warn" id="logout-button" bind:tap="logout">退出当前账号</button>
   </view>
 </view>

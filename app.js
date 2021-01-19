@@ -52,9 +52,10 @@ App({
         })
       } else {
         // 待区分token过期和token未过期，并进行处理
-        wx.reLaunch({
-          url: '/pages/index/index',
-        })
+        // 另，为了方便调试，先注释掉下面代码，不然无法使用编译模式，都要先跳转到index
+        // wx.reLaunch({
+        //   url: '/pages/index/index',
+        // })
       }
 
       // checkToken 跳转login，三种token，待确定

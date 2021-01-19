@@ -68,24 +68,50 @@ page {
 } */
 
 .courses-container {
+  width: 100%;
+  height: 100%;
+  background-color: darkcyan;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  /* flex-direction: row; */
+  /* justify-content: center; */
   text-align: center;
 }
 
 .axisY {
-  width: 100%;
-  /* height: 100%; */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  /* justify-items: center; */
+  /* width: 100%; */
+  width: calc(100% / 7);
+  height: 100%;
+  /* display: flex;
+  flex-direction: column; */
+  /* justify-content: center; */
   /* align-items: center; */
   background-color: cornsilk;
+
+  /* display: block; */
+}
+
+.axisY-item {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
 }
 
 .axisX {
   width: 100%;
+  height: calc(100% / 13);
+  /* background-color: darkgray; */
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  position: relative;
+}
+
+.axisX-item {
+  width: 100%;
   height: 100%;
+  display: block;
+  background-color: pink;
 }
