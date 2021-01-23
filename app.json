@@ -12,7 +12,7 @@
     "pages/unitsInfo/unitsInfo",
     "pages/evaluationRecord/evaluationRecord",
     "pages/getUserInfo/getUserInfo",
-    "pages/evaluationSheet/evaluationSheet"
+    "pages/evaluationPage/evaluationPage"
   ],
   "window": {
     "backgroundTextStyle": "light",

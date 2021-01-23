@@ -1,0 +1,23 @@
+<!--pages/evaluationPage/evaluationPage.wxml-->
+<text>pages/evaluationPage/evaluationPage.wxml</text>
+<view class="container">
+  <view class="classification-radio">
+    <!-- 内容和它下面的那个一样，只是多了样式 -->
+    <!-- <radio-group bind:change="radioChange">
+      <label for="" class="weui-cell weui-check__label" wx:for="{{radioItems}}" wx:key="value">
+        <view class="weui-cell__hd">
+          <radio value="{{item.value}}" checked="{{item.checked}}"/>
+        </view>
+        <view class="weui-cell__bd">{{item.name}}</view>
+      </label>
+    </radio-group> -->
+    <radio-group bind:change="radioChange">
+      <label for="" wx:for="{{radioItems}}" wx:key="value">
+          <radio value="{{item.value}}" checked="{{item.checked}}"/>
+          {{item.name}}   
+      </label>
+    </radio-group>
+  </view>
+  <view>——</view>
+  <theory-sheet></theory-sheet>
+</view>

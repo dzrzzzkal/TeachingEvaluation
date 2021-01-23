@@ -1,0 +1,17 @@
+/* pages/evaluationSheet/evaluationSheet.wxss */
+.container {
+  /* background-color: #fff; */
+}
+
+.list {
+  border: 1rpx solid red;
+  font-size: 32rpx;
+}
+
+.event {
+  border: 1rpx solid gray;
+}
+
+.content {
+
+}

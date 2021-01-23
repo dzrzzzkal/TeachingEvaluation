@@ -1,0 +1,81 @@
+<!--pages/evaluationSheet/evaluationSheet.wxml-->
+<view class="container">
+
+  <mp-toptips msg="{{error}}" ext-class="toptips" show="{{error}}"></mp-toptips>
+  <mp-form id="baseinfo" rules="{{rules}}" models="{{baseinfoData}}">
+    <!-- <mp-cell prop="username" title="username" ext-class=""></mp-cell> -->
+    <label for="">
+      开课单位：
+      <input bind:input="formInputChange" data-field="setupUnit" class="weui-input" placeholder="" type="text" />
+    </label>
+    <label for="">
+      课程名称：
+      <input bind:input="formInputChange" data-field="name" class="weui-input" placeholder="" type="text" />
+    </label>
+    <label for="">
+      开课班号：
+      <input bind:input="formInputChange" data-field="id" class="weui-input" placeholder="" type="text" />
+    </label>
+    <label for="">
+      授课教师：
+      <input bind:input="formInputChange" data-field="teacher" class="weui-input" placeholder="" type="text" />
+    </label>
+    <label for="">
+      听课时间：
+      <input bind:input="formInputChange" data-field="date" class="weui-input" placeholder="" type="text" />
+      <input bind:input="formInputChange" data-field="start-time" class="weui-input" placeholder="start-time" type="text" />~
+      <input bind:input="formInputChange" data-field="end-time" class="weui-input" placeholder="end-time" type="text" />(具体时分)
+    </label>
+    <view></view>
+    <label for="">
+      地点：
+      <input bind:input="formInputChange" data-field="place" class="weui-input" placeholder="" type="text" />
+    </label>
+    <label for="">
+      学生应到人数：
+      <input bind:input="formInputChange" data-field="attend-num" class="weui-input" placeholder="" type="text" />
+    </label>
+    <label for="">
+      学生实到人数：
+      <input bind:input="formInputChange" data-field="actual-num" class="weui-input" placeholder="" type="text" />
+    </label>
+    <label for="">
+      听课类型：
+      <radio-group bind:change="">
+        <label for="" wx:for="{{roleItems}}" wx:key="value">
+          <radio value="{{item.value}}" checked="{{item.checked}}"/>
+          {{item.name}}
+      </label>
+      </radio-group>
+    </label>
+  </mp-form>
+  <view>一、	教学环境观察: 请观察教室安排是否合理，教室设备，教室采光、通风、噪音、温度等环境条件是否符合教学要求以及其他可能影响到教学效果的环境因素。</view>
+  <view>二、评价</view>
+  <view>*评价等级：优、良、中、合格、不合格、不适用（含+、-）</view>
+
+  <!-- PS:还没设置必填，现在的rules有点不一样，参考/login中是为每个表单元素是设为对象formData的属性，而现在这里是将contentData设置为数组，不同。目前可能考虑的操作，1.合并为一个表单 2.将contentData设置为对象 -->
+  <mp-form id="content" rules="{{contentRules}}" models="{{contentData}}">
+    <view class="list" wx:for="{{listData}}" wx:key="index">
+      index: {{index}}
+      <view>{{item.event}}</view>
+      <view>{{item.content}}</view>
+      <view>{{item.recommend}}</view>
+      <view>{{item.grade}}</view>
+      <label for="" wx:for="{{item.gradesItem}}" wx:for-item="grade" wx:for-index="gradeIndex" wx:key="gradeIndex">
+        <radio-group id="radio{{index}}" bind:change="gradeChange" data-index="{{index}}">
+          <label for="">
+            {{grade.name}}
+            <radio value="{{grade.value}}" checked="{{grade.checked}}"/>
+          </label>
+        </radio-group>
+      </label>
+
+
+    </view>
+  </mp-form>
+
+  <view class="weui-btn-area">
+    <button bind:tap="submitForm" class="weui-btn" type="primary">确定</button>
+  </view>
+
+</view>

@@ -8,7 +8,7 @@
       <block wx:for="{{class}}" wx:key="index">
         <view class="box" bind:tap="classClick" data-classid="{{item.id}}">
           {{item.course.name}}
-          <button id="evaluation-button" bind:tap="evaluationInput">听课表录入</button>
+          <button id="evaluation-button" bind:tap="evaluationJump" data-classid="{{item.id}}" data-classification="{{item.course.classification}}">听课表录入</button>
         </view>
       </block>
     </view>

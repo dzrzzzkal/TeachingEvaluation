@@ -29,9 +29,11 @@ Page({
       .catch(err => console.log(err))
   },
 
-  evaluationInput: function() {
+  evaluationJump: function(e) {
+    let classid = e.currentTarget.dataset.classid
+    let classification = e.currentTarget.dataset.classification
     wx.navigateTo({
-      url: '/pages/evaluationSheet/evaluationSheet',
+      url: `/pages/evaluationPage/evaluationPage?classid=${classid}&classification=${classification}`,
     })
   },
 
