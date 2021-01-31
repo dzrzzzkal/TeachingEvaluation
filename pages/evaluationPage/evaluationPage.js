@@ -16,6 +16,8 @@ Page({
       {value: 'theory of public welfare', name: '公益课程理论讲授'},
       {value: 'practice of public welfare', name: '公益课程服务实践'},
     ],
+
+    contentData: '',
   },
 
   radioChange(e) {
@@ -29,7 +31,15 @@ Page({
       radioItems: items,
       classification: value
     })
+    console.log(e)
     console.log('classification: ' + this.data.classification)
+  },
+
+  getForm(e) {
+    this.setData({
+      contentData: e.detail
+    })
+    console.log(this.data.contentData)
   },
 
 

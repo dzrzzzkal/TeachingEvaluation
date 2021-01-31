@@ -125,7 +125,7 @@
         {
           "name": "pages/evaluationPage/evaluationPage",
           "pathName": "pages/evaluationPage/evaluationPage",
-          "query": "classification=理论讲授",
+          "query": "classid=111111&classification=理论讲授",
           "scene": null
         }
       ]

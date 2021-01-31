@@ -8,7 +8,7 @@ Page({
    */
   data: {
     classname: '',
-    class: [],
+    classes: [],
   },
 
   searchInput: function(e) {
@@ -22,9 +22,9 @@ Page({
     $api.searchClass(this.data.classname)
       .then(res => {
         that.setData({
-          class: res
+          classes: res
         })
-        console.log(that.data.class)
+        console.log(that.data.classes)
       })
       .catch(err => console.log(err))
   },

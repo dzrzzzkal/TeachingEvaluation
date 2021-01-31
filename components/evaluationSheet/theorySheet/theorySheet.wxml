@@ -6,30 +6,32 @@
     <!-- <mp-cell prop="username" title="username" ext-class=""></mp-cell> -->
     <label for="">
       开课单位：
-      <input bind:input="formInputChange" data-field="setupUnit" class="weui-input" placeholder="" type="text" />
+      <input id="setupUnit" bind:input="formInputChange" value="{{courseinfo.setupUnit}}" data-field="setupUnit" class="initialization weui-input" placeholder="" type="text" />
     </label>
     <label for="">
       课程名称：
-      <input bind:input="formInputChange" data-field="name" class="weui-input" placeholder="" type="text" />
+      <input bind:input="formInputChange" value="{{courseinfo.name}}" data-field="name" class="initialization weui-input" placeholder="" type="text" />
     </label>
     <label for="">
       开课班号：
-      <input bind:input="formInputChange" data-field="id" class="weui-input" placeholder="" type="text" />
+      <input bind:input="formInputChange" value="{{classinfo.id}}" data-field="id" class="initialization weui-input" placeholder="" type="text" />
     </label>
     <label for="">
-      授课教师：
-      <input bind:input="formInputChange" data-field="teacher" class="weui-input" placeholder="" type="text" />
+      授课教师id(待改成name)：
+      <!-- 目前是id，待改成name -->
+      <input bind:input="formInputChange" value="{{classinfo.teacher_id}}" data-field="teacher" class="initialization weui-input" placeholder="" type="text" />
     </label>
     <label for="">
       听课时间：
-      <input bind:input="formInputChange" data-field="date" class="weui-input" placeholder="" type="text" />
+      <!-- 待改，改成匹配课程表上课程的最近日期 或具体课程的日期，因为填表日期可能与听课日期不一致，要么就不设定默认值 -->
+      <input bind:input="formInputChange" value="{{daytime}}" data-field="date" class="initialization weui-input" placeholder="" type="text" />
       <input bind:input="formInputChange" data-field="start-time" class="weui-input" placeholder="start-time" type="text" />~
       <input bind:input="formInputChange" data-field="end-time" class="weui-input" placeholder="end-time" type="text" />(具体时分)
     </label>
     <view></view>
     <label for="">
       地点：
-      <input bind:input="formInputChange" data-field="place" class="weui-input" placeholder="" type="text" />
+      <input bind:input="formInputChange" value="{{}}" data-field="place" class="weui-input" placeholder="" type="text" />
     </label>
     <label for="">
       学生应到人数：
@@ -39,38 +41,227 @@
       学生实到人数：
       <input bind:input="formInputChange" data-field="actual-num" class="weui-input" placeholder="" type="text" />
     </label>
-    <label for="">
+    <view>
       听课类型：
-      <radio-group bind:change="">
-        <label for="" wx:for="{{roleItems}}" wx:key="value">
-          <radio value="{{item.value}}" checked="{{item.checked}}"/>
+      <radio-group bind:change="radioChange" data-field="role" data-fieldData="roleItems">
+        <label for="" wx:for="{{roleItems}}" wx:key="value" >
+          <radio value="{{item.value}}" checked="{{item.checked}}" />
           {{item.name}}
-      </label>
+        </label>
       </radio-group>
-    </label>
+    </view>
   </mp-form>
-  <view>一、	教学环境观察: 请观察教室安排是否合理，教室设备，教室采光、通风、噪音、温度等环境条件是否符合教学要求以及其他可能影响到教学效果的环境因素。</view>
-  <view>二、评价</view>
-  <view>*评价等级：优、良、中、合格、不合格、不适用（含+、-）</view>
 
-  <!-- PS:还没设置必填，现在的rules有点不一样，参考/login中是为每个表单元素是设为对象formData的属性，而现在这里是将contentData设置为数组，不同。目前可能考虑的操作，1.合并为一个表单 2.将contentData设置为对象 -->
+  <!-- PS:还没设置必填，现在的rules有点不一样，参考/login中是为每个表单元素是设为对象formData的属性，而现在这里是将contentData设置为数组，不同。目前可能考虑的操作，1.合并为一个表单 2.将contentData设置为对象(√) -->
   <mp-form id="content" rules="{{contentRules}}" models="{{contentData}}">
-    <view class="list" wx:for="{{listData}}" wx:key="index">
+    <!-- 一、	教学环境观察 -->
+    <view class="environment">
+      一、	教学环境观察: 请观察教室安排是否合理，教室设备，教室采光、通风、噪音、温度等环境条件是否符合教学要求以及其他可能影响到教学效果的环境因素。
+      <label for="">
+        <textarea bind:input="formInputChange" data-field="environment" maxlength="-1" name="" id="" cols="" rows=""></textarea>
+      </label>
+    </view>
+    <!-- 二、评价 -->
+    <view>二、评价</view>
+    <view>*评价等级：优、良、中、合格、不合格、不适用（含+、-）</view>
+    <view class="evaluationList" wx:for="{{evaluationListData}}" wx:key="index">
       index: {{index}}
       <view>{{item.event}}</view>
       <view>{{item.content}}</view>
       <view>{{item.recommend}}</view>
       <view>{{item.grade}}</view>
-      <label for="" wx:for="{{item.gradesItem}}" wx:for-item="grade" wx:for-index="gradeIndex" wx:key="gradeIndex">
-        <radio-group id="radio{{index}}" bind:change="gradeChange" data-index="{{index}}">
+      <!-- 后面看能不能改成跟别的表单item一样，bind:input="formChange" data-field="evaluationList" -->
+      <label for="" wx:for="{{item.gradeItems}}" wx:for-item="grade" wx:for-index="gradeIndex" wx:key="gradeIndex">
+        <radio-group id="radio{{index}}" bind:change="gradeChange" data-index="{{index}}" class="radio-group">
           <label for="">
             {{grade.name}}
             <radio value="{{grade.value}}" checked="{{grade.checked}}"/>
           </label>
         </radio-group>
       </label>
-
-
+    </view>
+    <!-- 三、总体评价 -->
+    <view class="overallEvaluation">
+      三、总体评价
+      <view class="appreciateMethod">
+        <label for="">
+          最欣赏的方法或表现：
+          <textarea bind:input="formInputChange" data-field="appreciateMethod" maxlength="-1" name="" id="" cols="" rows=""></textarea>
+        </label>
+      </view>
+      <view class="concreteSuggestion">
+        <label for="">
+          给任课教师的具体建议：
+          <textarea bind:input="formInputChange" data-field="concreteSuggestion" maxlength="-1" name="" id="" cols="" rows=""></textarea>
+        </label>
+      </view>
+      <view class="familiarity">
+        本人对听课的课程的内容熟悉程度：
+        <radio-group id="familiarity" bind:change="formInputChange" data-field="familiarity" data-fieldData="familiarityItems" class="radio-group">
+          <label for="" wx:for="{{familiarityItems}}" wx:key="index">
+            <radio value="{{item.value}}">{{item.name}}</radio>
+          </label>
+        </radio-group>
+      </view>
+      <view class="suggestions">
+        <label for="">
+          建议推广主讲教师教学方法：
+          <radio-group id="extendsion" bind:change="formInputChange" data-field="extendsion" data-fieldData="extendsionItems" class="radio-group">
+            <label for="" wx:for="{{extendsionItems}}" wx:key="index">
+              <radio value="{{item.value}}">{{item.name}}</radio>
+            </label>
+          </radio-group>
+        </label>
+        <label for="">
+          建议主讲教师提升教学能力，学院（部、中心）继续听课跟进：
+          <radio-group id="followUp" bind:change="formInputChange" data-field="followUp" data-fieldData="followUpItems" class="radio-group">
+            <label for="" wx:for="{{followUpItems}}" wx:key="index">
+              <radio value="{{item.value}}">{{item.name}}</radio>
+            </label>
+          </radio-group>
+        </label>
+        <view class="otherSuggestion">
+          <label for="">
+            其他建议：
+            <textarea bind:input="formInputChange" data-field="otherSuggestion" maxlength="-1" name="" id="" cols="" rows=""></textarea>
+          </label>
+        </view>
+        <view class="participant">
+          听课人：
+          <label for="">
+            <input bind:input="formInputChange" data-field="participant" type="text" />
+          </label>
+        </view>
+        <view class="time">
+          <label for="">
+            <input bind:input="formInputChange" data-field="year" placeholder="year" />
+            年
+          </label>
+          <label for="">
+            <input bind:input="formInputChange" data-field="month" placeholder="month" />
+            月
+          </label>
+          <label for="">
+            <input bind:input="formInputChange" data-field="day" placeholder="day" />
+            日
+          </label>
+        </view>
+      </view>
+    </view>
+    <!-- 四、	跟进记录 -->
+    <view class="followUpRecord" hidden="{{contentData.followUp != 'true'}}">
+      四、	跟进记录
+      <view class="followUpDegree">
+        <radio-group id="followUpDegree" bind:change="formInputChange" data-field="followUpDegree" data-fieldData="followUpDegreeItems" class="radio-group">
+          <label for="" wx:for="{{followUpDegreeItems}}" wx:key="index">
+            <radio value="{{item.value}}">{{item.name}}</radio>
+          </label>
+        </radio-group>
+      </view>
+      <view class="followUpParticipantSuggestion">
+        <label for="">
+          （跟进听课）听课教师意见及建议
+          <textarea bind:input="formInputChange" data-field="followUpParticipantSuggestion" maxlength="-1" name="" id="" cols="" rows=""></textarea>
+        </label>
+        <view class="followUpParticipant">
+          （签名）：
+          <label for="">
+            <input bind:input="formInputChange" data-field="followUpParticipant" type="text" />
+          </label>
+        </view>
+        <view class="followUpParticipantTime time">
+          <label for="">
+            <input bind:input="formInputChange" data-field="followUpParticipantTime-year" placeholder="year" />
+            年
+          </label>
+          <label for="">
+            <input bind:input="formInputChange" data-field="followUpParticipantTime-month" placeholder="month" />
+            月
+          </label>
+          <label for="">
+            <input bind:input="formInputChange" data-field="followUpParticipantTime-day" placeholder="day" />
+            日
+          </label>
+        </view>
+      </view>
+      <view class="followUpCollegeSuggestion">
+        <label for="">
+          学院（部、中心）跟进意见
+          <textarea bind:input="formInputChange" data-field="followUpCollegeSuggestion" maxlength="-1" name="" id="" cols="" rows=""></textarea>
+        </label>
+        <view class="followUpCollege">
+          （签名）：
+          <label for="">
+            <input bind:input="formInputChange" data-field="followUpCollege" type="text" />
+          </label>
+        </view>
+        <view class="followUpCollegeTime time">
+          <label for="">
+            <input bind:input="formInputChange" data-field="followUpCollegeTime-year" placeholder="year" />
+            年
+          </label>
+          <label for="">
+            <input bind:input="formInputChange" data-field="followUpCollegeTime-month" placeholder="month" />
+            月
+          </label>
+          <label for="">
+            <input bind:input="formInputChange" data-field="followUpCollegeTime-day" placeholder="day" />
+            日
+          </label>
+        </view>
+      </view>
+      <view class="lecturerRectification">
+        <label for="">
+          主讲教师反思及整改方案
+          <textarea bind:input="formInputChange" data-field="lecturerRectification" maxlength="-1" name="" id="" cols="" rows=""></textarea>
+        </label>
+        <view class="lecturer">
+          （签名）：
+          <label for="">
+            <input bind:input="formInputChange" data-field="lecturer" type="text" />
+          </label>
+        </view>
+        <view class="lecturerTime time">
+          <label for="">
+            <input bind:input="formInputChange" data-field="lecturerTime-year" placeholder="year" />
+            年
+          </label>
+          <label for="">
+            <input bind:input="formInputChange" data-field="lecturerTime-month" placeholder="month" />
+            月
+          </label>
+          <label for="">
+            <input bind:input="formInputChange" data-field="lecturerTime-day" placeholder="day" />
+            日
+          </label>
+        </view>
+      </view>
+      <view class="followUpUnitSuggestion">
+        <label for="">
+          教学管理、服务部门意见
+          <textarea bind:input="formInputChange" data-field="followUpUnitSuggestion" maxlength="-1" name="" id="" cols="" rows=""></textarea>
+        </label>
+        <view class="followUpUnit">
+          （签名）：
+          <label for="">
+            <input bind:input="formInputChange" data-field="followUpUnit" type="text" />
+          </label>
+        </view>
+        <view class="followUpUnitTime time">
+          <label for="">
+            <input bind:input="formInputChange" data-field="followUpUnitTime-year" placeholder="year" />
+            年
+          </label>
+          <label for="">
+            <input bind:input="formInputChange" data-field="followUpUnitTime-month" placeholder="month" />
+            月
+          </label>
+          <label for="">
+            <input bind:input="formInputChange" data-field="followUpUnitTime-day" placeholder="day" />
+            日
+          </label>
+        </view>
+      </view>
     </view>
   </mp-form>
 

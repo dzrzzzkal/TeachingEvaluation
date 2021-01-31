@@ -3,7 +3,7 @@
   /* background-color: #fff; */
 }
 
-.list {
+.evaluationList {
   border: 1rpx solid red;
   font-size: 32rpx;
 }
@@ -14,4 +14,29 @@
 
 .content {
 
+}
+
+.radio-group {
+  display: inline-block;
+}
+
+.overallEvaluation {
+  border: 1rpx solid green;
+}
+
+textarea {
+  border: 1rpx solid pink;
+}
+
+.suggestions {
+  border: 1rpx solid blue;
+}
+
+.time label {
+  /* display: inline-block; */
+}
+
+.time label input {
+  width: 100rpx;
+  display: inline-block;
 }

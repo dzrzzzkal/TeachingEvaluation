@@ -14,10 +14,14 @@
     <radio-group bind:change="radioChange">
       <label for="" wx:for="{{radioItems}}" wx:key="value">
           <radio value="{{item.value}}" checked="{{item.checked}}"/>
-          {{item.name}}   
+          {{item.name}}
       </label>
     </radio-group>
   </view>
   <view>——</view>
-  <theory-sheet></theory-sheet>
+  <theory-sheet classid="{{classid}}" bind:sendForm="getForm"></theory-sheet>
+
+  <view class="weui-btn-area">
+    <button bind:tap="submitForm" class="weui-btn" type="primary">evaluationPage-确定</button>
+  </view>
 </view>

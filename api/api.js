@@ -14,5 +14,7 @@ api.doLogin = (data) => api.post('/doLogin', data)
 api.checkToken = (data) => api.post('/checkToken', data)
 api.getCourses = () => api.get('/getCourses')
 api.searchClass = (name) => api.get(`/class?name=${name}`)
+api.getClass = (classid) => api.get(`/classid/${classid}`)
+api.submitForm = (data) => api.post('/submitForm', data)
 
 module.exports = api
