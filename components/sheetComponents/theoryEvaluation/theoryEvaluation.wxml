@@ -1,0 +1,21 @@
+<!--components/sheetComponents/theoryEvaluation.wxml-->
+<view>
+  <view>二、评价</view>
+  <view>*评价等级：优、良、中、合格、不合格、不适用（含+、-）</view>
+  <view class="evaluationList" wx:for="{{evaluationListData}}" wx:key="index">
+    index: {{index}}
+    <view>{{item.event}}</view>
+    <view>{{item.content}}</view>
+    <view>{{item.recommend}}</view>
+    <view>{{item.grade}}</view>
+    <!-- 后面看能不能改成跟别的表单item一样，bind:input="formChange" data-field="evaluationList" -->
+    <label for="" wx:for="{{item.gradeItems}}" wx:for-item="grade" wx:for-index="gradeIndex" wx:key="gradeIndex">
+      <radio-group id="gradeRadio{{index}}" bind:change="gradeChange" data-index="{{index}}" data-field="evaluationList" data-fieldData="evaluationListData" data-radioItems="gradeItems" class="radio-group">
+        <label for="">
+          {{grade.name}}
+          <radio value="{{grade.value}}" checked="{{grade.checked}}"/>
+        </label>
+      </radio-group>
+    </label>
+  </view>
+</view>

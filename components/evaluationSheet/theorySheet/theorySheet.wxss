@@ -3,31 +3,6 @@
   /* background-color: #fff; */
 }
 
-.evaluationList {
-  border: 1rpx solid red;
-  font-size: 32rpx;
-}
-
-.event {
-  border: 1rpx solid gray;
-}
-
-.content {
-
-}
-
-.radio-group {
-  display: inline-block;
-}
-
-.overallEvaluation {
-  border: 1rpx solid green;
-}
-
-textarea {
-  border: 1rpx solid pink;
-}
-
 .suggestions {
   border: 1rpx solid blue;
 }

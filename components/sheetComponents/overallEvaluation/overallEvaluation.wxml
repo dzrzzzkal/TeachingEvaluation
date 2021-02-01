@@ -1,0 +1,70 @@
+<!--components/sheetComponents/overallEvaluation/overallEvaluation.wxml-->
+<view>
+  <view class="overallEvaluation">
+    三、总体评价
+    <view class="appreciateMethod">
+      <label for="">
+        最欣赏的方法或表现：
+        <textarea bind:input="inputChange" data-field="appreciateMethod" maxlength="-1" name="" id="" cols="" rows=""></textarea>
+      </label>
+    </view>
+    <view class="concreteSuggestion">
+      <label for="">
+        给任课教师的具体建议：
+        <textarea bind:input="inputChange" data-field="concreteSuggestion" maxlength="-1" name="" id="" cols="" rows=""></textarea>
+      </label>
+    </view>
+    <view class="familiarity">
+      本人对听课的课程的内容熟悉程度：
+      <radio-group id="familiarity" bind:change="inputChange" data-field="familiarity" data-fieldData="familiarityItems" class="radio-group">
+        <label for="" wx:for="{{familiarityItems}}" wx:key="index">
+          <radio value="{{item.value}}">{{item.name}}</radio>
+        </label>
+      </radio-group>
+    </view>
+    <view class="suggestions">
+      <label for="">
+        建议推广主讲教师教学方法：
+        <radio-group id="extendsion" bind:change="inputChange" data-field="extendsion" data-fieldData="extendsionItems" class="radio-group">
+          <label for="" wx:for="{{extendsionItems}}" wx:key="index">
+            <radio value="{{item.value}}">{{item.name}}</radio>
+          </label>
+        </radio-group>
+      </label>
+      <label for="">
+        建议主讲教师提升教学能力，学院（部、中心）继续听课跟进：
+        <radio-group id="followUp" bind:change="inputChange" data-field="followUp" data-fieldData="followUpItems" class="radio-group">
+          <label for="" wx:for="{{followUpItems}}" wx:key="index">
+            <radio value="{{item.value}}">{{item.name}}</radio>
+          </label>
+        </radio-group>
+      </label>
+      <view class="otherSuggestion">
+        <label for="">
+          其他建议：
+          <textarea bind:input="inputChange" data-field="otherSuggestion" maxlength="-1" name="" id="" cols="" rows=""></textarea>
+        </label>
+      </view>
+      <view class="participant">
+        听课人：
+        <label for="">
+          <input bind:input="inputChange" data-field="participant" type="text" />
+        </label>
+      </view>
+      <view class="time">
+        <label for="">
+          <input bind:input="inputChange" data-field="year" placeholder="year" />
+          年
+        </label>
+        <label for="">
+          <input bind:input="inputChange" data-field="month" placeholder="month" />
+          月
+        </label>
+        <label for="">
+          <input bind:input="inputChange" data-field="day" placeholder="day" />
+          日
+        </label>
+      </view>
+    </view>
+  </view>
+</view>

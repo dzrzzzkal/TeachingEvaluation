@@ -62,92 +62,9 @@
       </label>
     </view>
     <!-- 二、评价 -->
-    <view>二、评价</view>
-    <view>*评价等级：优、良、中、合格、不合格、不适用（含+、-）</view>
-    <view class="evaluationList" wx:for="{{evaluationListData}}" wx:key="index">
-      index: {{index}}
-      <view>{{item.event}}</view>
-      <view>{{item.content}}</view>
-      <view>{{item.recommend}}</view>
-      <view>{{item.grade}}</view>
-      <!-- 后面看能不能改成跟别的表单item一样，bind:input="formChange" data-field="evaluationList" -->
-      <label for="" wx:for="{{item.gradeItems}}" wx:for-item="grade" wx:for-index="gradeIndex" wx:key="gradeIndex">
-        <radio-group id="radio{{index}}" bind:change="gradeChange" data-index="{{index}}" class="radio-group">
-          <label for="">
-            {{grade.name}}
-            <radio value="{{grade.value}}" checked="{{grade.checked}}"/>
-          </label>
-        </radio-group>
-      </label>
-    </view>
+    <theory-evaluation bind:radioChange="getEvaluationList"></theory-evaluation>
     <!-- 三、总体评价 -->
-    <view class="overallEvaluation">
-      三、总体评价
-      <view class="appreciateMethod">
-        <label for="">
-          最欣赏的方法或表现：
-          <textarea bind:input="formInputChange" data-field="appreciateMethod" maxlength="-1" name="" id="" cols="" rows=""></textarea>
-        </label>
-      </view>
-      <view class="concreteSuggestion">
-        <label for="">
-          给任课教师的具体建议：
-          <textarea bind:input="formInputChange" data-field="concreteSuggestion" maxlength="-1" name="" id="" cols="" rows=""></textarea>
-        </label>
-      </view>
-      <view class="familiarity">
-        本人对听课的课程的内容熟悉程度：
-        <radio-group id="familiarity" bind:change="formInputChange" data-field="familiarity" data-fieldData="familiarityItems" class="radio-group">
-          <label for="" wx:for="{{familiarityItems}}" wx:key="index">
-            <radio value="{{item.value}}">{{item.name}}</radio>
-          </label>
-        </radio-group>
-      </view>
-      <view class="suggestions">
-        <label for="">
-          建议推广主讲教师教学方法：
-          <radio-group id="extendsion" bind:change="formInputChange" data-field="extendsion" data-fieldData="extendsionItems" class="radio-group">
-            <label for="" wx:for="{{extendsionItems}}" wx:key="index">
-              <radio value="{{item.value}}">{{item.name}}</radio>
-            </label>
-          </radio-group>
-        </label>
-        <label for="">
-          建议主讲教师提升教学能力，学院（部、中心）继续听课跟进：
-          <radio-group id="followUp" bind:change="formInputChange" data-field="followUp" data-fieldData="followUpItems" class="radio-group">
-            <label for="" wx:for="{{followUpItems}}" wx:key="index">
-              <radio value="{{item.value}}">{{item.name}}</radio>
-            </label>
-          </radio-group>
-        </label>
-        <view class="otherSuggestion">
-          <label for="">
-            其他建议：
-            <textarea bind:input="formInputChange" data-field="otherSuggestion" maxlength="-1" name="" id="" cols="" rows=""></textarea>
-          </label>
-        </view>
-        <view class="participant">
-          听课人：
-          <label for="">
-            <input bind:input="formInputChange" data-field="participant" type="text" />
-          </label>
-        </view>
-        <view class="time">
-          <label for="">
-            <input bind:input="formInputChange" data-field="year" placeholder="year" />
-            年
-          </label>
-          <label for="">
-            <input bind:input="formInputChange" data-field="month" placeholder="month" />
-            月
-          </label>
-          <label for="">
-            <input bind:input="formInputChange" data-field="day" placeholder="day" />
-            日
-          </label>
-        </view>
-      </view>
-    </view>
+    <overall-evaluation bind:inputChange="getOverallEvaluation"></overall-evaluation>
     <!-- 四、	跟进记录 -->
     <view class="followUpRecord" hidden="{{contentData.followUp != 'true'}}">
       四、	跟进记录

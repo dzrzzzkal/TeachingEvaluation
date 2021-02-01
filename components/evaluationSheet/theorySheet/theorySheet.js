@@ -1,7 +1,8 @@
-// pages/evaluationSheet/evaluationSheet.js
+// pages/evaluationSheet/theorySheet/theorySheet.js
 
 const $api = require('../../../api/api')
 const util = require('../../../utils/util')
+const {getFormChange} = require('../../../utils/form')
 
 Component({
   /**
@@ -28,108 +29,7 @@ Component({
       {value: 'leader', name: '领导听课'},
       {value: 'supervisor', name: '督导听课'}
     ],
-    evaluationListData:[
-      {
-        "event": "教学态度",
-        "content": "教学认真，备课细致",
-        "recommend": "向学生指出具体并对学习有指导性的目标；有教学内容提纲；对所下结论提供证据信息；结束时有总结。",
-        "grade": "",
-      },
-      {
-        "event": "",
-        "content": "讲课精神饱满，举止得体，仪容整洁",
-        "recommend": "多数时间是面向学生的（不是面对电脑或屏幕），能与大多数学生沟通。",
-        "grade": ""
-      },
-      {
-        "event": "教学能力",
-        "content": "声音宏亮，外语或普通话发音准确，表达流畅",
-        "recommend": "对关键的用词有解释；注重用语的准确、科学性。",
-        "grade": ""
-      },
-      {
-        "event": "",
-        "content": "时间安排合理，节奏控制好",
-        "recommend": "能从容完成授课计划；提问并给予学生时间思考；内容过渡合理。",
-        "grade": ""
-      },
-      {
-        "event": "",
-        "content": "条理性强，内容熟练，运用启发式教学",
-        "recommend": "讲授有条理；对学生表现给予及时反馈；不需要逐字读PPT；鼓励学生自由提问讨论并可随时应对学生的问题。",
-        "grade": ""
-      },
-      {
-        "event": "",
-        "content": "内容符合大纲要求，重点突出",
-        "recommend": "一节课的知识点数量适当；收尾时强调重点；示范对重点知识的应用；提出进一步学习的参考文献；给学生创造应用知识的机会。",
-        "grade": ""
-      },
-      {
-        "event": "",
-        "content": "理论联系实际；反映学科进展",
-        "recommend": "采用具体事例帮助学生理解；结合学科较新热点或引用较新文献。",
-        "grade": ""
-      },
-      {
-        "event": "教学手段",
-        "content": "内容简明扼要；合理使用多媒体教学手段",
-        "recommend": "PPT应清晰；图示应与课程内容相匹配；合理运用图片、视频等资料；多媒体技术运用应服务于课堂教学，避免干扰正常教学秩序情况。",
-        "grade": ""
-      },
-      {
-        "event": "学生表现",
-        "content": "迟到现象少，听课率高",
-        "recommend": "学生缺席、迟到现象少（低于5%）；学生能跟随老师的讲课节奏；不存在与课堂无关的手机、电脑使用情况或低头做其他事情等现象。",
-        "grade": ""
-      },
-      {
-        "event": "",
-        "content": "课堂表现积极、活跃",
-        "recommend": "大多数学生课堂表现活跃，学生之间、师生之间互动积极。",
-        "grade": ""
-      },
-      {
-        "event": "总体评价等级",
-        "content": "",
-        "recommend": "",
-        "grade": ""
-      },
-    ],
-    gradeItems: [
-      {value: '优+', name: '优+'},
-      {value: '优', name: '优'},
-      {value: '优-', name: '优-'},
-      {value: '良+', name: '良+'},
-      {value: '良', name: '良'},
-      {value: '良-', name: '良-'},
-      {value: '中+', name: '中+'},
-      {value: '中', name: '中'},
-      {value: '中-', name: '中-'},
-      {value: '合格+', name: '合格+'},
-      {value: '合格', name: '合格'},
-      {value: '合格-', name: '合格-'},
-      {value: '不合格+', name: '不合格+'},
-      {value: '不合格', name: '不合格'},
-      {value: '不合格-', name: '不合格-'},
-      {value: '不适用+', name: '不适用+'},
-      {value: '不适用', name: '不适用'},
-      {value: '不适用-', name: '不适用-'},
-    ],
-    familiarityItems: [
-      {value: '非常熟悉', name: '非常熟悉'},
-      {value: '熟悉', name: '熟悉'},
-      {value: '不太熟悉', name: '不太熟悉'},
-      {value: '完全不熟悉', name: '完全不熟悉'},
-    ],
-    extendsionItems: [
-      {value: true, name: '是'},
-      {value: false, name: '否'},
-    ],
-    followUpItems: [
-      {value: true, name: '需要跟进'},
-      {value: false, name: '不需要跟进'},
-    ],
+
     followUpDegreeItems: [
       {value: '教研室/系/院/组织了交流讨论', name: '教研室/系/院/组织了交流讨论'},
       {value: '与被听课教师/教学单位负责人/教学管理服务中心交流、反馈了意见', name: '与被听课教师/教学单位负责人/教学管理服务中心交流、反馈了意见'},
@@ -138,8 +38,8 @@ Component({
     
     // 提交的表单
     baseinfoData: {},
-    contentData: {  // 目前设定不需要setData
-      evaluationList: [],
+    contentData: {
+      
     },
 
     rules: [
@@ -203,33 +103,48 @@ Component({
       // console.log(e)
     },
 
-    gradeChange(e) {
-      let index = e.currentTarget.dataset.index
-      let evaluationListData = this.data.evaluationListData
-      let gradeItems = evaluationListData[index].gradeItems
+    // 获取 二、评价 表的值
+    getEvaluationList(e) {
+      // let evaluationList = e.detail
+      // this.setData({
+      //   'contentData.evaluationList': evaluationList
+      // })
+      getFormChange(e, this, 'contentData')
+      console.log(this.data.contentData)
 
-      let value = e.detail.value
+      // 
+      // let i = this.judgeEvaluationListRule()
+      // if(i) {
+      //   console.log(`第${i}题未填写`)
+      // }else {
+      //   console.log('evaluationList fulfill!')
+      // }
+    },
 
-      console.log('event: ')
-      console.log(e.currentTarget)
-
-      for(let i = 0, len = gradeItems.length; i < len; ++i) {
-        gradeItems[i].checked = gradeItems[i].value === value
+    judgeEvaluationListRule() {
+      let evaluationList = this.data.contentData.evaluationList
+      let i = 1 // 题号，应为下标+1，所以初始值为1
+      for(let item of evaluationList) {
+        if(!item) {
+          return i  // 返回值为''的第一个题号
+        }
+        i++
       }
-      this.setData({
-        [`evaluationListData[${index}].gradeItems`]: gradeItems,
-        [`contentData.evaluationList[${index}]`]: value,
-      })
+    },
+
+    // 获取 三、总体评价 中的值
+    getOverallEvaluation(e) {
+      getFormChange(e, this, 'contentData')
       console.log(this.data.contentData)
     },
 
-    formInputChange(e) {
-      const {field} = e.currentTarget.dataset
-      this.setData({
-        [`contentData.${field}`]: e.detail.value
-      })
-      // this.data.contentData[field] = e.detail.value
-    },
+    // formInputChange(e) {
+    //   const {field} = e.currentTarget.dataset
+    //   this.setData({
+    //     [`contentData.${field}`]: e.detail.value
+    //   })
+    //   // this.data.contentData[field] = e.detail.value
+    // },
 
     submitForm() {
       var that = this
@@ -263,28 +178,26 @@ Component({
 
   lifetimes: {
     attached: function() {
-      let {evaluationListData, gradeItems, contentData, contentRules} = this.data
-      let listLength = evaluationListData.length
-      for(let i = 0; i < listLength; ++i) {
-        evaluationListData[i].gradeItems = gradeItems
+      let { contentData, contentRules} = this.data
+      // let listLength = evaluationListData.length
+      // for(let i = 0; i < listLength; ++i) {
+      //   evaluationListData[i].gradeItems = gradeItems
 
-        // contentRules.push({
-        //   // index为0时，name要为字符串'0，但index为1……时，name可以为字符串'1'……，也为数字1……，不知道为什么
-        //   name: `${i}`,
-        //   rules: {required: true, message: `content-${i + 1} 必填`}
-        // })
-      }
+      //   // contentRules.push({
+      //   //   // index为0时，name要为字符串'0，但index为1……时，name可以为字符串'1'……，也为数字1……，不知道为什么
+      //   //   name: `${i}`,
+      //   //   rules: {required: true, message: `content-${i + 1} 必填`}
+      //   // })
+      // }
       contentRules.push({
         name: 'evaluationList',
         // ↓方便调试，暂时注释，是要的！
         // rules: {require: true, minlength: listLength, message: '评估表未完成'}
       })
       this.setData({
-        evaluationListData,
         contentData,
         contentRules,
       })
-      // console.log(evaluationListData)
       // console.log(contentRules)
       
     },
@@ -348,7 +261,6 @@ Component({
           for(let i in that.data.contentData) {
             console.log(i + ': ' + that.data.contentData[i])
           }
-          // console.log(that.data.contentData.evaluationList)
           // console.log(that.data.contentData)
           // console.log('ready-setupunit: ' + that.data.contentData.setupUnit)
           // // console.log(res.course)

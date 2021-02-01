@@ -1,0 +1,5 @@
+/* components/sheetComponents/theoryEvaluation.wxss */
+.evaluationList {
+  border: 1rpx solid red;
+  font-size: 32rpx;
+}

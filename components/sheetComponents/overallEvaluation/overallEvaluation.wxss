@@ -1,0 +1,4 @@
+/* components/sheetComponents/overallEvaluation/overallEvaluation.wxss */
+.overallEvaluation {
+  border: 1rpx solid green;
+}
