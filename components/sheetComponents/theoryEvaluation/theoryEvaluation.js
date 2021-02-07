@@ -1,6 +1,6 @@
 // components/sheetComponents/theoryEvaluation.js
 
-const {formRadioGroupChange, initRadioGroupData} = require('../../../utils/form')
+const {radioGroupsChange, initRadioGroupsData} = require('../../../utils/form')
 Component({
   /**
    * 组件的属性列表
@@ -128,7 +128,7 @@ Component({
       // // 传值给父组件theorySheet
       // this.triggerEvent('radioChange', this.data.evaluationList)
 
-      formRadioGroupChange(e, this)
+      radioGroupsChange(e, this, 'theoryEvaluation')
     },
   },
 
@@ -144,7 +144,7 @@ Component({
       //   evaluationListData,
       //   evaluationList
       // })
-      initRadioGroupData(this, 'evaluationList', 'evaluationListData', 'gradeItems')
+      initRadioGroupsData(this, 'evaluationList', 'evaluationListData', 'gradeItems')
     }
   },
   

@@ -25,8 +25,8 @@
     <view class="suggestions">
       <label for="">
         建议推广主讲教师教学方法：
-        <radio-group id="extendsion" bind:change="inputChange" data-field="extendsion" data-fieldData="extendsionItems" class="radio-group">
-          <label for="" wx:for="{{extendsionItems}}" wx:key="index">
+        <radio-group id="extension" bind:change="inputChange" data-field="extension" data-fieldData="extensionItems" class="radio-group">
+          <label for="" wx:for="{{extensionItems}}" wx:key="index">
             <radio value="{{item.value}}">{{item.name}}</radio>
           </label>
         </radio-group>

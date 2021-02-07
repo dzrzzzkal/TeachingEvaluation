@@ -7,8 +7,7 @@ Page({
   data: {
     classid: '',
     classification: '',
-    cb: '',
-    radioItems: [
+    classificationItems: [
       {value: 'theory', name: '理论课'},
       {value: 'student report', name: '学生汇报课'},
       {value: 'experiment', name: '实验课'},
@@ -21,19 +20,20 @@ Page({
   },
 
   radioChange(e) {
-    const items = this.data.radioItems
+    const items = this.data.classificationItems
     // 如果从radio中传入则是e.detail.value，如果是onLoad时调用则传入的形参e是一个值，没有e.detail
     const value = e.detail ? e.detail.value : e
     for(let i = 0, len = items.length; i < len; ++i) {
       items[i].checked = items[i].value === value
     }
     this.setData({
-      radioItems: items,
+      classificationItems: items,
       classification: value
     })
-    console.log(e)
     console.log('classification: ' + this.data.classification)
+    console.log(this.data)
   },
+
 
   getForm(e) {
     this.setData({

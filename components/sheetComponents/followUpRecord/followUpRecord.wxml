@@ -1,0 +1,117 @@
+<!--components/sheetComponents/followUpRecord/followUpRecord.wxml-->
+<view>
+  <view class="followUpRecord" hidden="{{isHidden}}">
+    四、	跟进记录
+    <view class="followUpDegree">
+      <radio-group id="followUpDegree" bind:change="inputChange" data-field="followUpDegree" data-fieldData="followUpDegreeItems" class="radio-group">
+        <label for="" wx:for="{{followUpDegreeItems}}" wx:key="index">
+          <radio value="{{item.value}}">{{item.name}}</radio>
+        </label>
+      </radio-group>
+    </view>
+    <view class="followUpParticipantSuggestion">
+      <label for="">
+        （跟进听课）听课教师意见及建议
+        <textarea bind:input="inputChange" data-field="followUpParticipantSuggestion" maxlength="-1" name="" id="" cols="" rows=""></textarea>
+      </label>
+      <view class="followUpParticipant">
+        （签名）：
+        <label for="">
+          <input bind:input="inputChange" data-field="followUpParticipant" type="text" />
+        </label>
+      </view>
+      <view class="followUpParticipantTime time">
+        <label for="">
+          <input bind:input="inputChange" data-field="followUpParticipantTime_year" placeholder="year" />
+          年
+        </label>
+        <label for="">
+          <input bind:input="inputChange" data-field="followUpParticipantTime_month" placeholder="month" />
+          月
+        </label>
+        <label for="">
+          <input bind:input="inputChange" data-field="followUpParticipantTime_day" placeholder="day" />
+          日
+        </label>
+      </view>
+    </view>
+    <view class="followUpCollegeSuggestion">
+      <label for="">
+        学院（部、中心）跟进意见
+        <textarea bind:input="inputChange" data-field="followUpCollegeSuggestion" maxlength="-1" name="" id="" cols="" rows=""></textarea>
+      </label>
+      <view class="followUpCollege">
+        （签名）：
+        <label for="">
+          <input bind:input="inputChange" data-field="followUpCollege" type="text" />
+        </label>
+      </view>
+      <view class="followUpCollegeTime time">
+        <label for="">
+          <input bind:input="inputChange" data-field="followUpCollegeTime_year" placeholder="year" />
+          年
+        </label>
+        <label for="">
+          <input bind:input="inputChange" data-field="followUpCollegeTime_month" placeholder="month" />
+          月
+        </label>
+        <label for="">
+          <input bind:input="inputChange" data-field="followUpCollegeTime_day" placeholder="day" />
+          日
+        </label>
+      </view>
+    </view>
+    <view class="lecturerRectification">
+      <label for="">
+        主讲教师反思及整改方案
+        <textarea bind:input="inputChange" data-field="lecturerRectification" maxlength="-1" name="" id="" cols="" rows=""></textarea>
+      </label>
+      <view class="lecturer">
+        （签名）：
+        <label for="">
+          <input bind:input="inputChange" data-field="lecturer" type="text" />
+        </label>
+      </view>
+      <view class="lecturerTime time">
+        <label for="">
+          <input bind:input="inputChange" data-field="lecturerTime_year" placeholder="year" />
+          年
+        </label>
+        <label for="">
+          <input bind:input="inputChange" data-field="lecturerTime_month" placeholder="month" />
+          月
+        </label>
+        <label for="">
+          <input bind:input="inputChange" data-field="lecturerTime_day" placeholder="day" />
+          日
+        </label>
+      </view>
+    </view>
+    <view class="followUpUnitSuggestion">
+      <label for="">
+        教学管理、服务部门意见
+        <textarea bind:input="inputChange" data-field="followUpUnitSuggestion" maxlength="-1" name="" id="" cols="" rows=""></textarea>
+      </label>
+      <view class="followUpUnit">
+        （签名）：
+        <label for="">
+          <input bind:input="inputChange" data-field="followUpUnit" type="text" />
+        </label>
+      </view>
+      <view class="followUpUnitTime time">
+        <label for="">
+          <input bind:input="inputChange" data-field="followUpUnitTime_year" placeholder="year" />
+          年
+        </label>
+        <label for="">
+          <input bind:input="inputChange" data-field="followUpUnitTime_month" placeholder="month" />
+          月
+        </label>
+        <label for="">
+          <input bind:input="inputChange" data-field="followUpUnitTime_day" placeholder="day" />
+          日
+        </label>
+      </view>
+    </view>
+  </view>
+</view>

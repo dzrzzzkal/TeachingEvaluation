@@ -20,7 +20,7 @@ Component({
       {value: '不太熟悉', name: '不太熟悉'},
       {value: '完全不熟悉', name: '完全不熟悉'},
     ],
-    extendsionItems: [
+    extensionItems: [
       {value: true, name: '是'},
       {value: false, name: '否'},
     ],
@@ -35,7 +35,7 @@ Component({
    */
   methods: {
     inputChange(e){
-      formInputChange(e, this)
+      formInputChange(e, this, 'overallEvaluation')
     }
   }
 })

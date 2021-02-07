@@ -1,0 +1,42 @@
+// components/sheetComponents/followUpRecord/followUpRecord.js
+
+const {formInputChange} = require('../../../utils/form')
+
+Component({
+  /**
+   * 组件的属性列表
+   */
+  properties: {
+    isHidden: {
+      type: Boolean,
+      // value: true,
+      // observer: function(newVal,oldVal,change) {
+      //   console.log(newVal,oldVal,change)
+      // }
+    }
+  },
+
+  /**
+   * 组件的初始数据
+   */
+  data: {
+    followUpDegreeItems: [
+      {value: '教研室/系/院/组织了交流讨论', name: '教研室/系/院/组织了交流讨论'},
+      {value: '与被听课教师/教学单位负责人/教学管理服务中心交流、反馈了意见', name: '与被听课教师/教学单位负责人/教学管理服务中心交流、反馈了意见'},
+      {value: '建议修订课程目标', name: '建议修订课程目标'}
+    ],
+  },
+
+  /**
+   * 组件的方法列表
+   */
+  methods: {
+    inputChange(e){
+      formInputChange(e, this, 'followUpRecord')
+    }
+  },
+
+  lifetimes: {
+    
+  }
+})

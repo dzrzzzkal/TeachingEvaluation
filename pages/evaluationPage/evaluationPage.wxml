@@ -11,15 +11,15 @@
         <view class="weui-cell__bd">{{item.name}}</view>
       </label>
     </radio-group> -->
-    <radio-group bind:change="radioChange">
-      <label for="" wx:for="{{radioItems}}" wx:key="value">
+    <radio-group id="classification" bind:change="radioChange" data-field="classification" data-fieldData="classificationItems" class="radio-group">
+      <label for="" wx:for="{{classificationItems}}" wx:key="index">
           <radio value="{{item.value}}" checked="{{item.checked}}"/>
           {{item.name}}
       </label>
     </radio-group>
   </view>
   <view>——</view>
-  <theory-sheet classid="{{classid}}" bind:sendForm="getForm"></theory-sheet>
+  <theory-sheet classid="{{classid}}" classification="{{classification}}" bind:sendForm="getForm"></theory-sheet>
 
   <view class="weui-btn-area">
     <button bind:tap="submitForm" class="weui-btn" type="primary">evaluationPage-确定</button>
