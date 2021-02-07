@@ -1,0 +1,25 @@
+<!--components/evaluationSheet/studentReportSheet/studentReportSheet.wxml-->
+<view class="container">
+
+<mp-toptips msg="{{error}}" ext-class="toptips" show="{{error}}"></mp-toptips>
+
+<!-- PS:还没设置必填，现在的rules有点不一样，参考/login中是为每个表单元素是设为对象formData的属性，而现在这里是将contentData设置为数组，不同。目前可能考虑的操作，1.合并为一个表单 2.将contentData设置为对象(√) -->
+<mp-form id="content" rules="{{contentRules}}" models="{{contentData}}">
+  <!-- 基本信息 -->
+  <!-- <baseinfo classinfo="{{classinfo}}" courseinfo="{{courseinfo}}" roleItems="{{roleItems}}"></baseinfo> -->
+  <baseinfo classid="{{classid}}" bind:inputChange="getFormChange"></baseinfo>
+  <!-- 一、	教学环境观察 -->
+  <environment-evaluation bind:inputChange="getFormChange"></environment-evaluation>
+  <!-- 二、评价 -->
+  <student-report-evaluation bind:radioChange="getFormChange"></student-report-evaluation>
+  <!-- 三、总体评价 -->
+  <overall-evaluation bind:inputChange="getFormChange"></overall-evaluation>
+  <!-- 四、	跟进记录 -->
+  <followup-record bind:inputChange="getFormChange" isHidden="{{contentData.overallEvaluation.followUp != 'true'}}"></followup-record>
+</mp-form>
+
+<view class="weui-btn-area">
+  <button bind:tap="submitForm" class="weui-btn" type="primary">确定</button>
+</view>
+
+</view>

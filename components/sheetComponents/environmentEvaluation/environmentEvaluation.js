@@ -24,5 +24,12 @@ Component({
     inputChange(e){
       formInputChange(e, this, 'environmentEvaluation')
     }
+  },
+
+  lifetimes: {
+    ready: function() {
+      // 发送本自定义组件中的field，用来检验本组件中未填的field
+      this.triggerEvent('sendFields', {environmentEvaluation: ['environment']})
+    }
   }
 })

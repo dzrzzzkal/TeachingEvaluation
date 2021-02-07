@@ -37,5 +37,11 @@ Component({
     inputChange(e){
       formInputChange(e, this, 'overallEvaluation')
     }
+  },
+  lifetimes: {
+    ready: function() {
+      // 发送本自定义组件中的field，用来检验本组件中未填的field
+      this.triggerEvent('sendFields', {overallEvaluation: ['appreciateMethod', 'concreteSuggestion', 'familiarity', 'extension', 'followUp', 'otherSuggestion', 'participant', 'year', 'month', 'day']})
+    }
   }
 })

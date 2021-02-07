@@ -40,7 +40,7 @@ const initFormInput = () =>{
 }
 
 /**
- * 某个radiogroup的通过点击触发事件，改变值。后传给父组件。
+ * 子组件使用。某个radiogroup的通过点击触发事件，改变值，然后传给父组件。
  * @param {*} e 
  * @param {*} that 
  * @param {string} objname 将发送给父组件的数据包在某个对象中，objname为该对象的名字，一般用自定义组件的名称
@@ -142,6 +142,21 @@ const setRadioGroupChange = (value, that, field, fielddata, objname) => {
   that.triggerEvent('inputChange', obj)
 }
 
+
+/**
+ * 判断 二、评价 中的值(数组)中第一个未填的值，用于提醒用户未填的题号
+ * @param {array} evaluationList 
+ */
+const judgeEvaluationListRule = (evaluationList) => {
+  let i = 1 // 题号，应为下标+1，所以初始值为1
+  for(let item of evaluationList) {
+    if(!item) {
+      return i  // 返回值为''的第一个题号
+    }
+    i++
+  }
+}
+
 module.exports = {
   formInputChange,
   radioGroupChange,
@@ -149,4 +164,6 @@ module.exports = {
   initRadioGroupsData,
   setFormChange,
   setRadioGroupChange,
+
+  judgeEvaluationListRule,
 }

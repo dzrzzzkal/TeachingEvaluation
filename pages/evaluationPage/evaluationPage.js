@@ -34,7 +34,7 @@ Page({
     console.log(this.data)
   },
 
-
+  // 暂时没用
   getForm(e) {
     this.setData({
       contentData: e.detail

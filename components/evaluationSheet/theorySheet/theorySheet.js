@@ -2,7 +2,7 @@
 
 const $api = require('../../../api/api')
 const util = require('../../../utils/util')
-const {setFormChange} = require('../../../utils/form')
+const {setFormChange, judgeEvaluationListRule} = require('../../../utils/form')
 const form = require('../../../utils/form')
 
 Component({
@@ -19,10 +19,7 @@ Component({
   },
   data: {
     // classid: '',
-    
-    // // 自动填充baseinfo
-    // daytime: '',
-    // role: '',
+    l: 123,
 
     classinfo: {},
     courseinfo: {},
@@ -35,25 +32,36 @@ Component({
     ],
     
     // 提交的表单
-    // baseinfoData: {},
-    contentData: {},
-    formData: {},
+    contentData: {},  // 表单
+    formData: {}, // 修改后，真正提交的数据
 
+    // 没用的，没起作用
     rules: [
       {
-        name: 'setupUnit',
-        rules: {required: true, message: '开课单位必填'}
+        name: 'baseinfo',
+        rules: {required: true, message: '基本信息 未填'}
       },
       {
-        name: 'name',
-        rules: {required: true, message: '课程名称必填'}
+        name: 'environment',
+        rules: {require: true, message: '一、教学环境观察 未填'}
       },
       {
-        name: 'id',
-        rules: {require: true, message: '开课班号必填'}
+        name: 'theoryEvaluation',
+        rules: {require: true, message: '二、评价 未填'}
+      },
+      {
+        name: 'overallEvaluation',
+        rules: {require: true, message: '三、总体评价 未填'}
+      },
+      
+      {
+        name: 'followUpRecord',
+        rules: {require: true, message: '四、跟进记录 未填'}
       },
     ],
-    contentRules: [],
+
+    // 自定义组件中的field，用来检验未填的field
+    componentFields: {},
   },
   methods: {
 
@@ -108,18 +116,6 @@ Component({
       console.log(this.data.contentData)
     },
 
-    // 判断 二、评价 表的值
-    judgeEvaluationListRule() {
-      let evaluationList = this.data.contentData.evaluationList
-      let i = 1 // 题号，应为下标+1，所以初始值为1
-      for(let item of evaluationList) {
-        if(!item) {
-          return i  // 返回值为''的第一个题号
-        }
-        i++
-      }
-    },
-
     // 将contentData中各个自定义组件传过来的包裹数据的对象分解，分解出各项数据，写入formData
     resolveObj(obj, newObj) {
       for(let i in obj) {
@@ -132,7 +128,7 @@ Component({
       }
     },
 
-    // 有问题的，因为这份表可能要交到几个部门去根据他们的身份去填写修改表
+    // 有问题的，因为这份表可能要交到几个部门去根据他们的身份去填写修改表，而且代码很丑
     // 处理formData中包含时间的格式
     dealTime() {
       let {date, start_time, end_time} = this.data.formData // 相当于baseinfo中的听课时间
@@ -170,11 +166,55 @@ Component({
       this.data.formData = formData
     },
 
+    // 获取自定义组件传来的fields，写入this.data.componentFields
+    getComponentsFields(e) {
+      for(let i in e.detail) {
+        this.data.componentFields[i] = e.detail[i]
+      }
+    },
+
+    // 检验未填的field
+    checkRules() {
+      let err
+      // let {baseinfo, enviornment, overallEvaluation, followUpRecord} = this.data.contentData
+      let componments = ['baseinfo', 'environmentEvaluation', 'theoryEvaluation', 'overallEvaluation']
+      if(this.data.contentData.overallEvaluation && this.data.contentData.overallEvaluation.followUp == 'true') {
+        componments.push('followUpRecord')
+      }
+      for(let i of componments) {
+        if(this.data.contentData[i]) {
+          if(i === 'theoryEvaluation') {  // 因为this.data.theoryEvaluation.evaluationList为数组
+            let t = judgeEvaluationListRule(this.data.contentData.theoryEvaluation.evaluationList)  // 判断 二、评价 中第一个未填的题号
+            err = t
+            break
+          }
+          let arr = this.data.componentFields[i]
+          for(let j of arr) {
+            if(!this.data.contentData[i][j]) {
+              err = j
+              break
+            }
+          }
+          if(err) break
+        }else {
+          err = i
+          break
+        }
+      }
+      if(err) {
+        this.setData({
+          error: `${err} 未填`
+        })
+        return false
+      }
+      return true
+    },
+
 
     submitForm() {
       this.selectComponent('#content').validate((isValid, errors) => {
         console.log('valid', isValid, errors)
-        if(!isValid) {
+        if(!isValid) {  // 目前是没有作用的
           const firstError = Object.keys(errors)
           if(firstError.length) {
             this.setData({
@@ -187,6 +227,10 @@ Component({
             delete this.data.contentData.followUpRecord
           }
           console.log(this.data.contentData)
+          let checkRes = this.checkRules()  // 用来检验未填的field
+          if(!checkRes){ // checkRes为false，即检查到有未填写的field，有err
+            return  // 中断
+          }
           // this.triggerEvent('sendForm', this.data.contentData)
 
           // 将contentData分解，写入formData
@@ -225,6 +269,7 @@ Component({
       this.setData({
         'contentData.classification': classification
       })
+      this.data.componentFields.classification = classification
     }
 
     // attached: function() {

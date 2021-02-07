@@ -33,7 +33,7 @@ Component({
 
     classinfo: {},
     courseinfo: {},
-    contentData: {},
+    baseinfo: {},
 
     roleItems: [
       {value: 'teacher', name: '教师听课'},
@@ -144,6 +144,9 @@ Component({
           })
           .exec()
         }).catch(err => console.log(err))
+
+      // 发送本自定义组件中的field，用来检验本组件中未填的field
+      this.triggerEvent('sendFields', {baseinfo: ['setupUnit', 'name', 'id', 'teacher', 'date', 'start_time', 'end_time', 'place', 'attend_num', 'actual_num', 'role']})
     }
   }
 })
