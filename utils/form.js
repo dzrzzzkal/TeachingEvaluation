@@ -87,17 +87,18 @@ const radioGroupsChange = (e, that, objname) =>{
  * 初始化radiogroups，包括设置文字内容fielddata，和设置存储radio groups的数据的数组
  * @param {*} that 调用此方法的自定义组件的this
  * @param {string} field 存储数据的数组的名字
- * @param {string} fielddata 填充radiogroup的文字说明内容和checked的数组的名字，这里主要将radioitems初始化填充入数组中的所有元素作为文字说明内容
- * @param {string} radioitems 填充radiogroup中包含的所有radio的值的数组的名字
+ * @param {string} fielddata 填充radiogroup的文字说明内容和checked的数组的名字，这里主要将radioitems初始化填充入数组中的所有元素作为文字说明内容。例如：教学态度——反馈及时，备课充分等
+//  * @param {string} radioitems 填充radiogroup中包含的所有radio的值的数组的名字。例如：优、良等  （修改：这里的radioItems默认为上面的gradeItems，因此直接写'gradeItems'）
  */
 // 目前的代码是仿照上面的，其实有了名字可以更简化，待修改
-const initRadioGroupsData = (that, field, fielddata, radioitems) => {
+// const initRadioGroupsData = (that, field, fielddata, radioitems) => {
+const initRadioGroupsData = (that, field, fielddata) => {
   const f = that.data[field]
   const fdata = that.data[fielddata]  // 数组
-  const items = that.data[radioitems]  // fdata数组的第index个元素中的radioitems属性的值，是一个数组，即radioItems
+  // const items = that.data[radioitems]  // fdata数组的第index个元素中的radioitems属性的值，是一个数组，即radioItems
+  const items = that.data.gradeItems
   for(let i = 0, len = fdata.length; i < len; ++i) {
-    // [`${fdata}[${i}].${radioitems}`] = items  // 遍历，设置fdata中的元素[radioitems]为items数组
-    fdata[i][radioitems] = items
+    fdata[i].gradeItems = items
     f.push('') // 设置数组长度
   }
   that.setData({

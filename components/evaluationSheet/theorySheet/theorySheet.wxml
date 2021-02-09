@@ -1,6 +1,5 @@
-<!--pages/evaluationSheet/evaluationSheet.wxml-->
+<!--components/evaluationSheet/theorySheet/theorySheet.wxml-->
 <view class="container">
-
   <mp-toptips msg="{{error}}" ext-class="toptips" show="{{error}}"></mp-toptips>
   <!-- <mp-form id="baseinfo" rules="{{rules}}" models="{{baseinfoData}}">
     <mp-cell prop="username" title="username" ext-class=""></mp-cell>

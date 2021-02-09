@@ -19,7 +19,12 @@
     </radio-group>
   </view>
   <view>——</view>
-  <theory-sheet classid="{{classid}}" classification="{{classification}}" bind:sendForm="getForm"></theory-sheet>
+  <theory-sheet wx:if="{{classification === 'theory'}}" classid="{{classid}}" classification="{{classification}}" bind:sendForm="getForm"></theory-sheet>
+  <student-report-sheet wx:if="{{classification === 'student report'}}" classid="{{classid}}" classification="{{classification}}" bind:sendForm="getForm"></student-report-sheet>
+  <experiment-sheet wx:if="{{classification === 'experiment'}}" classid="{{classid}}" classification="{{classification}}" bind:sendForm="getForm"></experiment-sheet>
+  <pe-sheet wx:if="{{classification === 'PE'}}" classid="{{classid}}" classification="{{classification}}" bind:sendForm="getForm"></pe-sheet>
+  <theory-of-public-welfare-sheet wx:if="{{classification === 'theory of public welfare'}}" classid="{{classid}}" classification="{{classification}}" bind:sendForm="getForm"></theory-of-public-welfare-sheet>
+  <practice-of-public-welfare-sheet wx:if="{{classification === 'practice of public welfare'}}" classid="{{classid}}" classification="{{classification}}" bind:sendForm="getForm"></practice-of-public-welfare-sheet>
 
   <view class="weui-btn-area">
     <button bind:tap="submitForm" class="weui-btn" type="primary">evaluationPage-确定</button>

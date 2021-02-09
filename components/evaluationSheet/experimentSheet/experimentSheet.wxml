@@ -1,4 +1,4 @@
-<!--components/evaluationSheet/studentReportSheet/studentReportSheet.wxml-->
+<!--components/evaluationSheet/experimentSheet/experimentSheet.wxml-->
 <view class="container">
   <mp-toptips msg="{{error}}" ext-class="toptips" show="{{error}}"></mp-toptips>
   <mp-form id="content" rules="{{rules}}" models="{{contentData}}">
@@ -7,7 +7,7 @@
     <!-- 一、	教学环境观察 -->
     <environment-evaluation bind:inputChange="getFormChange" bind:sendFields="getComponentsFields"></environment-evaluation>
     <!-- 二、评价 -->
-    <student-report-evaluation bind:radioChange="getFormChange" bind:sendFields="getComponentsFields"></student-report-evaluation>
+    <experiment-evaluation bind:radioChange="getFormChange" bind:sendFields="getComponentsFields"></experiment-evaluation>
     <!-- 三、总体评价 -->
     <overall-evaluation bind:inputChange="getFormChange" bind:sendFields="getComponentsFields"></overall-evaluation>
     <!-- 四、	跟进记录 -->

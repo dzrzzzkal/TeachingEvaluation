@@ -1,5 +1,10 @@
 {
   "usingComponents": {
-    "theory-sheet": "/components/evaluationSheet/theorySheet/theorySheet"
+    "theory-sheet": "/components/evaluationSheet/theorySheet/theorySheet",
+    "student-report-sheet": "/components/evaluationSheet/studentReportSheet/studentReportSheet",
+    "experiment-sheet": "/components/evaluationSheet/experimentSheet/experimentSheet",
+    "pe-sheet": "/components/evaluationSheet/PESheet/PESheet",
+    "theory-of-public-welfare-sheet": "/components/evaluationSheet/theoryOfPublicWelfareSheet/theoryOfPublicWelfareSheet",
+    "practice-of-public-welfare-sheet": "/components/evaluationSheet/practiceOfPublicWelfareSheet/practiceOfPublicWelfareSheet"
   }
 }

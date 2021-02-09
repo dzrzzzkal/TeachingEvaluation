@@ -1,4 +1,4 @@
-// components/evaluationSheet/theorySheet/theorySheet.js
+// components/evaluationSheet/experimentSheet/experimentSheet.js
 
 const $api = require('../../../api/api')
 const {setFormChange, judgeEvaluationListRule} = require('../../../utils/form')
@@ -35,7 +35,7 @@ Component({
         rules: {require: true, message: '一、教学环境观察 未填'}
       },
       {
-        name: 'studentReportEvaluation',
+        name: 'experimentEvaluation',
         rules: {require: true, message: '二、评价 未填'}
       },
       {
@@ -63,7 +63,7 @@ Component({
 
     // 点击提交按钮
     submitForm() {
-      dealAndSubmitForm(this, 'studentReportEvaluation')
+      dealAndSubmitForm(this, 'experimentEvaluation')
     },
   },
 

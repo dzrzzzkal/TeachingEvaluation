@@ -1,0 +1,13 @@
+{
+  "component": true,
+  "usingComponents": {
+    "baseinfo": "/components/sheetComponents/baseinfo/baseinfo",
+    "environment-evaluation": "/components/sheetComponents/environmentEvaluation/environmentEvaluation",
+    "pe-evaluation": "/components/sheetComponents/PEEvaluation/PEEvaluation",
+    "overall-evaluation": "/components/sheetComponents/overallEvaluation/overallEvaluation",
+    "followup-record": "/components/sheetComponents/followUpRecord/followUpRecord",
+    "mp-toptips": "weui-miniprogram/toptips/toptips",
+    "mp-form": "weui-miniprogram/form/form",
+    "mp-cell": "weui-miniprogram/cell/cell"
+  }
+}

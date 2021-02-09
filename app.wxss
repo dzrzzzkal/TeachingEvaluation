@@ -32,3 +32,9 @@ page {
 textarea {
   border: 1rpx solid pink;
 }
+
+/* 二、评价 xxEvaluation 组件中 */
+.evaluationList {
+  border: 1rpx solid red;
+  font-size: 32rpx;
+}

@@ -1,4 +1,4 @@
-<!--components/sheetComponents/studentReportEvaluation/studentReportEvaluation.wxml-->
+<!--components/sheetComponents/PEEvaluation/PEEvaluation.wxml-->
 <view>
   <view>二、评价</view>
   <view>*评价等级：优、良、中、合格、不合格、不适用（含+、-）</view>

@@ -144,7 +144,7 @@ Component({
       //   evaluationListData,
       //   evaluationList
       // })
-      initRadioGroupsData(this, 'evaluationList', 'evaluationListData', 'gradeItems')
+      initRadioGroupsData(this, 'evaluationList', 'evaluationListData')
     }
   },
   

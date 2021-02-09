@@ -1,4 +1,4 @@
-// components/evaluationSheet/theorySheet/theorySheet.js
+// components/evaluationSheet/PESheet/PESheet.js
 
 const $api = require('../../../api/api')
 const {setFormChange, judgeEvaluationListRule} = require('../../../utils/form')
@@ -35,11 +35,11 @@ Component({
         rules: {require: true, message: '一、教学环境观察 未填'}
       },
       {
-        name: 'studentReportEvaluation',
+        name: 'practiceOfPublicWelfareEvaluation',
         rules: {require: true, message: '二、评价 未填'}
       },
       {
-        name: 'overallEvaluation',
+        name: 'PEEvaluation',
         rules: {require: true, message: '三、总体评价 未填'}
       },
       
@@ -63,7 +63,7 @@ Component({
 
     // 点击提交按钮
     submitForm() {
-      dealAndSubmitForm(this, 'studentReportEvaluation')
+      dealAndSubmitForm(this, 'PEEvaluation')
     },
   },
 
