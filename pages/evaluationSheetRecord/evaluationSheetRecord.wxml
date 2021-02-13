@@ -1,0 +1,10 @@
+<!--pages/evaluationSheetRecord/evaluationSheetRecord.wxml-->
+<view class="container">
+  <view>
+    <block wx:for="{{sheet}}" wx:for-index="key" wx:for-item="value" wx:key="key" >
+      <view>
+        {{key}}:   {{value}}
+      </view>
+    </block>
+  </view>
+</view>

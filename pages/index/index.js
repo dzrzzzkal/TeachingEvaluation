@@ -2,6 +2,7 @@
 // //获取应用实例
 
 const filter = require('../../utils/filter').identityFilter
+const $api = require('../../api/api')
 
 Page(filter({
 // Page({
@@ -17,6 +18,10 @@ Page(filter({
       { ec_name: '数据库原理', ec_time: '890', ec_location: 'E座303', issubmitted: false },
       { ec_name: '整合思维', ec_time: 'AB', ec_location: 'G座102', issubmitted: false }
     ],
+
+    // 听课任务情况
+    ec_submittedNum: 0,
+    ec_totalt: 0,
   },
   //事件处理函数
 
@@ -50,6 +55,25 @@ Page(filter({
       }
     })
   },
+  
+  onLoad: function(options) {
+    $api.getEvaluationProgress()
+      .then(res => {
+        let {length, taskCount} = res
+        this.setData({
+          ec_submittedNum: length,
+          ec_total: taskCount
+        })
+      })
+      .catch(err => {
+        console.log(err)
+        wx.showToast({
+          title: '加载失败',
+          icon: 'none'
+        })
+      })
+
+  }
   
 // })
 }))

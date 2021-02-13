@@ -16,5 +16,8 @@ api.getCourses = () => api.get('/getCourses')
 api.searchClass = (name) => api.get(`/class?name=${name}`)
 api.getClass = (classid) => api.get(`/classid/${classid}`)
 api.submitForm = (data) => api.post('/submitForm', data)
+api.getEvaluationProgress = () => api.get('/getEvaluationProgress')
+api.getSubmittedSheetsList = () => api.get('/getSubmittedSheetsList')
+api.evaluationSheet = (sheet_id) => api.get(`/evaluationSheet/${sheet_id}`)
 
 module.exports = api

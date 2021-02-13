@@ -11,7 +11,12 @@
     <view wx:if="{{ec_records[0] == null}}">没有记录喔</view>
     <view wx:else>
       <block wx:for="{{ec_records}}" wx:key="index" >
-        <view class="box">{{item.content}}</view>
+        <view class="box" bind:tap="evaluationSheetClick" data-sheetid="{{item.id}}">
+          <text>{{item.course_name}}</text>
+          <text>{{item.classification}}</text>
+          <view>{{item.teacher_id}}</view>
+          <view>createdAt：{{item.createdAt}}</view>
+        </view>
       </block>
     </view>
   </view>

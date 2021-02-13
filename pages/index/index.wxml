@@ -32,8 +32,7 @@
     <view class="module-content">
       <view class="evaluation-process">
         评估进度：<br/>
-        <!-- {{ec_submittedNum}} / {{ec_total}} -->
-        12 / 32
+        {{ec_submittedNum}} / {{ec_total}}
       </view>
       <view class="tobeSubmitted-ec-box">
         待提交报告课程：

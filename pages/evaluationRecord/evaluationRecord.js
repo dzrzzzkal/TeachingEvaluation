@@ -1,4 +1,7 @@
 // pages/evaluationRecord/evaluationRecord.js
+
+const $api = require('../../api/api')
+
 Page({
 
   /**
@@ -89,6 +92,14 @@ Page({
     }
   },
 
+  // 点击查看某个具体的evaluationSheet内容
+  evaluationSheetClick: function(e) {
+    let sheet_id = e.currentTarget.dataset.sheetid
+    wx.navigateTo({
+      url: `../evaluationSheetRecord/evaluationSheetRecord?sheet_id=${sheet_id}`
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -96,14 +107,32 @@ Page({
     this.setData({
       currentTabid: parseInt(options.theme_id)  // 因为传入的theme_id是字符串类型，所以parseInt()成数字类型
     })
-    this.getRecords(this.data.currentTabid)
+
+    $api.getSubmittedSheetsList()
+      .then(res => {
+        console.log(res)
+        // 暂时决定不需要用setData，如果要用的话改一下this.getRecords()的传入参数，一起setData
+        this.data.submitted_ec = res.eS
+        // this.setData({
+        //   submitted_ec: res.eS
+        // })
+        this.getRecords(this.data.currentTabid)
+      })
+      .catch(err => {
+        console.log(err)
+        wx.showToast({
+          title: '加载失败',
+          icon: 'none'
+        })
+      })
+
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    
+
   },
 
   /**
