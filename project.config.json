@@ -127,6 +127,11 @@
           "pathName": "pages/evaluationPage/evaluationPage",
           "query": "classid=111111&classification=理论讲授",
           "scene": null
+        },
+        {
+          "name": "components/customCourseForm/customCourseForm",
+          "pathName": "components/customCourseForm/customCourseForm",
+          "scene": null
         }
       ]
     }

@@ -1,57 +1,135 @@
 <!--pages/schedule/schedule.wxml-->
 <view class="container">
-  <view class="schedule">
-    <!-- <block wx:for="abbbbbbbccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" wx:key="index">
-      <text>{{item}}</text>
-    </block> -->
-    <view class="blank"></view>
-    <view class="date-bar">
-      <block wx:for="日一二三四五六" wx:key="index">
-        <view class="date">{{item}}</view>
-      </block>
+  <view class='content'>
+    <view class="top-bar">
+      <view class="week-title">
+        <view class="week-left" catch:tap="clickSiderWeek" data-sider="left">
+          <text decode='true' hidden="{{week === weeksList[0]}}">&lt;</text>
+        </view>
+        <view class="week" catch:tap="showWeeksScroll">
+          {{week}}
+        </view>
+        <view class="week-right" catch:tap="clickSiderWeek" data-sider="right">
+          <text decode='true' hidden="{{week === weeksList[weeksList.length-1]}}">&gt;</text>
+        </view>
+      </view>
+      <view class='title_right'>
+        <view class="tab-item" bindtap="addCustomCourse">
+          添加课程
+        </view>
+      </view>
+      <!-- <custom-course-form wx:if="{{showAdd}}"></custom-course-form> -->
+      <view>customCourse: {{customCourse.title}}</view>
+      <view>customCourse111: {{customCourse111.title}}</view>
+      <scroll-view class="show" scroll-x="true" wx:if="{{showWeeks}}">
+        <view class="show_week" catch:tap="chooseWeek" data-week="{{item}}" data-index="{{index}}" wx:for="{{weeksList}}" wx:key="index">{{item}}</view>
+      </scroll-view>
+      <view class="top">
+        <view class='left'>节\周</view>
+        <view wx:for="{{['一','二','三','四','五','六','日']}}" wx:key="index" class="top-text">
+          周{{item}}
+        </view>
+      </view>
     </view>
-    <view class="section-bar">
-      <block wx:for="1234567890ABC" wx:key="index">
-        <view class="section">{{item}}</view>
-      </block>
-    </view>
-    <view class="courses-container">
-
-      <!-- ↓想用网格布局，但是hidden的话，网格布局里面该格直接没了，失败了 -->
-      <!-- <block wx:for="{{boxes}}" wx:key="index">
-        <view hidden="{{item === 'a'}}" class="course" bind:tap="boxClick" data-boxindex="{{index}}">{{item}}</view>
-      </block> -->
-      <!-- ↓用的网页布局，通过修改样式来假装不存在，暂时弃用 -->
-      <!-- <block wx:for="{{boxes}}" wx:key="index">
-        <view class="course {{item === 'a' || item === 'f' || item === 'k' ? 'white' : ''}}" bind:tap="boxClick" data-boxindex="{{index}}">{{item}}</view>
-      </block> -->
-
-      <!-- ↓用二维数组，暂定这种方法 -->
-      <!-- 这里bind:tap要绑定在外循环中，此时e.target为内循环，e.currentTarget为外循环 -->
-      <view class="axisY" id="axisY" wx:for="{{courses}}" wx:for-item="axisY" wx:key="index" data-yid="{{index}}" bind:tap="courseClick" >
-        <view class="axisY-item" id="axisY-item" hidden="{{axisY.length === 0}}">
-          <!-- <view class="axisX" id="axisX" wx:for="{{axisY}}" wx:for-item="axisX" wx:key="index" >
-            <view class="axisX-item" style="height: {{axisX ? '200%' : ''}};" id="axisX-item" hidden="{{!axisX}}" data-xid="{{index}}">
-              {{axisX}}
-            </view>
-          </view> -->
-
-
-          <!-- ing，实现方法是js中的setCourse1()，目前是想：先按周一到周日分类，然后例如周一有N节课，则设置N个循环，每个循环包括两个块，一个是空白块，用于调整位置，一个是课程块。
-          目前未成功 -->
-          <view wx:for="{{c}}" wx:key="index" style="width: 100%; background-color: gray;">
-            <view style="height: calc(100% / 13); background-color: blue; width:100%; display: block;">
-              
-            </view>
-            <view style="height: calc(100% / 13 * {{clength * 2}}); background-color: pink; width: 100%; display: block;">
+    
+    <view class="schedule-content">
+      <scroll-view scroll-y="true" class="scroll" style='height:{{windowHeight-110}}px;' bindtap='clickHide'>
+        <view style="width:100%;display:flex;">
+          <view style="background-color:#EFEFF4;color:#333;">
+            <view wx:for="{{[1,2,3,4,5,6,7,8,9,0,'A','B','C']}}" wx:key="index" class="left" style='height:50px'>
               {{item}}
             </view>
           </view>
-          
+          <view wx:for="{{[1,2,3,4,5,6,7,8,9,0,'A','B','C']}}" wx:key="index">
+            <view style="width:100%;margin-top:{{(index+1)*50-0.8}}px;  position: absolute;border-bottom:1rpx solid lightgray;">
+            </view>
+          </view>
+          <!--课表-->
+          <view wx:for="{{wlist}}" wx:key="index">
+            <view class="flex-item kcb-item" bindtap="showCardView" data-wlist='{{item}}' data-index='{{index}}' style="margin-left:{{(item.weekday-1)*98}}rpx;margin-top:{{(item.first_section-1)*50+2}}px;height:{{item.section_lengthh*50-5}}px;background-color:{{item.color == '0'?'#FCB8AF':(item.color == '1'?'#81D2FC':'#F8C77A')}}" wx:if="{{item.show == 'true'}}">
+              <view class="smalltext" style='-webkit-line-clamp: {{item.section_lengthh == "3"?"4":(item.section_lengthh == "4"?"6":"2")}};'>{{item.course_name}}</view>
+              <view class='classRoom'>({{item.classroom == ''?'--':item.classroom}})</view>
+              <view class='logo' style="background-color:{{item.color == '0'?'#FA7666':(item.color == '1'?'#3CB9FB':'#F39C13')}}">{{item.color == '0'?'必':(item.color == '1'?'选':'其')}}</view>
+              <!-- weekday代表星期几上课，first_section是开始上课的第一节，section_lengthh上课长度，course_name课程名，classroom教室编号 -->
+            </view>
+          </view>
         </view>
-          
-      </view>
-
+      </scroll-view>
     </view>
   </view>
+
+  <view class="drawer_screen" data-statu="close" wx:if="{{showModalStatus}}" catchtouchmove='preventTouchMove' bindtap='hideModal'></view>
+
+  <view class="drawer_box" wx:if="{{showModalStatus}}" catchtouchmove='preventTouchMove'>
+
+    <view class="do_drawer_content" style="color:#FFF;background-color:{{cardView.color == '0'?'#FCB8AF':(cardView.color == '1'?'#81D2FC':'#F8C77A')}}">
+      <view class='drawer_top'>
+        <text>{{cardView.course_name}}</text>
+      </view>
+      <view>
+        <view class='noidle-item'>
+          <label class='noidle-item-prefix'>教师：{{cardView.teacher_id}}</label>
+          <!-- <label class='noidle-item-content'>江峰</label> -->
+        </view>
+        <view class='noidle-item'>
+          <label class='noidle-item-prefix'>教室：</label>
+          <label class='noidle-item-content'>{{cardView.classroom}}</label>
+        </view>
+        <view class='noidle-item'>
+          <label class='noidle-item-prefix'>时间：</label>
+          <!-- <label class='noidle-item-content'>2019.10.26 周一</label> -->
+          <label class='noidle-item-content'>{{cardView.time}}</label>
+        </view>
+        <view class='noidle-item'>
+          <label class='noidle-item-prefix'>周数：</label>
+          <!-- <label class='noidle-item-content'>第1,2,3,4节次 (08:30~09:45)</label> -->
+          <label class='noidle-item-content'>{{cardView.week}}</label>
+        </view>
+      </view>
+      <view class='drawer_logo' style="background-color:{{cardView.color == '0'?'#FA7666':(cardView.color == '1'?'#3CB9FB':'#F39C13')}}">{{cardView.color == '0'?'必':(cardView.color == '1'?'选':'其')}}</view>
+    </view>
+  </view>
+
 </view>
+
+
+
+
+
+
+
+<!-- ---------------------------------------------- -->
+<!-- <view class="container">
+  <view class="week-container">
+    <view class="week-title">
+      <view class="week-left" catch:tap="clickSiderWeek" data-sider="left">
+        <text decode='true' hidden="{{week === weeksList[0]}}">&lt;</text>
+      </view>
+      <view class="week" catch:tap="showWeeksScroll">
+        {{week}}
+      </view>
+      <view class="week-right" catch:tap="clickSiderWeek" data-sider="right">
+        <text decode='true' hidden="{{week === weeksList[weeksList.length-1]}}">&gt;</text>
+      </view>
+    </view>
+    <scroll-view class="weeks-scroll" scroll-x="true" wx:if="{{showWeeks}}">
+      <view class="weeks" catch:tap="chooseWeek" data-week="{{item}}" data-index="{{index}}" wx:for="{{weeksList}}" wx:key="index">{{item}}</view>
+    </scroll-view>
+  </view>
+    
+  <view class="schedule">
+    <view class="top-bar">
+      <view class="top-bar-section">节\周</view>
+      <view class="top-bar-weekday" wx:for="{{weekday}}" wx:key="index">周{{item}}</view>
+    </view>
+    <scroll-view scroll-y="true" class="schedule-content" style="height: 100%" bind:tap="">
+      <view style="width:100%;display:flex;">
+        <view style="color:#333;">
+          <view wx:for="{{[1,2,3,4,5,6,7,8,9,10,11,12,13,14]}}" wx:key="index" class="left-bar">
+            {{item}}
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view> -->

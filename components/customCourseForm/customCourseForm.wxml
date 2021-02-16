@@ -1,0 +1,57 @@
+<!--components/customCourseForm/customCourseForm.wxml-->
+<mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+<view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+  <view class="page__hd">
+    <view class="page__title">Form</view>
+    <view class="page__desc">添加课程</view>
+  </view>
+  <view class="page__bd">
+    <mp-form id="form" rules="{{rules}}" models="{{formData}}">
+      <mp-cells title="表单" footer="">
+        <mp-cell prop="title" title="事件名" ext-class="">
+          <input bindinput="formInputChange" data-field="title" class="weui-input" placeholder="事件名"/>
+        </mp-cell>
+        <mp-cell prop="classroom" title="教室" ext-class="">
+          <input bindinput="formInputChange" data-field="classroom" class="weui-input" placeholder="教室(选填)"/>
+        </mp-cell>
+        <mp-cell prop="description" title="描述" ext-class="">
+          <input bindinput="formInputChange" data-field="description" class="weui-input" placeholder="事件信息(班号、教室、学分等)"/>
+        </mp-cell>
+        <mp-cell prop="time" title="时间" ext-class="">
+          <picker data-field="date" mode="multiSelector" value="{{timeIndex}}" range="{{timeArray}}" bindchange="bindTimePickerChange" bindcolumnchange="">
+              <view class="weui-input">{{timeArray[0][timeIndex[0]]}} - {{timeArray[1][timeIndex[1]]}} - {{timeArray[2][timeIndex[2]]}}</view>
+          </picker>
+        </mp-cell>
+        <mp-cell prop="week" title="周数" ext-class="">
+          <picker data-field="date" mode="multiSelector" value="{{weekIndex}}" range="{{weekArray}}" bindchange="bindWeekChange" bindcolumnchange="">
+              <view class="weui-input">{{weekArray[0][weekIndex[0]]}} - {{weekArray[1][weekIndex[1]]}}</view>
+          </picker>
+        </mp-cell>
+      </mp-cells>
+      <!-- <mp-cell> -->
+      <!-- 这里因为样式问题，没有使用mp-cell，因此没有写入rule -->
+      <view class="weui-cells__title">备注</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <textarea prop="notes" bindinput="formInputChange" data-field="notes" class="weui-textarea" placeholder="请输入文本" style="height: 3.3em"></textarea>
+              <view class="weui-textarea-counter">0/200</view>
+            </view>
+        </view>
+      </view>
+      <!-- </mp-cell> -->
+        <!-- <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">
+                    <textarea class="weui-textarea" placeholder="请输入文本" style="height: 3.3em"></textarea>
+                    <view class="weui-textarea-counter">0/200</view>
+                </view>
+            </view>
+        </view> -->
+    </mp-form>
+
+    <view class="weui-btn-area">
+      <button class="weui-btn" type="primary" bindtap="submitForm">确定</button>
+    </view>
+  </view>
+</view>
