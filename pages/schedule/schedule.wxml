@@ -127,6 +127,12 @@
             <textarea bind:input="formInputChange" data-field="custom_notes" name="custom_notes" id="custom_notes" maxlength="95" cols="" rows="" style="border: 1rpx solid #FFFFF0; height: 250rpx; width: 430rpx">{{cardView.custom_notes}}</textarea>
           </label>
         </view>
+        <view class="scrol-buttons">
+          <view class='scroll-button' wx:if="{{cardView.isCustomCourse}}" catch:tap="deleteCustomCourse" style="font-size: 26rpx; color: gray;">
+            删除
+          </view>
+        </view>
+        
       </view>
       <view class='drawer_logo' style="background-color:{{cardView.color == '0'?'#FA7666':(cardView.color == '1'?'#3CB9FB':'#F39C13')}}">{{cardView.color == '0'?'必':(cardView.color == '1'?'选':'其')}}</view>
     </view>

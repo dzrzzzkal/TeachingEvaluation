@@ -11,6 +11,8 @@ Component({
    * 组件的初始数据
    */
   data: {
+    customCourseArray: [],  // 暂时存储storage中的自定义课程customCourse，提交时push入新的数据，修改storage中的customCourse
+
     showTopTips: false,
 
     timeIndex: [0, 0, 0],
@@ -107,7 +109,7 @@ Component({
     submitData: function() {
       let pages = getCurrentPages() // 当前页面
       let prevPage = pages[pages.length - 2]  // 上一页面
-      let wlist = prevPage.data.wlist
+      let {wlist} = prevPage.data
 
       let {time} = this.data.formData
       let week_ = this.data.formData.week
@@ -167,13 +169,19 @@ Component({
               return `与 ${i.course_name} ${i.week} ${i.time} 冲突`   // 存在冲突，不能提交表单，直接结束整个函数，返回失败原因
             }
           }
-        }else {
-          continue
         }
       }
-      // 直接调用上一页面的dealCourse()，写入课程
+      this.data.customCourseArray.push(this.data.formData)
+      wx.setStorageSync('customCourse', this.data.customCourseArray)  // 新增加的自定义课程写入storage
+      prevPage.setData({
+        getNewCustomCourse: true,
+        newCustomCourse: this.data.formData
+      })
+
+      // 直接调用上一页面的dealCourse()，写入课程到wlist，这样做的目的是 让schedule页面onshow时不需要再读取一次storage就可以看到新添加的自定义课程
       prevPage.dealCourse([this.data.formData])
-      // prevPage.setData({  // 直接给上一页面赋值
+      // // 直接给上一页面赋值
+      // prevPage.setData({  
       //   customCourse: this.data.formData
       // })
       wx.navigateBack({
@@ -201,6 +209,23 @@ Component({
           })
         }
       })
+    }
+  },
+  lifetimes: {
+    created: function() {
+      
+    },
+    attached: function() {
+      let pages = getCurrentPages() // 当前页面
+      let prevPage = pages[pages.length - 2]  // 上一页面
+      let {schoolYear, semester} = prevPage.data
+      this.data.formData.schoolYear = schoolYear
+      this.data.formData.semester = semester
+
+      let customCourseArray = wx.getStorageSync('customCourse')
+      if(customCourseArray) {
+        this.data.customCourseArray = customCourseArray
+      }
     }
   }
 })
