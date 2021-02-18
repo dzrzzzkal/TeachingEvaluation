@@ -8,14 +8,17 @@
   <view class="page__bd">
     <mp-form id="form" rules="{{rules}}" models="{{formData}}">
       <mp-cells title="表单" footer="">
-        <mp-cell prop="title" title="事件名" ext-class="">
-          <input bindinput="formInputChange" data-field="title" class="weui-input" placeholder="事件名"/>
+        <mp-cell prop="course_name" title="事件名" ext-class="">
+          <input bindinput="formInputChange" data-field="course_name" class="weui-input" placeholder="事件名"/>
+        </mp-cell>
+        <mp-cell prop="teacher" title="教师" ext-class="">
+          <input bindinput="formInputChange" data-field="teacher" class="weui-input" placeholder="教师(选填)"/>
         </mp-cell>
         <mp-cell prop="classroom" title="教室" ext-class="">
           <input bindinput="formInputChange" data-field="classroom" class="weui-input" placeholder="教室(选填)"/>
         </mp-cell>
         <mp-cell prop="description" title="描述" ext-class="">
-          <input bindinput="formInputChange" data-field="description" class="weui-input" placeholder="事件信息(班号、教室、学分等)"/>
+          <input bindinput="formInputChange" data-field="description" class="weui-input" placeholder="班号、课程信息等(选填)"/>
         </mp-cell>
         <mp-cell prop="time" title="时间" ext-class="">
           <picker data-field="date" mode="multiSelector" value="{{timeIndex}}" range="{{timeArray}}" bindchange="bindTimePickerChange" bindcolumnchange="">
@@ -34,8 +37,8 @@
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
             <view class="weui-cell__bd">
-              <textarea prop="notes" bindinput="formInputChange" data-field="notes" class="weui-textarea" placeholder="请输入文本" style="height: 3.3em"></textarea>
-              <view class="weui-textarea-counter">0/200</view>
+              <textarea prop="custom_notes" bindinput="formInputChange" data-field="custom_notes" maxlength="100" class="weui-textarea" placeholder="备注信息...(选填)" style="height: 3.3em"></textarea>
+              <view class="weui-textarea-counter">{{formData.custom_notes.length || '0'}}/100</view>
             </view>
         </view>
       </view>

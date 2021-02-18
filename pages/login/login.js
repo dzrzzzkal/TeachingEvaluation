@@ -102,7 +102,9 @@ Component({
             }).catch(err => {
               console.log(err)
               wx.showToast({
-                title: err,
+                // title: JSON.stringify(err),
+                title: err.errMsg,
+                icon: 'none'
               })
             })
           } else {

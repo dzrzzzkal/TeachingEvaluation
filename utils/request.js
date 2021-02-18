@@ -5,6 +5,7 @@
 function request(method, url, data, header) {
   return new Promise(function(resolve, reject) {
     let baseURL = 'http://localhost:3000/api'
+    // let baseURL = 'http://192.168.1.4:3000/api'
     let token = wx.getStorageSync('token')
     let defaultHeader = {
       'Authorization': token ? 'Bearer ' + token : null,

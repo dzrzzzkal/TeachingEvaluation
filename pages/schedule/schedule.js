@@ -14,28 +14,36 @@ Page({
     weeksList: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'],
     showWeeks: false,
 
+    thisSchoolYear: '', // 当前学年
+    schoolYear: '',
+    schoolYearIndex: -1,
+    schoolYearList: ['2018-2019年', '2019-2020年', '2020-2021年', '2021-2022年', '2022-2023年', '2023-2024年', '2024-2025年'],
+    showSchoolYear: false,
+    thisSemester: '', // 当前学期
+    semester: '',
+    semesterIndex: -1,
+    semesterList: ['春季学期', '夏季学期', '秋季学期'],
 
-    // tab0: "日",
-    // tab1: "周",
-    // type: 0,  //0是学生，1是老师
-    // currentTab: 1, //0是日课程表，1是周课程表
-    // show: false,
+    tempSchoolYearIndex: -1, // 用于记录schoolYear&semesterScroll中暂时点击的数据，以便下一步的确认或取消
+    tempSemesterIndex: -1,
+
+
     dayTab: 0,
     // weekList: ['6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'],
     day: ['10.25', '10.26', '10.27', '10.28', '10.29', '10.30', '10.31',],
     wlist: [
-      { "weekday": 1, "first_section": 1, "section_lengthh": 4, "course_name": "高等数学啊实打实大大说阿大声道亚特兰蒂斯号", "classroom": "A301", "color": 0, "week": "1-16", "course_time": "Mon1234"},
-      { "weekday": 1, "first_section": 5, "section_lengthh": 3, "course_name": "高等数学", "classroom": "A-302", "color": 0 , "week": "9-16", "course_time": "Mon567"},
-      { "weekday": 2, "first_section": 1, "section_lengthh": 3, "course_name": "高等数学啊实打实大大说阿大声道", "classroom": "A303", "color": 1, "week": "2-8", "course_time": "Tue123"},
-      { "weekday": 2, "first_section": 8, "section_lengthh": 2, "course_name": "计算机应用技术", "classroom": "A304", "color": 1, "week": "1-16", "course_time": "Tue89"},
-      { "weekday": 3, "first_section": 2, "section_lengthh": 3, "course_name": "普通物理学", "classroom": "A305", "color": 0, "week": "3-4", "course_time": "Wed234"},
-      { "weekday": 3, "first_section": 8, "section_lengthh": 2, "course_name": "计算机网络", "classroom": "A306", "color": 2, "week": "7-16", "course_time": "Wed89"},
-      { "weekday": 3, "first_section": 5, "section_lengthh": 2, "course_name": "女士形象设计", "classroom": "A307", "color": 0, "week": "14-16", "course_time": "Wed56"},
-      { "weekday": 4, "first_section": 2, "section_lengthh": 3, "course_name": "高等数学", "classroom": "A308", "color": 1, "week": "1-16", "course_time": "Thur234"},
-      { "weekday": 4, "first_section": 8, "section_lengthh": 2, "course_name": "排球", "classroom": "A309", "color": 2, "week": "9", "course_time": "Thur89"},
-      { "weekday": 5, "first_section": 6, "section_lengthh": 2, "course_name": "计算机网络", "classroom": "A310", "color": 1, "week": "1-16", "course_time": "Fri67"},
-      { "weekday": 6, "first_section": 3, "section_lengthh": 2, "course_name": "数据库原理", "classroom": "A311", "color": 2, "week": "1", "course_time": "Sat34"},
-      { "weekday": 7, "first_section": 5, "section_lengthh": 3, "course_name": "声乐巡游", "classroom": "", "color": 0, "week": "1-3", "course_time": "Sun567"},
+      { "weekday": 1, "first_section": 1, "section_length": 4, "course_name": "高等数学啊实打实大大说阿大声道亚特兰蒂斯号", "classroom": "A301", "color": 0, "week": "1-16", "time": "Mon1234"},
+      { "weekday": 1, "first_section": 5, "section_length": 3, "course_name": "高等数学", "classroom": "A-302", "color": 0 , "week": "9-16", "time": "Mon567"},
+      { "weekday": 2, "first_section": 1, "section_length": 3, "course_name": "高等数学啊实打实大大说阿大声道", "classroom": "A303", "color": 1, "week": "2-8", "time": "Tue123"},
+      { "weekday": 2, "first_section": 8, "section_length": 2, "course_name": "计算机应用技术", "classroom": "A304", "color": 1, "week": "1-16", "time": "Tue89"},
+      { "weekday": 3, "first_section": 2, "section_length": 3, "course_name": "普通物理学", "classroom": "A305", "color": 0, "week": "3-4", "time": "Wed234"},
+      { "weekday": 3, "first_section": 8, "section_length": 2, "course_name": "计算机网络", "classroom": "A306", "color": 2, "week": "7-16", "time": "Wed89"},
+      { "weekday": 3, "first_section": 5, "section_length": 2, "course_name": "女士形象设计", "classroom": "A307", "color": 0, "week": "14-16", "time": "Wed56"},
+      { "weekday": 4, "first_section": 2, "section_length": 3, "course_name": "高等数学", "classroom": "A308", "color": 1, "week": "1-16", "time": "Thur234"},
+      { "weekday": 4, "first_section": 8, "section_length": 2, "course_name": "排球", "classroom": "A309", "color": 2, "week": "9", "time": "Thur89"},
+      { "weekday": 5, "first_section": 6, "section_length": 2, "course_name": "计算机网络", "classroom": "A310", "color": 1, "week": "1-16", "time": "Fri67"},
+      { "weekday": 6, "first_section": 3, "section_length": 2, "course_name": "数据库原理", "classroom": "A311", "color": 2, "week": "1", "time": "Sat34"},
+      { "weekday": 7, "first_section": 5, "section_length": 3, "course_name": "声乐巡游", "classroom": "", "color": 0, "week": "1-3", "time": "Sun567"},
     ],
     dayList: [
       { "jcxx": "第1,2节次 08:00~09:45", "course_name": "大学英语", "skls": "陈江", "classroom": "教A520", "kkyx": "外语学院", "xsrs": "88", "skbj": "外语系521", "type": 0 },
@@ -43,8 +51,11 @@ Page({
       { "jcxx": "第5,6节次 10:15~11:45", "course_name": "生物化学", "skls": "黄雪峰", "classroom": "教A104", "kkyx": "中药学院", "xsrs": "70", "skbj": "中药制药1702501", "type": 1 },
       { "jcxx": "第7,8节次 16:00~18:00", "course_name": "药物经济学", "skls": "黄雪峰", "classroom": "教A104", "kkyx": "中药学院", "xsrs": "70", "skbj": "中药制药1702501", "type": 1 },
       { "jcxx": "第7,8节次 16:00~18:00", "course_name": "药物经济学", "skls": "黄雪峰", "classroom": "教A104", "kkyx": "中药学院", "xsrs": "70", "skbj": "中药制药1702501", "type": 1 },
-    ]
+    ],
+
+    cardCourseIndex: -1,
   },
+
   clickShow: function (e) {
     var that = this;
     that.setData({
@@ -54,10 +65,10 @@ Page({
     console.log(e)
   },
 
-  clickHide: function (e) {
+  clickHideWeeks: function (e) {
     var that = this
     that.setData({
-      show: false
+      showWeeks: false
     })
   },
 
@@ -96,7 +107,6 @@ Page({
   },
 
   showCardView: function (e) {
-    console.log(e)
     let cardView = {
       course_name: e.currentTarget.dataset.wlist.course_name,
       color: e.currentTarget.dataset.wlist.color,
@@ -105,12 +115,17 @@ Page({
       classroom: e.currentTarget.dataset.wlist.classroom,
       time: e.currentTarget.dataset.wlist.time,
       week: e.currentTarget.dataset.wlist.week,
+      custom_notes: e.currentTarget.dataset.wlist.custom_notes,
+      description: e.currentTarget.dataset.wlist.description, // 可能删掉
     }
     this.setData({
-      cardView: cardView
+      cardView: cardView,
+      cardCourseIndex: parseInt(e.currentTarget.dataset.index)
     })
     this.util("open");
 
+    // console.log(e.currentTarget.dataset.wlist)
+    // console.log(this.data.cardView)
   },
 
   hideModal() {
@@ -167,18 +182,18 @@ Page({
   //   weekday: ['一','二','三','四','五','六','日'],
 
   //   wlist: [
-  //     { "weekday": 1, "first_section": 1, "section_lengthh": 4, "course_name": "高等数学啊实打实大大说阿大声道亚特兰蒂斯号", "classroom": "A301", "color": 0 },
-  //     { "weekday": 1, "first_section": 5, "section_lengthh": 3, "course_name": "高等数学", "classroom": "A-302", "color": 0 },
-  //     { "weekday": 2, "first_section": 1, "section_lengthh": 3, "course_name": "高等数学啊实打实大大说阿大声道", "classroom": "A303", "color": 1 },
-  //     { "weekday": 2, "first_section": 8, "section_lengthh": 2, "course_name": "计算机应用技术", "classroom": "A304", "color": 1 },
-  //     { "weekday": 3, "first_section": 3, "section_lengthh": 2, "course_name": "高等数学", "classroom": "A305", "color": 2 },
-  //     { "weekday": 3, "first_section": 8, "section_lengthh": 2, "course_name": "高等数学", "classroom": "A306", "color": 2 },
-  //     { "weekday": 3, "first_section": 5, "section_lengthh": 2, "course_name": "高等数学", "classroom": "A307", "color": 0 },
-  //     { "weekday": 4, "first_section": 2, "section_lengthh": 3, "course_name": "高等数学", "classroom": "A308", "color": 1 },
-  //     { "weekday": 4, "first_section": 8, "section_lengthh": 2, "course_name": "高等数学", "classroom": "A309", "color": 2 },
-  //     { "weekday": 5, "first_section": 1, "section_lengthh": 2, "course_name": "高等数学", "classroom": "A310", "color": 1 },
-  //     { "weekday": 6, "first_section": 3, "section_lengthh": 2, "course_name": "高等数学", "classroom": "A311", "color": 2 },
-  //     { "weekday": 7, "first_section": 5, "section_lengthh": 3, "course_name": "高等数学", "classroom": "", "color": 0 },
+  //     { "weekday": 1, "first_section": 1, "section_length": 4, "course_name": "高等数学啊实打实大大说阿大声道亚特兰蒂斯号", "classroom": "A301", "color": 0 },
+  //     { "weekday": 1, "first_section": 5, "section_length": 3, "course_name": "高等数学", "classroom": "A-302", "color": 0 },
+  //     { "weekday": 2, "first_section": 1, "section_length": 3, "course_name": "高等数学啊实打实大大说阿大声道", "classroom": "A303", "color": 1 },
+  //     { "weekday": 2, "first_section": 8, "section_length": 2, "course_name": "计算机应用技术", "classroom": "A304", "color": 1 },
+  //     { "weekday": 3, "first_section": 3, "section_length": 2, "course_name": "高等数学", "classroom": "A305", "color": 2 },
+  //     { "weekday": 3, "first_section": 8, "section_length": 2, "course_name": "高等数学", "classroom": "A306", "color": 2 },
+  //     { "weekday": 3, "first_section": 5, "section_length": 2, "course_name": "高等数学", "classroom": "A307", "color": 0 },
+  //     { "weekday": 4, "first_section": 2, "section_length": 3, "course_name": "高等数学", "classroom": "A308", "color": 1 },
+  //     { "weekday": 4, "first_section": 8, "section_length": 2, "course_name": "高等数学", "classroom": "A309", "color": 2 },
+  //     { "weekday": 5, "first_section": 1, "section_length": 2, "course_name": "高等数学", "classroom": "A310", "color": 1 },
+  //     { "weekday": 6, "first_section": 3, "section_length": 2, "course_name": "高等数学", "classroom": "A311", "color": 2 },
+  //     { "weekday": 7, "first_section": 5, "section_length": 3, "course_name": "高等数学", "classroom": "", "color": 0 },
   //   ],
   // },
 
@@ -269,7 +284,7 @@ Page({
   },
 
   // 点击weeksScroll中的week
-  chooseWeek: function(e) {
+  clickShowWeeks: function(e) {
     let {week, index} = e.currentTarget.dataset
     if(week !== this.data.week) {
       this.setData({
@@ -283,6 +298,62 @@ Page({
     this.showClass()
   },
 
+  showSchoolYearAndSemesterPicker: function(e) {
+    this.setData({
+      showScrollModalStatus: true,
+    });
+  },
+
+  // 点击schoolYear&semesterScroll中的item
+  chooseSchoolYearAndSemester: function(e) {
+    let schoolYearIndex = e.currentTarget.dataset.schoolyearindex
+    let semesterIndex = e.currentTarget.dataset.semesterindex
+    // this.setData({
+    //   schoolYearIndex,
+    //   schoolYear: this.data.schoolYearList[schoolYearIndex],
+    //   semesterIndex,
+    //   semester: this.data.semesterList[semesterIndex],
+    //   // showScrollModalStatus: !this.data.showScrollModalStatus
+    // })
+    this.setData({
+      tempSchoolYearIndex: schoolYearIndex,
+      tempSemesterIndex: semesterIndex
+    })
+
+
+    // // 根据新的学年和学期请求新的课程
+    // this.requestCourse()
+  },
+
+  // hideScrollModal: function(e) {
+  //   this.setData({
+  //     showScrollModalStatus: false
+  //   })
+  // },
+
+  // 点击schoolYear&semesterScroll中的“取消”按钮
+  cancelChangeScroll: function(e) {
+    this.setData({
+      tempSchoolYearIndex: this.data.schoolYearIndex,
+      tempSemesterIndex: this.data.semesterIndex,
+      showScrollModalStatus: false
+    })
+  },
+  // 点击schoolYear&semesterScroll中的“确认”按钮
+  confirmChangeScroll: function(e) {
+    let tempSchoolYearIndex = this.data.tempSchoolYearIndex
+    let tempSemesterIndex = this.data.tempSemesterIndex
+    this.setData({
+      schoolYearIndex: tempSchoolYearIndex,
+      schoolYear: this.data.schoolYearList[tempSchoolYearIndex],
+      semesterIndex: tempSemesterIndex,
+      semester: this.data.semesterList[tempSemesterIndex],
+      showScrollModalStatus: !this.data.showScrollModalStatus
+    })
+    // 根据新的学年和学期请求新的课程
+    this.requestCourse()
+  },
+
   // 添加自定义课程
   addCustomCourse: function() {
     this.setData({
@@ -292,6 +363,18 @@ Page({
     wx.navigateTo({
       url: '../../components/customCourseForm/customCourseForm',
     })
+  },
+
+  // 在card中设置课程备注
+  formInputChange(e) {
+    const {field} = e.currentTarget.dataset
+    let cardCourseIndex = this.data.cardCourseIndex
+    this.setData({
+        [`cardView.${field}`]: e.detail.value,
+        [`wlist[${cardCourseIndex}].${field}`]: e.detail.value
+    })
+    // console.log(this.data.cardView)
+    // console.log(this.data.wlist[cardCourseIndex])
   },
 
   dealCourse: function(courseArr) {
@@ -310,12 +393,12 @@ Page({
       let timeArr = time.split(',')
       console.log(timeArr)
       for(let j of timeArr) {
-        // weekday代表星期几上课，first_section指开始上课的第一节，section_lengthh上课长度，course_name课程名，classroom教室编号
+        // weekday代表星期几上课，first_section指开始上课的第一节，section_length上课长度，course_name课程名，classroom教室编号
         let weekday = (j.match('Mon') || j.match('Tue') || j.match('Wed') || j.match('Thur') || j.match('Fri') || j.match('Sat') || j.match('Sun'))[0]
         let section = j.split(weekday)[1]
-        let section_lengthh = section.length
+        let section_length = section.length
         // console.log('section: ' + section)
-        // console.log('section_lengthh: ' + section_lengthh)
+        // console.log('section_length: ' + section_length)
 
         // 将weekday从'Mon'等设置为对应数字1等
         switch (weekday) {
@@ -369,15 +452,18 @@ Page({
         item.color = 2
         item.weekday = weekday
         item.first_section = first_section
-        item.section_lengthh = section_lengthh
-        item.course_name = item.course.name
-        // i.classroom = i.classroom
-        // i.week = '1-16'
+        item.section_length = section_length
+        // ↓处理 请求服务器返回的课程 时调用本函数(返回数据包含item.course.name/yyy，即course_name)。若是处理 添加自定义课程 时调用本函数(返回数据包含item.course_name，不需要另外处理)
+        if(item.course) { 
+          item.course_name = item.course.name
+        }
+        // item.course_name
+        // item.classroom
+        // item.week = '1-16'
         item.course_time = j
         item.show = 'false'
 
         wlist.push(item)
-        console.log(wlist)
       }
     }
     // 给每个课程增加'show'属性
@@ -385,107 +471,19 @@ Page({
       i.show = 'false'
     }
     this.data.wlist = wlist
+    console.log(wlist)
 
     this.showClass()
   },
 
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    var that = this
+  // 向服务器请求课程并处理展示
+  requestCourse: function() {
     // 获取课程基本信息
-    $api.getCourses()
+    // $api.getCourses('2020-2021年', '春季学期')
+    $api.getCourses(this.data.schoolYear, this.data.semester)
       .then(res => {
         console.log(res)
-
-        let wlist = this.data.wlist
-
         this.dealCourse(res)
-        // for(let i of res) {
-        //   let time = i.time
-        //   // if(time.indexOf(',') < 0) console.log('true')
-        //   let timeArr = time.split(',')
-        //   console.log(timeArr)
-        //   for(let j of timeArr) {
-        //     // weekday代表星期几上课，first_section指开始上课的第一节，section_lengthh上课长度，course_name课程名，classroom教室编号
-        //     let weekday = (j.match('Mon') || j.match('Tue') || j.match('Wed') || j.match('Thur') || j.match('Fri') || j.match('Sat') || j.match('Sun'))[0]
-        //     let section = j.split(weekday)[1]
-        //     let section_lengthh = section.length
-        //     // console.log('section: ' + section)
-        //     // console.log('section_lengthh: ' + section_lengthh)
-
-        //     // 将weekday从'Mon'等设置为对应数字1等
-        //     switch (weekday) {
-        //       case 'Mon':
-        //         weekday = 1
-        //         break;
-        //       case 'Tue':
-        //         weekday = 2
-        //         break;
-        //       case 'Wed':
-        //         weekday = 3
-        //         break;
-        //       case 'Thur':
-        //         weekday = 4
-        //         break;
-        //       case 'Fri':
-        //         weekday = 5
-        //         break;
-        //       case 'Sat':
-        //         weekday = 6
-        //         break;
-        //       case 'Sun':
-        //         weekday = 7
-        //         break;
-        //     }
-        //     // console.log('weekday: ' + weekday)
-        //     // 将section第一个字符设为first_section，包括处理first_section为0、A、B、C这种特殊的
-        //     let first_section = section.substr(0,1)
-        //     if(first_section === '0') {
-        //       first_section = 10
-        //     }else if(first_section === 'A' || first_section === 'B' || first_section === 'C') {
-        //       switch (first_section) {
-        //         case 'A':
-        //           first_section = 11
-        //           break;
-        //         case 'B':
-        //           first_section = 12
-        //           break;
-        //         case 'C':
-        //           first_section = 13
-        //           break;
-        //       }
-        //     }else {
-        //       first_section = parseInt(first_section)
-        //     }
-        //     // console.log('first_section: ' + first_section)
-
-        //     // let item = i // 坑！这样内循环中的item始终指向的是i的地址，即使内循环设置不同的i.first_section=xxx或yyy等，在同一个内循环中item的first_section数值总为最后一个设置的i.first_section=yyy
-        //     let item = JSON.parse(JSON.stringify(i))
-        //     // 将first_section等写入api请求来的课程，以展示
-        //     item.color = 2
-        //     item.weekday = weekday
-        //     item.first_section = first_section
-        //     item.section_lengthh = section_lengthh
-        //     item.course_name = item.course.name
-        //     // i.classroom = i.classroom
-        //     // i.week = '1-16'
-        //     item.show = 'false'
-
-        //     this.data.wlist.push(item)
-        //     console.log(this.data.wlist)
-        //   }
-        // }
-
-        // // 给每个课程增加'show'属性
-        // for(let i of wlist) {
-        //   i.show = 'false'
-        // }
-        // this.data.wlist = wlist
-
-        // this.showClass()
       })
       .catch(err => {
         console.log(err)
@@ -493,8 +491,61 @@ Page({
           content: '未获取到课程信息喔',
           showCancel: false,
         })
-        return
       })
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    var that = this
+
+    // 根据当前日期设置学年和学期
+    let thisYear = new Date().getFullYear()
+    let thisMonth = new Date().getMonth() + 1
+    for(let i in this.data.schoolYearList) {
+      let year = parseInt(this.data.schoolYearList[i].substring(0, 4))
+      if(thisYear === year) {
+        // 设置学期 semesterList: ['春季学期', '夏季学期', '秋季学期'],
+        let semesterIndex
+        if(thisMonth <= 2 || thisMonth >= 9) {
+          semesterIndex = 2
+        }else if(thisMonth >= 3 && thisMonth <= 6) {
+          semesterIndex = 0
+        }else if(thisMonth >= 7 && thisMonth <= 8) {
+          semesterIndex = 2
+        }
+        this.setData({
+          schoolYearIndex: i,
+          tempSchoolYearIndex: i,
+          schoolYear: this.data.schoolYearList[i],
+          thisSchoolYear: this.data.schoolYearList[i],
+          semesterIndex,
+          tempSemesterIndex: semesterIndex,
+          semester: this.data.semesterList[semesterIndex],
+          thisSemester: this.data.semesterList[semesterIndex],
+        })
+        break
+      }
+    }
+
+    this.requestCourse()
+    // // 获取课程基本信息
+    // // $api.getCourses('2020-2021年', '春季学期')
+    // $api.getCourses(this.data.schoolYear, this.data.semester)
+    //   .then(res => {
+    //     console.log(res)
+    //     let wlist = this.data.wlist
+    //     this.dealCourse(res)
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //     wx.showModal({
+    //       content: '未获取到课程信息喔',
+    //       showCancel: false,
+    //     })
+    //     return
+    //   })
     
     wx.getSystemInfo({
       success: (res) => {
@@ -520,13 +571,14 @@ Page({
     var that = this
     var pages = getCurrentPages()
     var currPage = pages[pages.length - 1]  // 当前页面
-    if(currPage.data.customCourse) {
-      that.setData({
-        customCourse111: currPage.data.customCourse
-      })
-    }
-    console.log('↓')
-    console.log(this.data.customCourse)
+    // if(currPage.data.customCourse) {
+    //   that.setData({
+    //     customCourse111: currPage.data.customCourse
+    //   })
+    //   // this.dealCourse([currPage.data.customCourse])
+    // }
+    // console.log('↓')
+    // console.log(this.data.customCourse)
   },
 
   /**

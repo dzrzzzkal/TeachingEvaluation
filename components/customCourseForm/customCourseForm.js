@@ -24,23 +24,26 @@ Component({
       week: '1'
     },
     rules: [{
-        name: 'title',
-        rules: {required: true, message: '事件名必填'},
+      name: 'course_name',
+      rules: {required: true, message: '事件名必填'},
     }, {
-        name: 'classroom',
-        rules: {required: false, message: ''},
+      name: 'teacher',
+      rules: {required: false, message: ''},
     }, {
-        name: 'description',
-        rules: {required: false, message: ''},
+      name: 'classroom',
+      rules: {required: false, message: ''},
     }, {
-        name: 'notes',
-        rules: {required: false, message: ''},
+      name: 'description',
+      rules: {required: false, message: ''},
     }, {
-        name: 'time',
-        rules: {required: true, message: '时间必选'},
+      name: 'custom_notes',
+      rules: {required: false, message: ''},
     }, {
-        name: 'week',
-        rules: {required: true, message: '周数必选'},
+      name: 'time',
+      rules: {required: true, message: '时间必选'},
+    }, {
+      name: 'week',
+      rules: {required: true, message: '周数必选'},
     }]
 
   },
@@ -168,9 +171,11 @@ Component({
           continue
         }
       }
-      prevPage.setData({  // 直接给上一页面赋值
-        customCourse: this.data.formData
-      })
+      // 直接调用上一页面的dealCourse()，写入课程
+      prevPage.dealCourse([this.data.formData])
+      // prevPage.setData({  // 直接给上一页面赋值
+      //   customCourse: this.data.formData
+      // })
       wx.navigateBack({
         delta: 1,
       })

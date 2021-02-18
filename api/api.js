@@ -12,7 +12,7 @@ api.post = (url, data) => request('POST', url, data, {'content-type': 'applicati
 // api.doLogin = (data, header) => request('POST', '/doLogin', data, header)
 api.doLogin = (data) => api.post('/doLogin', data)
 api.checkToken = (data) => api.post('/checkToken', data)
-api.getCourses = () => api.get('/getCourses')
+api.getCourses = (schoolYear, semester) => api.get(`/getCourses?schoolYear=${schoolYear}&semester=${semester}`)
 api.searchClass = (name) => api.get(`/class?name=${name}`)
 api.getClass = (classid) => api.get(`/classid/${classid}`)
 api.submitForm = (data) => api.post('/submitForm', data)

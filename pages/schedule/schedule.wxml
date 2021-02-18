@@ -2,27 +2,32 @@
 <view class="container">
   <view class='content'>
     <view class="top-bar">
-      <view class="week-title">
-        <view class="week-left" catch:tap="clickSiderWeek" data-sider="left">
-          <text decode='true' hidden="{{week === weeksList[0]}}">&lt;</text>
+      <view class="top-components">
+        <view class="week-title">
+          <view class="week-left" catch:tap="clickSiderWeek" data-sider="left">
+            <text decode='true' hidden="{{week === weeksList[0]}}">&lt;</text>
+          </view>
+          <view class="week" catch:tap="showWeeksScroll">
+            {{week}}
+          </view>
+          <view class="week-right" catch:tap="clickSiderWeek" data-sider="right">
+            <text decode='true' hidden="{{week === weeksList[weeksList.length-1]}}">&gt;</text>
+          </view>
         </view>
-        <view class="week" catch:tap="showWeeksScroll">
-          {{week}}
-        </view>
-        <view class="week-right" catch:tap="clickSiderWeek" data-sider="right">
-          <text decode='true' hidden="{{week === weeksList[weeksList.length-1]}}">&gt;</text>
+
+        <!-- class暂时使用上面的与week有关的，以后待改 -->
+        <view class="schoolYear-title" style="margin-left: 20rpx; width: 320rpx" bind:tap="showSchoolYearAndSemesterPicker">
+          {{schoolYearList[schoolYearIndex]}} {{semesterList[semesterIndex]}}
         </view>
       </view>
+      
       <view class='title_right'>
         <view class="tab-item" bindtap="addCustomCourse">
           添加课程
         </view>
       </view>
-      <!-- <custom-course-form wx:if="{{showAdd}}"></custom-course-form> -->
-      <view>customCourse: {{customCourse.title}}</view>
-      <view>customCourse111: {{customCourse111.title}}</view>
       <scroll-view class="show" scroll-x="true" wx:if="{{showWeeks}}">
-        <view class="show_week" catch:tap="chooseWeek" data-week="{{item}}" data-index="{{index}}" wx:for="{{weeksList}}" wx:key="index">{{item}}</view>
+        <view class="show_week" catch:tap="clickShowWeeks" data-week="{{item}}" data-index="{{index}}" wx:for="{{weeksList}}" wx:key="index">{{item}}</view>
       </scroll-view>
       <view class="top">
         <view class='left'>节\周</view>
@@ -33,7 +38,7 @@
     </view>
     
     <view class="schedule-content">
-      <scroll-view scroll-y="true" class="scroll" style='height:{{windowHeight-110}}px;' bindtap='clickHide'>
+      <scroll-view scroll-y="true" class="scroll" style='height:{{windowHeight-110}}px;' bindtap='clickHideWeeks'>
         <view style="width:100%;display:flex;">
           <view style="background-color:#EFEFF4;color:#333;">
             <view wx:for="{{[1,2,3,4,5,6,7,8,9,0,'A','B','C']}}" wx:key="index" class="left" style='height:50px'>
@@ -46,11 +51,11 @@
           </view>
           <!--课表-->
           <view wx:for="{{wlist}}" wx:key="index">
-            <view class="flex-item kcb-item" bindtap="showCardView" data-wlist='{{item}}' data-index='{{index}}' style="margin-left:{{(item.weekday-1)*98}}rpx;margin-top:{{(item.first_section-1)*50+2}}px;height:{{item.section_lengthh*50-5}}px;background-color:{{item.color == '0'?'#FCB8AF':(item.color == '1'?'#81D2FC':'#F8C77A')}}" wx:if="{{item.show == 'true'}}">
-              <view class="smalltext" style='-webkit-line-clamp: {{item.section_lengthh == "3"?"4":(item.section_lengthh == "4"?"6":"2")}};'>{{item.course_name}}</view>
+            <view class="flex-item kcb-item" bindtap="showCardView" data-wlist='{{item}}' data-index='{{index}}' style="margin-left:{{(item.weekday-1)*98}}rpx;margin-top:{{(item.first_section-1)*50+2}}px;height:{{item.section_length*50-5}}px;background-color:{{item.color == '0'?'#FCB8AF':(item.color == '1'?'#81D2FC':'#F8C77A')}}" wx:if="{{item.show == 'true'}}">
+              <view class="smalltext" style='-webkit-line-clamp: {{item.section_length == "3"?"4":(item.section_length == "4"?"6":"2")}};'>{{item.course_name}}</view>
               <view class='classRoom'>({{item.classroom == ''?'--':item.classroom}})</view>
               <view class='logo' style="background-color:{{item.color == '0'?'#FA7666':(item.color == '1'?'#3CB9FB':'#F39C13')}}">{{item.color == '0'?'必':(item.color == '1'?'选':'其')}}</view>
-              <!-- weekday代表星期几上课，first_section是开始上课的第一节，section_lengthh上课长度，course_name课程名，classroom教室编号 -->
+              <!-- weekday代表星期几上课，first_section是开始上课的第一节，section_length上课长度，course_name课程名，classroom教室编号 -->
             </view>
           </view>
         </view>
@@ -58,10 +63,37 @@
     </view>
   </view>
 
+  <!-- schoolYear & semester drawer -->
+  <view class="drawer_screen" data-statu="close" wx:if="{{showScrollModalStatus}}" catchtouchmove='preventTouchMove' bindtap=''></view>
+
+  <view class="drawer_box" wx:if="{{showScrollModalStatus}}" catchtouchmove='preventTouchMove' style="height: 500rpx;">
+    <view class="do_drawer_content" style="color: black; background-color: white; height: 100%;">
+      <scroll-view class="" scroll-y="true" style="overflow:hidden; overflow-y: auto; height: 80%;">
+        <view style="margin-top: 30rpx; border: 1rpx solid green"></view>
+        <view class="" wx:for="{{schoolYearList}}"  wx:for-item="schoolYearItem" wx:for-index="schoolYearIndex" wx:key="schoolYearIndex">
+          <view class="" catch:tap="chooseSchoolYearAndSemester" wx:for="{{semesterList}}" wx:for-item="semesterItem" wx:for-index="semesterIndex" wx:key="semesterIndex" data-schoolyearindex="{{schoolYearIndex}}" data-semesterindex="{{semesterIndex}}" style="border-top: 1rpx solid gray; border-bottom: 1rpx solid gray; height: 70rpx; width: 95%; margin: 0 2.5%">
+            {{schoolYearItem}}   {{semesterItem}}
+            <text hidden="{{!(schoolYearIndex == tempSchoolYearIndex && semesterIndex == tempSemesterIndex)}}" style="background-color: yellowgreen; height: 50rpx; width: 50rpx; border-radius: 50%;">√</text>
+            <text wx:if="{{schoolYearItem == thisSchoolYear && semesterItem == thisSemester}}" style="color: gray; font-size: 24rpx; float: right;">今年学年学期</text>
+          </view>
+        </view>
+        <view style="margin-bottom: 30rpx; border: 1rpx solid green"></view>
+      </scroll-view>
+      <view class="scroll-buttons">
+        <view class="scroll-button" catch:tap="cancelChangeScroll">
+          取消
+        </view>
+        <view class="scroll-button" catch:tap="confirmChangeScroll" style="background-color: yellowgreen">
+          确定
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- course drawer -->
   <view class="drawer_screen" data-statu="close" wx:if="{{showModalStatus}}" catchtouchmove='preventTouchMove' bindtap='hideModal'></view>
 
   <view class="drawer_box" wx:if="{{showModalStatus}}" catchtouchmove='preventTouchMove'>
-
     <view class="do_drawer_content" style="color:#FFF;background-color:{{cardView.color == '0'?'#FCB8AF':(cardView.color == '1'?'#81D2FC':'#F8C77A')}}">
       <view class='drawer_top'>
         <text>{{cardView.course_name}}</text>
@@ -75,6 +107,10 @@
           <label class='noidle-item-prefix'>教室：</label>
           <label class='noidle-item-content'>{{cardView.classroom}}</label>
         </view>
+        <view class='noidle-item' wx:if="{{cardView.description}}">
+          <label class='noidle-item-prefix'>描述：</label>
+          <label class='noidle-item-content'>{{cardView.description}}</label>
+        </view>
         <view class='noidle-item'>
           <label class='noidle-item-prefix'>时间：</label>
           <!-- <label class='noidle-item-content'>2019.10.26 周一</label> -->
@@ -84,6 +120,12 @@
           <label class='noidle-item-prefix'>周数：</label>
           <!-- <label class='noidle-item-content'>第1,2,3,4节次 (08:30~09:45)</label> -->
           <label class='noidle-item-content'>{{cardView.week}}</label>
+        </view>
+        <view class='noidle-item'>
+          <label class='noidle-item-prefix'>备注：</label>
+          <label class='noidle-item-content'>
+            <textarea bind:input="formInputChange" data-field="custom_notes" name="custom_notes" id="custom_notes" maxlength="95" cols="" rows="" style="border: 1rpx solid #FFFFF0; height: 250rpx; width: 430rpx">{{cardView.custom_notes}}</textarea>
+          </label>
         </view>
       </view>
       <view class='drawer_logo' style="background-color:{{cardView.color == '0'?'#FA7666':(cardView.color == '1'?'#3CB9FB':'#F39C13')}}">{{cardView.color == '0'?'必':(cardView.color == '1'?'选':'其')}}</view>
