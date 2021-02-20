@@ -1,6 +1,7 @@
 <!--components/sheetComponents/experimentEvaluation/experimentEvaluation.wxml-->
 <view>
-  <view>二、评价</view>
+  <view wx:if="{{!classification}}">二、评价</view>
+  <view wx:else>一、观察清单</view>
   <view>*评价等级：优、良、中、合格、不合格、不适用（含+、-）</view>
   <view class="evaluationList" wx:for="{{evaluationListData}}" wx:key="index">
     index: {{index}}

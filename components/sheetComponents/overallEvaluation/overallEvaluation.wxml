@@ -1,7 +1,8 @@
 <!--components/sheetComponents/overallEvaluation/overallEvaluation.wxml-->
 <view>
   <view class="overallEvaluation">
-    三、总体评价
+    <view wx:if="{{!classification}}">三、总体评价</view>
+    <view wx:else>二、总体评价</view>
     <view class="appreciateMethod">
       <label for="">
         最欣赏的方法或表现：

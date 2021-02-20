@@ -1,7 +1,8 @@
 <!--components/sheetComponents/followUpRecord/followUpRecord.wxml-->
 <view>
   <view class="followUpRecord" hidden="{{isHidden}}">
-    四、	跟进记录
+    <view wx:if="{{!classification}}">四、跟进记录</view>
+    <view wx:else>三、跟进记录</view>
     <view class="followUpDegree">
       <radio-group id="followUpDegree" bind:change="inputChange" data-field="followUpDegree" data-fieldData="followUpDegreeItems" class="radio-group">
         <label for="" wx:for="{{followUpDegreeItems}}" wx:key="index">

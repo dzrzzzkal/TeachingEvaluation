@@ -5,13 +5,15 @@
     <!-- 基本信息 -->
     <baseinfo classid="{{classid}}" bind:inputChange="getFormChange" bind:sendFields="getComponentsFields"></baseinfo>
     <!-- 一、	教学环境观察 -->
-    <environment-evaluation bind:inputChange="getFormChange" bind:sendFields="getComponentsFields"></environment-evaluation>
-    <!-- 二、评价 -->
-    <experiment-evaluation bind:radioChange="getFormChange" bind:sendFields="getComponentsFields"></experiment-evaluation>
-    <!-- 三、总体评价 -->
-    <overall-evaluation bind:inputChange="getFormChange" bind:sendFields="getComponentsFields"></overall-evaluation>
-    <!-- 四、	跟进记录 -->
-    <followup-record bind:inputChange="getFormChange" isHidden="{{contentData.overallEvaluation.followUp != 'true'}}" bind:sendFields="getComponentsFields"></followup-record>
+    <!-- <environment-evaluation bind:inputChange="getFormChange" bind:sendFields="getComponentsFields"></environment-evaluation> -->
+    
+    <!-- 只有 experimentSheet 加上classification='experiment'，如果子组件接受到则改变一下标题 -->
+    <!-- 一、观察清单（原：二、评价） -->
+    <experiment-evaluation bind:radioChange="getFormChange" bind:sendFields="getComponentsFields" classification='experiment'></experiment-evaluation>
+    <!-- 二、总体评价（原：三、总体评价） -->
+    <overall-evaluation bind:inputChange="getFormChange" bind:sendFields="getComponentsFields" classification='experiment'></overall-evaluation>
+    <!-- 三、跟进记录（四、	跟进记录） -->
+    <followup-record bind:inputChange="getFormChange" isHidden="{{contentData.overallEvaluation.followUp != 'true'}}" bind:sendFields="getComponentsFields" classification='experiment'></followup-record>
   </mp-form>
 
   <view class="weui-btn-area">
