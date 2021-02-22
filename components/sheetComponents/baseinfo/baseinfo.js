@@ -36,9 +36,9 @@ Component({
     baseinfo: {},
 
     roleItems: [
-      {value: 'teacher', name: '教师听课'},
-      {value: 'leader', name: '领导听课'},
-      {value: 'supervisor', name: '督导听课'}
+      {value: '教师', name: '教师听课'},
+      {value: '领导', name: '领导听课'},
+      {value: '督导', name: '督导听课'}
     ],
   },
 
@@ -48,19 +48,23 @@ Component({
   methods: {
     // 识别身份以匹配对应的radio
     roleDistinguish(role) {
-      switch (role) {
-        case '教师':
-          return 'teacher'
-          break;
-        case '领导':
-          return 'leader'
-          break;
-        case '督导':
-          return 'supervisorr'
-          break;
-        default:
-          break;
+      if(role.indexOf('领导') != -1) {
+        role = '领导'
       }
+      return role
+      // switch (role) {
+      //   case '教师':
+      //     return 'teacher'
+      //     break;
+      //   case '领导':
+      //     return 'leader'
+      //     break;
+      //   case '督导':
+      //     return 'supervisorr'
+      //     break;
+      //   default:
+      //     break;
+      // }
     },
 
     radioChange(e) {

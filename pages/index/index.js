@@ -59,10 +59,11 @@ Page(filter({
   onLoad: function(options) {
     $api.getEvaluationProgress()
       .then(res => {
-        let {length, taskCount} = res
+        let {submittedNum,beEvaluatedNum, taskCount} = res
         this.setData({
-          ec_submittedNum: length,
-          ec_total: taskCount
+          ec_submittedNum: submittedNum,
+          ec_beluateEvad: beEvaluatedNum,
+          ec_total: taskCount,
         })
       })
       .catch(err => {

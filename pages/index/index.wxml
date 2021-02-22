@@ -31,8 +31,9 @@
     <view class="module-title">听课任务情况</view>
     <view class="module-content">
       <view class="evaluation-process">
-        评估进度：<br/>
+        评估进度：
         {{ec_submittedNum}} / {{ec_total}}
+        <view wx:if="{{ec_beluateEvad}}">被听课：{{ec_beluateEvad}} / 1</view>
       </view>
       <view class="tobeSubmitted-ec-box">
         待提交报告课程：
