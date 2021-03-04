@@ -1,0 +1,20 @@
+<!--pages/classDetailPage/classDetailPage.wxml-->
+<view class="container">
+  <view class="class-info">
+    <view>开课班号：{{classinfo.id}}</view>
+    <view>课程编号：{{classinfo.course_id}}</view>
+    <view>课程名称：{{courseinfo.name}}</view>
+    <view>英文名称：{{courseinfo.en_name}}</view>
+    <view>教师：{{classinfo.teacher_name}}</view>
+    <view>教室：{{classinfo.classroom}}</view>
+    <view>周数：{{classinfo.week}}</view>
+    <view>时间：{{classinfo.time}}</view>
+    <view>开课单位：{{courseinfo.setupUnit}}</view>
+    <view>学分：{{courseinfo.credit}}</view>
+    <view>学时：{{courseinfo.classHours}}</view>
+    <view>课程类型：{{courseinfo.classification}}</view>
+    <view>课程简介：{{courseinfo.briefinfo}}</view>
+    <view>备注：{{classinfo.note}}</view>
+
+  </view>
+</view>

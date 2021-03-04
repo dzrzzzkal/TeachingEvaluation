@@ -1,6 +1,6 @@
 /* pages/evaluationInput/evaluationInput.wxss */
 
-#input-box {
+/* #input-box {
   background-color: rgb(224, 191, 191);
   border: 1rpx solid whitesmoke;
   width: 400rpx;
@@ -9,12 +9,39 @@
 #search-button {
   background-color: rgba(255, 96, 0, .7);
   height:60rpx;
-  /* line-height: 60rpx; */
   width: 170rpx;
   color: white;
   font-size: 30rpx;
   border-radius: 15rpx;
+} */
+
+.search-container{
+  width: 100%;
+  margin: 5rpx 0;
+  padding: 0 5rpx;
+  /* height: 85rpx; */
+  background-color: white;
+  display: flex;
 }
+.inputView{
+  border-radius: 6rpx;
+  background-color: #F5F7F9;
+  width: 88%;
+}
+.input{
+  padding-left: 20rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.imageView{
+  width: 12%;
+}
+.image{
+  width: 50rpx;
+  height: 50rpx;
+}
+
 
 .search-content {
   padding: 3rpx 5rpx;
@@ -22,12 +49,23 @@
 
 .box {
   height: 200rpx;
-  margin: 7rpx 0;
+  margin: 7rpx;
   background-color: #fff;
   border-radius: 10rpx;
+  display: flex;
+  align-items: center;
+}
+
+.class-info {
+  width: 75%;
+  text-overflow: ellipsis;
 }
 
 #evaluation-button {
-  width: 300rpx;
-  font-size: 30rpx;
+  width: 20%;
+  min-height: 120rpx;
+  font-size: 34rpx;
+  color: rgb(236, 162, 101);
+  border-radius: 15rpx;
+  padding: 15rpx;
 }

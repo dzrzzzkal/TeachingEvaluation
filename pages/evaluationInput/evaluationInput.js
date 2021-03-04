@@ -1,30 +1,54 @@
 // pages/evaluationInput/evaluationInput.js
 
 const $api = require('../../api/api')
+const {getSchoolYearAndSemester} = require('../../utils/getSchoolYearAndSemester')
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    classname: '',
+    keyword: '',
     classes: [],
+
+    schoolYear: '',
+    semester: '',
   },
 
   searchInput: function(e) {
     this.setData({
-      classname: e.detail.value
+      keyword: e.detail.value
     })
   },
 
   search: function() {
-    var that = this
-    $api.searchClass(this.data.classname)
+    if(!this.data.keyword) {
+      wx.showToast({
+        title: '请输入搜索关键字哦',
+        icon: 'none'
+      })
+      return
+    }
+    let that = this
+    $api.searchClass(this.data.keyword, this.data.schoolYear, this.data.semester)
       .then(res => {
+        console.log(res)
+        if(!res.length) {
+          wx.showToast({
+            title: '没有搜索到相关课程哦',
+            icon: 'none'
+          })
+          return
+        }
+        for(let i of res) {
+          let {time, classroom} = i
+          i.time = time.substring(0, time.length - 1)
+          i.classroom = classroom.substring(0, classroom.length - 1)
+        }
         that.setData({
           classes: res
         })
-        console.log(that.data.classes)
       })
       .catch(err => console.log(err))
   },
@@ -37,11 +61,21 @@ Page({
     })
   },
 
+  classJump: function(e) {
+    let classid = e.currentTarget.dataset.classid
+    wx.navigateTo({
+      url: `/pages/classDetailPage/classDetailPage?classid=${classid}`,
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let schoolYearAndSemester = getSchoolYearAndSemester()
+    let {schoolYear, semester} = schoolYearAndSemester
+    this.data.schoolYear = schoolYear
+    this.data.semester = semester
   },
 
   /**

@@ -131,6 +131,13 @@
         {
           "name": "components/customCourseForm/customCourseForm",
           "pathName": "components/customCourseForm/customCourseForm",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/classDetailPage/classDetailPage",
+          "pathName": "pages/classDetailPage/classDetailPage",
+          "query": "classid=222222",
           "scene": null
         }
       ]

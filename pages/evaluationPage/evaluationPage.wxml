@@ -1,5 +1,4 @@
 <!--pages/evaluationPage/evaluationPage.wxml-->
-<text>pages/evaluationPage/evaluationPage.wxml</text>
 <view class="container">
   <view class="classification-radio">
     <!-- 内容和它下面的那个一样，只是多了样式 -->

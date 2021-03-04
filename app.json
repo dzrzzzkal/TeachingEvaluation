@@ -13,7 +13,8 @@
     "pages/evaluationRecord/evaluationRecord",
     "pages/getUserInfo/getUserInfo",
     "pages/evaluationPage/evaluationPage",
-    "pages/evaluationSheetRecord/evaluationSheetRecord"
+    "pages/evaluationSheetRecord/evaluationSheetRecord",
+    "pages/classDetailPage/classDetailPage"
   ],
   "window": {
     "backgroundTextStyle": "light",

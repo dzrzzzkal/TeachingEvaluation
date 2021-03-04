@@ -62,7 +62,7 @@ Page(filter({
         let {submittedNum,beEvaluatedNum, taskCount} = res
         this.setData({
           ec_submittedNum: submittedNum,
-          ec_beluateEvad: beEvaluatedNum,
+          ec_beEvaluatedNum: beEvaluatedNum ? beEvaluatedNum : '',
           ec_total: taskCount,
         })
       })

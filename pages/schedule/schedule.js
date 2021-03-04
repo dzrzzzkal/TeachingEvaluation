@@ -1,6 +1,8 @@
 // pages/schedule/schedule.js
 
 const $api = require('../../api/api')
+const {schoolYearList, semesterList, getSchoolYearAndSemester} = require('../../utils/getSchoolYearAndSemester')
+
 Page({
 
   /**
@@ -17,12 +19,14 @@ Page({
     thisSchoolYear: '', // 当前学年
     schoolYear: '',
     schoolYearIndex: -1,
-    schoolYearList: ['2018-2019年', '2019-2020年', '2020-2021年', '2021-2022年', '2022-2023年', '2023-2024年', '2024-2025年'],
+    // schoolYearList: ['2018-2019年', '2019-2020年', '2020-2021年', '2021-2022年', '2022-2023年', '2023-2024年', '2024-2025年'],
+    schoolYearList: [],
     showSchoolYear: false,
     thisSemester: '', // 当前学期
     semester: '',
     semesterIndex: -1,
-    semesterList: ['春季学期', '夏季学期', '秋季学期'],
+    // semesterList: ['春季学期', '夏季学期', '秋季学期'],
+    semesterList: [],
 
     tempSchoolYearIndex: -1, // 用于记录schoolYear&semesterScroll中暂时点击的数据，以便下一步的确认或取消
     tempSemesterIndex: -1,
@@ -175,29 +179,7 @@ Page({
 
 
   // ---------------------------------------------
-    // data: {
-  //   week: '1',
-  //   weekIndex: 0,
-  //   weeksList: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'],
-  //   showWeeks: false,
 
-  //   weekday: ['一','二','三','四','五','六','日'],
-
-  //   wlist: [
-  //     { "weekday": 1, "first_section": 1, "section_length": 4, "course_name": "高等数学啊实打实大大说阿大声道亚特兰蒂斯号", "classroom": "A301", "color": 0 },
-  //     { "weekday": 1, "first_section": 5, "section_length": 3, "course_name": "高等数学", "classroom": "A-302", "color": 0 },
-  //     { "weekday": 2, "first_section": 1, "section_length": 3, "course_name": "高等数学啊实打实大大说阿大声道", "classroom": "A303", "color": 1 },
-  //     { "weekday": 2, "first_section": 8, "section_length": 2, "course_name": "计算机应用技术", "classroom": "A304", "color": 1 },
-  //     { "weekday": 3, "first_section": 3, "section_length": 2, "course_name": "高等数学", "classroom": "A305", "color": 2 },
-  //     { "weekday": 3, "first_section": 8, "section_length": 2, "course_name": "高等数学", "classroom": "A306", "color": 2 },
-  //     { "weekday": 3, "first_section": 5, "section_length": 2, "course_name": "高等数学", "classroom": "A307", "color": 0 },
-  //     { "weekday": 4, "first_section": 2, "section_length": 3, "course_name": "高等数学", "classroom": "A308", "color": 1 },
-  //     { "weekday": 4, "first_section": 8, "section_length": 2, "course_name": "高等数学", "classroom": "A309", "color": 2 },
-  //     { "weekday": 5, "first_section": 1, "section_length": 2, "course_name": "高等数学", "classroom": "A310", "color": 1 },
-  //     { "weekday": 6, "first_section": 3, "section_length": 2, "course_name": "高等数学", "classroom": "A311", "color": 2 },
-  //     { "weekday": 7, "first_section": 5, "section_length": 3, "course_name": "高等数学", "classroom": "", "color": 0 },
-  //   ],
-  // },
 
   showCourse: function() {
     // 控制course在其对应的week才出现
@@ -353,7 +335,7 @@ Page({
 
 
       let timeArr = time.split(',')
-      console.log(timeArr)
+      // console.log(timeArr)
       for(let j of timeArr) {
         // weekday代表星期几上课，first_section指开始上课的第一节，section_length上课长度，course_name课程名，classroom教室编号
         let weekday = (j.match('Mon') || j.match('Tue') || j.match('Wed') || j.match('Thur') || j.match('Fri') || j.match('Sat') || j.match('Sun'))[0]
@@ -475,9 +457,10 @@ Page({
     
     $api.getCourses(this.data.schoolYear, this.data.semester)
       .then(res => {
-        // console.log(res)
-        for(let item of res) {  // 把向服务器请求的数据也写入去deal
-          courseArray.push(item)
+        if(res.length) {
+          for(let item of res) {  // 把向服务器请求的数据也写入去deal
+            courseArray.push(item)
+          }
         }
         // console.log(courseArray)
         this.dealCourse(courseArray)  // 将自定义课程和请求来的课程 一起deal
@@ -534,37 +517,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this
+    let that = this
 
     // 根据当前日期设置学年和学期
-    let thisYear = new Date().getFullYear()
-    let thisMonth = new Date().getMonth() + 1
-    for(let i in this.data.schoolYearList) {
-      let year = parseInt(this.data.schoolYearList[i].substring(0, 4))
-      if(thisYear === year) {
-        // 设置学期 semesterList: ['春季学期', '夏季学期', '秋季学期'],
-        let semesterIndex
-        if(thisMonth <= 2 || thisMonth >= 9) {
-          semesterIndex = 2
-        }else if(thisMonth >= 3 && thisMonth <= 6) {
-          semesterIndex = 0
-        }else if(thisMonth >= 7 && thisMonth <= 8) {
-          semesterIndex = 2
-        }
-        this.setData({
-          schoolYearIndex: i,
-          schoolYear: this.data.schoolYearList[i],
-          thisSchoolYear: this.data.schoolYearList[i],
-          semesterIndex,
-          semester: this.data.semesterList[semesterIndex],
-          thisSemester: this.data.semesterList[semesterIndex],
+    let schoolYearAndSemester = getSchoolYearAndSemester()
+    schoolYearAndSemester.schoolYearList = schoolYearList
+    schoolYearAndSemester.semesterList = semesterList
+    this.setData(schoolYearAndSemester)
 
-          tempSchoolYearIndex: i, // 为了schoolYear&semester scroll显示当前选择的schoolYear&semester
-          tempSemesterIndex: semesterIndex,
-        })
-        break
-      }
-    }
     // 向服务器请求课程信息
     this.getCourse()
     
@@ -575,7 +535,7 @@ Page({
         })
       },
     })
-    console.log(this.data.windowHeight)
+    // console.log(this.data.windowHeight)
   },
 
   /**
