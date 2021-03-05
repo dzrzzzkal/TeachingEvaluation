@@ -33,6 +33,14 @@ Page(filter({
         toUrl = '../evaluationInput/evaluationInput'
         break;
       case 1:
+        let {dean} = wx.getStorageSync('userinfo')
+        if(dean !== 'true') {
+          wx.showToast({
+            title: '您不是系主任，不用提交年度报告哦',
+            icon: 'none'
+          })
+          break
+        }
         toUrl = '../annualReport/annualReport'
         break;
       case 2:

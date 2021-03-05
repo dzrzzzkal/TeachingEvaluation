@@ -25,7 +25,7 @@
   <theory-of-public-welfare-sheet wx:if="{{classification === 'theory of public welfare'}}" classid="{{classid}}" classification="{{classification}}" bind:sendForm="getForm"></theory-of-public-welfare-sheet>
   <practice-of-public-welfare-sheet wx:if="{{classification === 'practice of public welfare'}}" classid="{{classid}}" classification="{{classification}}" bind:sendForm="getForm"></practice-of-public-welfare-sheet>
 
-  <view class="weui-btn-area">
+  <!-- <view class="weui-btn-area">
     <button bind:tap="submitForm" class="weui-btn" type="primary">evaluationPage-确定</button>
-  </view>
+  </view> -->
 </view>

@@ -139,6 +139,12 @@
           "pathName": "pages/classDetailPage/classDetailPage",
           "query": "classid=222222",
           "scene": null
+        },
+        {
+          "name": "pages/annualReport/annualReport",
+          "pathName": "pages/annualReport/annualReport",
+          "query": "",
+          "scene": null
         }
       ]
     }

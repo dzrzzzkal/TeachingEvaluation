@@ -33,4 +33,29 @@ const getSchoolYearAndSemester = () => {
   }
 }
 
-module.exports = {schoolYearList, semesterList, getSchoolYearAndSemester}
+// 输入当前学期的起始日期。根据输入的year, month, day，判断当日是该学期的第几周
+// dateObject.setFullYear(year,month,day)
+const getSchoolWeek = (year, month, day) => {
+  var d = new Date();
+  // d.setFullYear(d.getFullYear(),0,1);  // 定义变量d为当年的1月1日0点
+  d.setFullYear(year, month, day)
+  console.log(d)
+  var day = d.getDay()  // 定义day为当年1月1日的星期数(0为星期天,1为星期1,6为星期6)
+  // 定义fistweekleft为第一周bai剩余的天数,此处认为星期一是一周的第一天，如果将星期天定义为一周的第一天，请写成fistweekleft = (6-day)%6
+  var fistweekleft = (7-day)%7;
+  // 将d赋值为第二周的第一天,1+fistweekleft号为第一周最后天，1+fistweekleft+1为第二周第一天
+  // d.setFullYear(d.getFullYear(),0,1+fistweekleft+1);
+  d.setFullYear(year, month, day + fistweekleft + 1);
+  // 定义变量d1为当天
+  var d1 = new Date()
+  // 当前时间与当年第二周第一天的毫秒数之差除以一周的毫秒数并取整即为当前日期距本的第二周已过的周数
+  // 结果加上2即为当天为本年的第几周（如果在一周的第一天的0点运行此程序，结果会比实际值大1，此种情况请自行处理）
+  console.log(2+parseInt((d1.getTime()-d.getTime())/1000/60/60/24/7))
+  let nowWeek = 2+parseInt((d1.getTime()-d.getTime())/1000/60/60/24/7)
+  if(nowWeek > 16) {
+    nowWeek = 16
+  }
+  return nowWeek
+}
+
+module.exports = {schoolYearList, semesterList, getSchoolYearAndSemester, getSchoolWeek}

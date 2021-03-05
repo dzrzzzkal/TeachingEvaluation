@@ -525,6 +525,26 @@ Page({
     schoolYearAndSemester.semesterList = semesterList
     this.setData(schoolYearAndSemester)
 
+    // 这一步↓和上面的设置↑重复了，后续看选用哪个。
+    // 向服务器请求当前属于的学年、学期、周数
+    $api.getSchoolTime()
+    .then(res => {
+      // console.log(res)
+      let {nowWeek, schoolYearAndSemester, schoolYearList, semesterList} = res
+      let {schoolYearIndex, schoolYear, semesterIndex, semester} = schoolYearAndSemester
+      that.setData({
+        week: nowWeek,
+        schoolYearIndex,
+        schoolYear,
+        semesterIndex,
+        semester,
+        thisSchoolYear: schoolYear,
+        thisSemester: semester,
+        tempSchoolYearIndex: schoolYearIndex,
+        tempSemesterIndex: semesterIndex
+      })
+    })
+
     // 向服务器请求课程信息
     this.getCourse()
     

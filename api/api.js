@@ -19,5 +19,6 @@ api.submitForm = (data) => api.post('/submitForm', data)
 api.getEvaluationProgress = () => api.get('/getEvaluationProgress')
 api.getSubmittedSheetsList = () => api.get('/getSubmittedSheetsList')
 api.evaluationSheet = (sheet_id) => api.get(`/evaluationSheet/${sheet_id}`)
+api.getSchoolTime = () => api.get('/getSchoolTime')
 
 module.exports = api

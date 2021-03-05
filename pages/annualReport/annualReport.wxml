@@ -1,2 +1,37 @@
 <!--pages/index/annualReport/annualReport.wxml-->
-<text>pages/index/annualReport/annualReport.wxml</text>
+<view class="container">
+  <view class="content">
+    <!-- <button class='download-btn' open-type='openSetting' bind:tap="downloadFile"></button> -->
+    <button class='download-btn' bind:tap="download">
+      <image class='download-btnImg' src='/images/icon/download.png'></image>
+      <view>下载</view>
+    </button>
+    <button class='download-btn' bind:tap="downloadAndSaveFile">
+      <image class='download-btnImg' src='/images/icon/download.png'></image>
+      <view>下载并缓存</view>
+    </button>
+
+    <view class="link">
+      <view class="tips">(可以将链接复制到浏览器中打开下载哦。)</view>
+      <button class='copylink-btn' bind:tap="copyLink" style="margin-top: 5rpx">
+        <image class='copylink-btnImg' src='/images/icon/copylink.png'></image>
+        <view>复制下载链接</view>
+      </button>     
+    </view>
+    
+
+    <view class="select">
+      <button class='selectFile-btn' bind:tap="selectFile" size="mini">
+        <image class='selectFile-btnImg' src='/images/icon/selectFile.png'></image>
+        <span>选择文件</span>
+      </button>
+      <view class="file-name">{{uploadFileName}}</view>
+    </view>
+
+    <button class='upload-btn' bind:tap="upload">
+      <image class='upload-btnImg' src='/images/icon/upload.png'></image>
+      <view>上传年度总结报告</view>
+    </button>
+
+  </view>
+</view>

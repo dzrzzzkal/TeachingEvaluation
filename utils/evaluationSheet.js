@@ -134,14 +134,13 @@ const dealAndSubmitForm = (that, evaluationComponentName) => {
       }
       console.log(that.data.contentData)
 
-      // // let checkRes = checkRules(this, 'theorySheet')  // 用来检验未填的field
-      // let checkRes = checkRules(that, evaluationComponentName)  // 用来检验未填的field
-      // if(!checkRes){ // checkRes为false，即检查到有未填写的field，有err
-      //   return  // 中断
-      // }
+      // let checkRes = checkRules(this, 'theorySheet')  // 用来检验未填的field
+      let checkRes = checkRules(that, evaluationComponentName)  // 用来检验未填的field
+      if(!checkRes){ // checkRes为false，即检查到有未填写的field，有err
+        return  // 中断
+      }
 
       // 将contentData分解，写入formData
-      // this.resolveContentData(this.data.contentData, this.data.formData)
       resolveObj(that.data.contentData, that.data.formData)
       // 修改一些属性的名称
       that.data.formData.course_name = that.data.formData.name
