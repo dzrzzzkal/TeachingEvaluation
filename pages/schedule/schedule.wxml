@@ -5,13 +5,13 @@
       <view class="top-components">
         <view class="week-title">
           <view class="week-left" catch:tap="clickSiderWeek" data-sider="left">
-            <text decode='true' hidden="{{week === weeksList[0]}}">&lt;</text>
+            <text decode='true' hidden="{{week === weekList[0]}}">&lt;</text>
           </view>
           <view class="week" catch:tap="showWeeksScroll">
             {{week}}
           </view>
           <view class="week-right" catch:tap="clickSiderWeek" data-sider="right">
-            <text decode='true' hidden="{{week === weeksList[weeksList.length-1]}}">&gt;</text>
+            <text decode='true' hidden="{{week === weekList[weekList.length-1]}}">&gt;</text>
           </view>
         </view>
 
@@ -27,14 +27,22 @@
         </view>
       </view>
       <scroll-view class="show" scroll-x="true" wx:if="{{showWeeks}}">
-        <view class="show_week" catch:tap="clickShowWeeks" data-week="{{item}}" data-index="{{index}}" wx:for="{{weeksList}}" wx:key="index">{{item}}</view>
+        <view class="show_week" catch:tap="clickShowWeeks" data-week="{{item}}" data-index="{{index}}" wx:for="{{weekList}}" wx:key="index">{{item}}</view>
       </scroll-view>
       <view class="top">
-        <view class='left'>节\周</view>
-        <view wx:for="{{['一','二','三','四','五','六','日']}}" wx:key="index" class="top-text">
-          周{{item}}
+        <view class='left' style="padding-bottom: 20rpx">节\周</view>
+        <view wx:for="{{weekdayAndDate}}" wx:key="index" class="top-text" style="display: flex; flex-direction: column">
+          周{{item.weekday}}
+          <text>{{item.date}}</text>
         </view>
       </view>
+      <!-- <view class="top">
+        <view class='left' style="padding-bottom: 20rpx">节\周</view>
+        <view wx:for="{{['一','二','三','四','五','六','日']}}" wx:key="index" class="top-text" style="display: flex; flex-direction: column">
+          周{{item}}
+          <text>oo</text>
+        </view>
+      </view> -->
     </view>
     
     <view class="schedule-content">
@@ -124,7 +132,7 @@
         <view class='noidle-item'>
           <label class='noidle-item-prefix'>备注：</label>
           <label class='noidle-item-content'>
-            <textarea bind:input="formInputChange" data-field="custom_notes" name="custom_notes" id="custom_notes" maxlength="95" cols="" rows="" style="border: 1rpx solid #FFFFF0; height: 250rpx; width: 430rpx">{{cardView.custom_notes}}</textarea>
+            <textarea bind:input="formInputChange" data-classid="{{cardView.class_id}}" data-coursename="{{cardView.course_name}}" data-field="custom_notes" name="custom_notes" id="custom_notes" maxlength="95" cols="" rows="" style="border: 1rpx solid #FFFFF0; height: 250rpx; width: 430rpx" value="{{cardView.custom_notes}}"></textarea>
           </label>
         </view>
         <view class="scrol-buttons">
@@ -151,17 +159,17 @@
   <view class="week-container">
     <view class="week-title">
       <view class="week-left" catch:tap="clickSiderWeek" data-sider="left">
-        <text decode='true' hidden="{{week === weeksList[0]}}">&lt;</text>
+        <text decode='true' hidden="{{week === weekList[0]}}">&lt;</text>
       </view>
       <view class="week" catch:tap="showWeeksScroll">
         {{week}}
       </view>
       <view class="week-right" catch:tap="clickSiderWeek" data-sider="right">
-        <text decode='true' hidden="{{week === weeksList[weeksList.length-1]}}">&gt;</text>
+        <text decode='true' hidden="{{week === weekList[weekList.length-1]}}">&gt;</text>
       </view>
     </view>
     <scroll-view class="weeks-scroll" scroll-x="true" wx:if="{{showWeeks}}">
-      <view class="weeks" catch:tap="chooseWeek" data-week="{{item}}" data-index="{{index}}" wx:for="{{weeksList}}" wx:key="index">{{item}}</view>
+      <view class="weeks" catch:tap="chooseWeek" data-week="{{item}}" data-index="{{index}}" wx:for="{{weekList}}" wx:key="index">{{item}}</view>
     </scroll-view>
   </view>
     

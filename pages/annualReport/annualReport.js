@@ -18,7 +18,7 @@ Page({
         'Authorization': 'Bearer ' + wx.getStorageSync('token'),
         // 'content-type': 'application/json'
       },
-      // url: 'http://172.16.30.60:3000/public/evaluationSheet.docx',
+      // url: 'http://172.16.30.60:3000/public/annualReportTemplate.docx',
       success: function(res) {
         var filePath = res.tempFilePath;
         wx.openDocument({
@@ -53,7 +53,7 @@ Page({
       title: '下载中',
     })
     wx.downloadFile({
-      url: 'http://172.16.30.60:3000/file/evaluationSheet.docx',
+      url: 'http://172.16.30.60:3000/file/annualReportTemplate.docx',
       //  url: 'http://172.16.30.60:3000/api/downloadAnnualReport',
       header: {
         'Authorization': 'Bearer ' + wx.getStorageSync('token'),
@@ -114,7 +114,7 @@ Page({
     },
 
   copyLink: function(){
-    let url='http://172.16.30.60:3000/file/evaluationSheet.docx';
+    let url='http://172.16.30.60:3000/file/annualReportTemplate.docx';
     // let url='http://172.16.30.60:3000/api/downloadAnnualReport'
     wx.setClipboardData({
       data: url,

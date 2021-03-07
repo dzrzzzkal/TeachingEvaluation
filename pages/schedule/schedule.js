@@ -1,7 +1,8 @@
 // pages/schedule/schedule.js
 
 const $api = require('../../api/api')
-const {schoolYearList, semesterList, getSchoolYearAndSemester} = require('../../utils/getSchoolYearAndSemester')
+const {schoolYearList, semesterList, weekList, getSchoolYearAndSemester} = require('../../utils/getSchoolYearAndSemester')
+const { getThisWeekDate, getLastWeekDate, getNextWeekDate } = require('../../utils/setWeekDate')
 
 Page({
 
@@ -10,13 +11,49 @@ Page({
    */
 
   data: {
-
+    thisWeek: '1',
+    thisWeekIndex: 0,
     week: '1',
     weekIndex: 0,
-    weeksList: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'],
+    // weekList: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'],
+    weekList: [],
     showWeeks: false,
 
-    thisSchoolYear: '', // 当前学年
+    date: '', // onLoad onShow时会被设置为new Date()，但如果进行了切换周数，date会被设置为不会流动的时分秒固定的的时间对象，值为切换前的时间±(7 * 切换前后周数差值)，随着周数的切换改变年月日。直到重新onLoad onShow重新设为new Date()
+    addDate: 0,
+    // 只有是在当前学年和学期下切换周才改变日期
+    weekdayAndDate: [
+      {
+        weekday: '一',
+        date: ''
+      },
+      {
+        weekday: '二',
+        date: ''
+      },
+      {
+        weekday: '三',
+        date: ''
+      },
+      {
+        weekday: '四',
+        date: ''
+      },
+      {
+        weekday: '五',
+        date: ''
+      },
+      {
+        weekday: '六',
+        date: ''
+      },
+      {
+        weekday: '日',
+        date: ''
+      }
+    ],
+
+    thisSchoolYear: '', // 当前日期的学年
     schoolYear: '',
     schoolYearIndex: -1,
     // schoolYearList: ['2018-2019年', '2019-2020年', '2020-2021年', '2021-2022年', '2022-2023年', '2023-2024年', '2024-2025年'],
@@ -31,43 +68,25 @@ Page({
     tempSchoolYearIndex: -1, // 用于记录schoolYear&semesterScroll中暂时点击的数据，以便下一步的确认或取消
     tempSemesterIndex: -1,
 
-    dayTab: 0,
-    // weekList: ['6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'],
-    day: ['10.25', '10.26', '10.27', '10.28', '10.29', '10.30', '10.31',],
-    wlist: [
-      { "weekday": 1, "first_section": 1, "section_length": 4, "course_name": "高等数学啊实打实大大说阿大声道亚特兰蒂斯号", "classroom": "A301", "color": 0, "week": "1-16", "time": "Mon1234", "course_time": "Mon1234"},
-      { "weekday": 1, "first_section": 5, "section_length": 3, "course_name": "高等数学", "classroom": "A-302", "color": 0 , "week": "9-16", "time": "Mon567", "course_time": "Mon567"},
-      { "weekday": 2, "first_section": 1, "section_length": 3, "course_name": "高等数学啊实打实大大说阿大声道", "classroom": "A303", "color": 1, "week": "2-8", "time": "Tue123", "course_time": "Tue123"},
-      { "weekday": 2, "first_section": 8, "section_length": 2, "course_name": "计算机应用技术", "classroom": "A304", "color": 1, "week": "1-16", "time": "Tue89", "course_time": "Tue89"},
-      { "weekday": 3, "first_section": 2, "section_length": 3, "course_name": "普通物理学", "classroom": "A305", "color": 0, "week": "3-4", "time": "Wed234", "course_time": "Wed234"},
-      { "weekday": 3, "first_section": 8, "section_length": 2, "course_name": "计算机网络", "classroom": "A306", "color": 2, "week": "7-16", "time": "Wed89", "course_time": "Wed89"},
-      { "weekday": 3, "first_section": 5, "section_length": 2, "course_name": "女士形象设计", "classroom": "A307", "color": 0, "week": "14-16", "time": "Wed56", "course_time": "Wed56"},
-      { "weekday": 4, "first_section": 2, "section_length": 3, "course_name": "高等数学", "classroom": "A308", "color": 1, "week": "1-16", "time": "Thur234", "course_time": "Thur234"},
-      { "weekday": 4, "first_section": 8, "section_length": 2, "course_name": "排球", "classroom": "A309", "color": 2, "week": "9", "time": "Thur89", "course_time": "Thur89"},
-      { "weekday": 5, "first_section": 6, "section_length": 2, "course_name": "计算机网络", "classroom": "A310", "color": 1, "week": "1-16", "time": "Fri67", "course_time": "Fri67"},
-      { "weekday": 6, "first_section": 3, "section_length": 2, "course_name": "数据库原理", "classroom": "A311", "color": 2, "week": "1", "time": "Sat34", "course_time": "Sat34"},
-      { "weekday": 7, "first_section": 5, "section_length": 3, "course_name": "声乐巡游", "classroom": "", "color": 0, "week": "1-3", "time": "Sun567", "course_time": "Sun567"},
-    ],
-    dayList: [
-      { "jcxx": "第1,2节次 08:00~09:45", "course_name": "大学英语", "skls": "陈江", "classroom": "教A520", "kkyx": "外语学院", "xsrs": "88", "skbj": "外语系521", "type": 0 },
-      { "jcxx": "第3,4节次 10:15~11:45", "course_name": "天然药物炮制实验", "skls": "黄雪峰", "classroom": "教A104", "kkyx": "中药学院", "xsrs": "70", "skbj": "中药制药1702501", "type": 1 },
-      { "jcxx": "第5,6节次 10:15~11:45", "course_name": "生物化学", "skls": "黄雪峰", "classroom": "教A104", "kkyx": "中药学院", "xsrs": "70", "skbj": "中药制药1702501", "type": 1 },
-      { "jcxx": "第7,8节次 16:00~18:00", "course_name": "药物经济学", "skls": "黄雪峰", "classroom": "教A104", "kkyx": "中药学院", "xsrs": "70", "skbj": "中药制药1702501", "type": 1 },
-      { "jcxx": "第7,8节次 16:00~18:00", "course_name": "药物经济学", "skls": "黄雪峰", "classroom": "教A104", "kkyx": "中药学院", "xsrs": "70", "skbj": "中药制药1702501", "type": 1 },
-    ],
+    // wlist: [
+    //   { "weekday": 1, "first_section": 1, "section_length": 4, "course_name": "高等数学啊实打实大大说阿大声道亚特兰蒂斯号", "classroom": "A301", "color": 0, "week": "1-16", "time": "Mon1234", "course_time": "Mon1234"},
+    //   { "weekday": 1, "first_section": 5, "section_length": 3, "course_name": "高等数学", "classroom": "A-302", "color": 0 , "week": "9-16", "time": "Mon567", "course_time": "Mon567"},
+    //   { "weekday": 2, "first_section": 1, "section_length": 3, "course_name": "高等数学啊实打实大大说阿大声道", "classroom": "A303", "color": 1, "week": "2-8", "time": "Tue123", "course_time": "Tue123"},
+    //   { "weekday": 2, "first_section": 8, "section_length": 2, "course_name": "计算机应用技术", "classroom": "A304", "color": 1, "week": "1-16", "time": "Tue89", "course_time": "Tue89"},
+    //   { "weekday": 3, "first_section": 2, "section_length": 3, "course_name": "普通物理学", "classroom": "A305", "color": 0, "week": "3-4", "time": "Wed234", "course_time": "Wed234"},
+    //   { "weekday": 3, "first_section": 8, "section_length": 2, "course_name": "计算机网络", "classroom": "A306", "color": 2, "week": "7-16", "time": "Wed89", "course_time": "Wed89"},
+    //   { "weekday": 3, "first_section": 5, "section_length": 2, "course_name": "女士形象设计", "classroom": "A307", "color": 0, "week": "14-16", "time": "Wed56", "course_time": "Wed56"},
+    //   { "weekday": 4, "first_section": 2, "section_length": 3, "course_name": "高等数学", "classroom": "A308", "color": 1, "week": "1-16", "time": "Thur234", "course_time": "Thur234"},
+    //   { "weekday": 4, "first_section": 8, "section_length": 2, "course_name": "排球", "classroom": "A309", "color": 2, "week": "9", "time": "Thur89", "course_time": "Thur89"},
+    //   { "weekday": 5, "first_section": 6, "section_length": 2, "course_name": "计算机网络", "classroom": "A310", "color": 1, "week": "1-16", "time": "Fri67", "course_time": "Fri67"},
+    //   { "weekday": 6, "first_section": 3, "section_length": 2, "course_name": "数据库原理", "classroom": "A311", "color": 2, "week": "1", "time": "Sat34", "course_time": "Sat34"},
+    //   { "weekday": 7, "first_section": 5, "section_length": 3, "course_name": "声乐巡游", "classroom": "", "color": 0, "week": "1-3", "time": "Sun567", "course_time": "Sun567"},
+    // ],
+    wlist: [],
 
     cardCourseIndex: -1,  // 当前cardView的数据 在this.data.wlist中对应的index
 
     customCourseArray: [],  // getStorage获取的自定义课程
-  },
-
-  clickShow: function (e) {
-    var that = this;
-    that.setData({
-      show: !that.data.show,
-    })
-
-    console.log(e)
   },
 
   clickHideWeeks: function (e) {
@@ -77,42 +96,9 @@ Page({
     })
   },
 
-  swichNav: function (e) {
-    this.clickHide();
-    if (this.data.currentTab === e.currentTarget.dataset.current) {
-      return false;
-    } else {
-      this.setData({
-        currentTab: e.currentTarget.dataset.current,
-      })
-    }
-  },
-
-  stopTouchMove: function () {
-    return false;
-  },
-
-  dayCheck: function (e) {
-    var that = this;
-    console.log(e)
-    if (that.data.dayTab === e.currentTarget.dataset.daytab) {
-      return false;
-    } else {
-      that.setData({
-        dayTab: e.currentTarget.dataset.daytab,
-      })
-    }
-  },
-
-  swiperChange: function (e) {
-    var self = this
-    self.setData({
-      dayTab: e.detail.current,
-    })
-  },
-
   showCardView: function (e) {
     let cardView = {
+      class_id: e.currentTarget.dataset.wlist.id, // 用于区分是自定义课程还是向服务器请求的课程
       course_name: e.currentTarget.dataset.wlist.course_name,
       color: e.currentTarget.dataset.wlist.color,
       classroom: e.currentTarget.dataset.wlist.classroom,
@@ -130,14 +116,13 @@ Page({
     })
     this.util("open");
 
-    // console.log(e.currentTarget.dataset.wlist)
-    // console.log(this.data.cardView)
   },
 
   hideModal() {
     this.util("close");
   },
 
+  // -----
   util: function (currentStatu) {
     var animation = wx.createAnimation({
       duration: 100, //动画时长 
@@ -168,19 +153,6 @@ Page({
     }
   },
 
-  studentList: function (e) {
-    this.clickHide()
-    wx.navigateTo({
-      url: '../timeTables0605/timeTables0605',
-      success: function(res) {},
-    })
-  },
-
-
-
-  // ---------------------------------------------
-
-
   showCourse: function() {
     // 控制course在其对应的week才出现
     let wlist = this.data.wlist
@@ -207,21 +179,84 @@ Page({
     })
   },
 
+  /**
+   * 
+   * @param {string} when 字符串类型，选择'last'、'now'、'next'来判断是查看：上一周、当周、下一周
+   */
+  getShowDate: function(when) {
+    let date = this.data.date
+    let year = date.getFullYear()
+    let month = date.getMonth()
+    let day = date.getDate()
+    let dateArr
+    let setDate // 会被设为不会流动的时分秒固定的时间对象，随setDate()变化
+    switch (when) {
+      case 'last':
+        dateArr = getLastWeekDate(year, month, day)
+        this.data.addDate = this.data.addDate - 7
+        setDate = date.setDate(date.getDate() - 7)
+        setDate = new Date(setDate)
+        break;
+      case 'now':
+        dateArr = getThisWeekDate(year, month, day)
+        break;
+      case 'next':
+        dateArr = getNextWeekDate(year, month, day)
+        this.data.addDate = this.data.addDate + 7
+        setDate = date.setDate(date.getDate() + 7)
+        setDate = new Date(setDate)
+        break;
+      default:
+        break;
+    }
+    let weekdayAndDate = JSON.parse(JSON.stringify(this.data.weekdayAndDate))
+    for(let i in weekdayAndDate) {
+      weekdayAndDate[i].date = dateArr[i]
+    }
+    if(when === 'now') {
+      return {weekdayAndDate}
+    }else {
+      return {weekdayAndDate, setDate}
+    }
+  },
+
   // 点击侧边'<'、'>'改变week
   clickSiderWeek: function(e) {
     let weekIndex = this.data.weekIndex
-    let weeksList = this.data.weeksList
+    let weekList = this.data.weekList
     let sider = e.currentTarget.dataset.sider
     if(sider === 'left' && weekIndex !== 0) {
-      this.setData({
-        weekIndex: weekIndex - 1,
-        week: weeksList[weekIndex - 1]
-      })
-    }else if(sider === 'right' && weekIndex !== weeksList.length - 1) {
-      this.setData({
-        weekIndex: weekIndex + 1,
-        week: weeksList[weekIndex + 1]
-      })
+      if(this.data.semester == this.data.thisSemester || this.data.schoolYear == this.data.thisSchoolYear) {  // 只有是在当前学年和学期下切换周才改变日期
+        let {weekdayAndDate, setDate} = this.getShowDate('last')
+        this.setData({
+          date: setDate ? setDate : new Date(),
+          weekdayAndDate,
+  
+          weekIndex: weekIndex - 1,
+          week: weekList[weekIndex - 1]
+        })
+      }else {
+        this.setData({
+          weekIndex: weekIndex - 1,
+          week: weekList[weekIndex - 1]
+        })
+      }
+    }else if(sider === 'right' && weekIndex !== weekList.length - 1) {
+      if(this.data.semester == this.data.thisSemester || this.data.schoolYear == this.data.thisSchoolYear) {  // 只有是在当前学年和学期下切换周才改变日期
+        let {weekdayAndDate, setDate} = this.getShowDate('next')
+        this.setData({
+          date: setDate ? setDate : new Date(),
+          weekdayAndDate,
+
+          weekIndex: weekIndex + 1,
+          week: weekList[weekIndex + 1]
+        })
+      }else {
+        this.setData({
+          weekIndex: weekIndex + 1,
+          week: weekList[weekIndex + 1]
+        })
+      }
     }else {
       return
     }
@@ -240,11 +275,40 @@ Page({
   clickShowWeeks: function(e) {
     let {week, index} = e.currentTarget.dataset
     if(week !== this.data.week) {
-      this.setData({
-        weekIndex: index,
-        week,
-        showWeeks: !this.data.showWeeks
-      })
+      if(this.data.semester == this.data.thisSemester || this.data.schoolYear == this.data.thisSchoolYear) {  // 只有是在当前学年和学期下切换周才改变日期
+        let diff_value = week - this.data.week
+        let times = Math.abs(diff_value)
+        let tempDate = this.data.date
+        let tempWdAndD = this.data.weekdayAndDate
+        for(let i = 0; i < times; i++) {
+          let when
+          if(diff_value > 0) {
+            when = 'next'
+          }else {
+            when = 'last'
+          }
+          let {weekdayAndDate, setDate} = this.getShowDate(when)
+          this.data.date = setDate ? setDate : new Date()
+          tempDate = this.data.date
+          this.data.weekdayAndDate = weekdayAndDate
+          tempWdAndD = this.data.weekdayAndDate
+        }
+        this.setData({
+          date: tempDate,
+          weekdayAndDate: tempWdAndD,
+
+          weekIndex: index,
+          week,
+          showWeeks: !this.data.showWeeks
+        })
+      }else {
+        this.setData({
+          weekIndex: index,
+          week,
+          showWeeks: !this.data.showWeeks
+        })
+      }
+      
     }
 
     // 控制course在其对应的week才出现
@@ -267,12 +331,6 @@ Page({
     })
   },
 
-  // hideScrollModal: function(e) {
-  //   this.setData({
-  //     showScrollModalStatus: false
-  //   })
-  // },
-
   // 点击schoolYear&semesterScroll中的“取消”按钮
   cancelChangeScroll: function(e) {
     this.setData({
@@ -293,6 +351,12 @@ Page({
       semester: this.data.semesterList[tempSemesterIndex],
       showScrollModalStatus: !this.data.showScrollModalStatus
     })
+    if(this.data.schoolYear === this.data.thisSchoolYear && this.data.semester === this.data.thisSemester) {  // 如果点击"确认"选择了当前日期属于的学年和学期，将this.data.week设置回当前日期属于的学周(即设置回当前日期属于该学年学期的第x周)
+      this.setData({
+        weekIndex: this.data.thisWeekIndex,
+        week: this.data.thisWeek,
+      })
+    }
     // 根据新的学年和学期请求新的课程 和 自定义课程，写入wlist
     this.getCourse()
   },
@@ -310,12 +374,50 @@ Page({
 
   // 在card中设置课程备注
   formInputChange(e) {
-    const {field} = e.currentTarget.dataset
+    const {field, classid, coursename} = e.currentTarget.dataset
+    console.log(e.currentTarget.dataset)
     let cardCourseIndex = this.data.cardCourseIndex
     this.setData({
-        [`cardView.${field}`]: e.detail.value,
-        [`wlist[${cardCourseIndex}].${field}`]: e.detail.value
+      [`cardView.${field}`]: e.detail.value,
+      [`wlist[${cardCourseIndex}].${field}`]: e.detail.value
     })
+
+    if(classid) {   // 是设置向服务器请求的课程的备注，因为服务器传来的开课编号是唯一的
+      let courseNotes = {
+        class_id: classid,
+        custom_notes: e.detail.value
+      }
+      let courseNotesArray = wx.getStorageSync('courseNotes')
+      if(!courseNotesArray || !courseNotesArray.length) { // courseNotesArray未设置或为[]
+        courseNotesArray = []
+        courseNotesArray.push(courseNotes)
+        wx.setStorageSync('courseNotes', courseNotesArray)
+      }else {
+        for(let i in courseNotesArray) {
+          if(courseNotesArray[i].class_id === classid) {
+            if(!e.detail.value.length) {
+              courseNotesArray.splice(i, 1)
+            }else {
+              courseNotesArray[i].custom_notes = e.detail.value
+            }
+            wx.setStorageSync('courseNotes', courseNotesArray)
+            return
+          }
+        }
+        courseNotesArray.push(courseNotes)
+        wx.setStorageSync('courseNotes', courseNotesArray)
+      }
+    }else { // 是设置自定义课程的备注
+      let customCourseArray = wx.getStorageSync('customCourse')
+      for(let i of customCourseArray) {
+        if(i.course_name === coursename && i.schoolYear === this.data.schoolYear && i.semester === this.data.semester) {
+          i.custom_notes = e.detail.value
+          wx.setStorageSync('customCourse', customCourseArray)
+          return
+        }
+      }
+    }
+
     // console.log(this.data.cardView)
     // console.log(this.data.wlist[cardCourseIndex])
   },
@@ -325,14 +427,11 @@ Page({
     let wlist = this.data.wlist
     for(let i of courseArr) {
       let time = i.time
-      // if(time.indexOf(',') < 0) console.log('true')
 
-
-      // TEST！！！测试多个上课时间用，例如time = 'Fri12,Wed3456'
-      if(time === 'Fri12') {
-        time = 'Fri12,Wed3456'
-      }
-
+      // // TEST！！！测试多个上课时间用，例如time = 'Fri12,Wed3456'
+      // if(time === 'Fri12') {
+      //   time = 'Fri12,Wed3456'
+      // }
 
       let timeArr = time.split(',')
       // console.log(timeArr)
@@ -401,9 +500,6 @@ Page({
         if(item.course) { 
           item.course_name = item.course.name
         }
-        // item.course_name
-        // item.classroom
-        // item.week = '1-16'
         item.course_time = j
         item.show = 'false'
 
@@ -423,53 +519,46 @@ Page({
   // 向服务器请求课程 和 向storage请求存储的自定义课程 并处理展示
   getCourse: function() {
     // 请求前先初始化(清空)this.data.wlist，防止请求其它学期的课程时，this.data.wlist已有课程信息然后混乱
-    // this.data.wlist = []  // 这里不需要setData，后面调用的函数会setData
-    // 这里为了方便测试和展示数据，暂时先设为↓，实际上要向上一行一样设为空数组，以后改回来
-    this.data.wlist = [
-      { "weekday": 1, "first_section": 1, "section_length": 4, "course_name": "高等数学啊实打实大大说阿大声道亚特兰蒂斯号", "classroom": "A301", "color": 0, "week": "1-16", "time": "Mon1234", "course_time": "Mon1234"},
-      { "weekday": 1, "first_section": 5, "section_length": 3, "course_name": "高等数学", "classroom": "A-302", "color": 0 , "week": "9-16", "time": "Mon567", "course_time": "Mon567"},
-      { "weekday": 2, "first_section": 1, "section_length": 3, "course_name": "高等数学啊实打实大大说阿大声道", "classroom": "A303", "color": 1, "week": "2-8", "time": "Tue123", "course_time": "Tue123"},
-      { "weekday": 2, "first_section": 8, "section_length": 2, "course_name": "计算机应用技术", "classroom": "A304", "color": 1, "week": "1-16", "time": "Tue89", "course_time": "Tue89"},
-      { "weekday": 3, "first_section": 2, "section_length": 3, "course_name": "普通物理学", "classroom": "A305", "color": 0, "week": "3-4", "time": "Wed234", "course_time": "Wed234"},
-      { "weekday": 3, "first_section": 8, "section_length": 2, "course_name": "计算机网络", "classroom": "A306", "color": 2, "week": "7-16", "time": "Wed89", "course_time": "Wed89"},
-      { "weekday": 3, "first_section": 5, "section_length": 2, "course_name": "女士形象设计", "classroom": "A307", "color": 0, "week": "14-16", "time": "Wed56", "course_time": "Wed56"},
-      { "weekday": 4, "first_section": 2, "section_length": 3, "course_name": "高等数学", "classroom": "A308", "color": 1, "week": "1-16", "time": "Thur234", "course_time": "Thur234"},
-      { "weekday": 4, "first_section": 8, "section_length": 2, "course_name": "排球", "classroom": "A309", "color": 2, "week": "9", "time": "Thur89", "course_time": "Thur89"},
-      { "weekday": 5, "first_section": 6, "section_length": 2, "course_name": "计算机网络", "classroom": "A310", "color": 1, "week": "1-16", "time": "Fri67", "course_time": "Fri67"},
-      { "weekday": 6, "first_section": 3, "section_length": 2, "course_name": "数据库原理", "classroom": "A311", "color": 2, "week": "1", "time": "Sat34", "course_time": "Sat34"},
-      { "weekday": 7, "first_section": 5, "section_length": 3, "course_name": "声乐巡游", "classroom": "", "color": 0, "week": "1-3", "time": "Sun567", "course_time": "Sun567"},
-    ]
+    this.data.wlist = []  // 这里不需要setData，后面调用的函数会setData
 
-    // let wlist = this.data.wlist  // 这里不能用this.data.wlist，好像也是会出现指向地址的问题，虽然我觉得调用的时候对象应该还没改变
+    // let wlist = this.data.wlist  // 这里不能用this.data.wlist，好像也是会出现指向地址的问题
     let courseArray = []
 
     // 获取自定义课程
     let customCourseArray = wx.getStorageSync('customCourse')
     this.data.customCourseArray = customCourseArray
-    // console.log(customCourseArray)
     for(let item of customCourseArray) {
       item.isCustomCourse = true  // 因为customCourseArray要写入this.data.wlist，用于判断this.data.wlist中的item哪个是自定义课程，以增加一个删除自定义课程功能
       if(item.schoolYear === this.data.schoolYear && item.semester === this.data.semester) {
         courseArray.push(item)
       }
     }
-    // console.log(courseArray)
     
     $api.getCourses(this.data.schoolYear, this.data.semester)
       .then(res => {
         if(res.length) {
-          for(let item of res) {  // 把向服务器请求的数据也写入去deal
-            courseArray.push(item)
+          let courseNotesArray = wx.getStorageSync('courseNotes')
+          if(courseNotesArray && courseNotesArray.length) { // 写入课程的自定义的备注
+            for(let item of res) {
+              for(let i of courseNotesArray) {
+                if(item.id === i.class_id) {
+                  item.custom_notes = i.custom_notes
+                  break
+                }
+              }
+              courseArray.push(item)
+            }
+          }else {
+            for(let item of res) {  // 把向服务器请求的数据也写入去deal
+              courseArray.push(item)
+            }
           }
         }
-        // console.log(courseArray)
         this.dealCourse(courseArray)  // 将自定义课程和请求来的课程 一起deal
       })
       .catch(err => {
-        // console.log(courseArray)
         this.dealCourse(courseArray)  // 这里只会deal自定义课程
 
-        console.log(err)
         wx.showModal({
           content: '未从服务器获取到课程信息',
           showCancel: false,
@@ -519,21 +608,34 @@ Page({
   onLoad: function (options) {
     let that = this
 
+    // 根据当前时间设置课表日期
+    this.data.date = new Date()
+    let {weekdayAndDate} = this.getShowDate('now')
+    
     // 根据当前日期设置学年和学期
     let schoolYearAndSemester = getSchoolYearAndSemester()
-    schoolYearAndSemester.schoolYearList = schoolYearList
-    schoolYearAndSemester.semesterList = semesterList
-    this.setData(schoolYearAndSemester)
+    let {schoolYearIndex, schoolYear, thisSchoolYear, semesterIndex, semester, thisSemester, tempSchoolYearIndex, tempSemesterIndex} = schoolYearAndSemester
+    this.setData({
+      weekdayAndDate,
+
+      schoolYearIndex, schoolYear, thisSchoolYear, semesterIndex, semester, thisSemester, tempSchoolYearIndex, tempSemesterIndex,
+      schoolYearList,
+      semesterList,
+      weekList
+    })
+
 
     // 这一步↓和上面的设置↑重复了，后续看选用哪个。
     // 向服务器请求当前属于的学年、学期、周数
     $api.getSchoolTime()
     .then(res => {
-      // console.log(res)
-      let {nowWeek, schoolYearAndSemester, schoolYearList, semesterList} = res
+      let {nowWeek, schoolYearAndSemester, schoolYearList, semesterList, weekList} = res
       let {schoolYearIndex, schoolYear, semesterIndex, semester} = schoolYearAndSemester
       that.setData({
-        week: nowWeek,
+        weekIndex: nowWeek - 1, // index 为当前周数-1
+        week: nowWeek,  // number
+        thisWeekIndex: nowWeek - 1,
+        thisWeek: nowWeek,
         schoolYearIndex,
         schoolYear,
         semesterIndex,
@@ -541,7 +643,11 @@ Page({
         thisSchoolYear: schoolYear,
         thisSemester: semester,
         tempSchoolYearIndex: schoolYearIndex,
-        tempSemesterIndex: semesterIndex
+        tempSemesterIndex: semesterIndex,
+
+        schoolYearList,
+        semesterList,
+        weekList
       })
     })
 
@@ -579,6 +685,12 @@ Page({
     //   this.dealCourse([currPage.data.newCustomCourse])
     //   currPage.data.getNewCustomCourse = false
     // }
+
+    this.data.date = new Date()
+    let {weekdayAndDate} = this.getShowDate('now')
+    this.setData({
+      weekdayAndDate
+    })
   },
 
   /**

@@ -17,8 +17,10 @@ api.searchClass = (keyword, schoolYear, semester) => api.get(`/class?keyword=${k
 api.getClass = (classid) => api.get(`/classid/${classid}`)
 api.submitForm = (data) => api.post('/submitForm', data)
 api.getEvaluationProgress = () => api.get('/getEvaluationProgress')
-api.getSubmittedSheetsList = () => api.get('/getSubmittedSheetsList')
+api.getSubmittedSheetList = () => api.get('/getSubmittedSheetList')
 api.evaluationSheet = (sheet_id) => api.get(`/evaluationSheet/${sheet_id}`)
+api.getSubmittedAnnualReport = () => api.get('/getSubmittedAnnualReport')
+// api.evaluationSheet = (sheet_id) => api.get(`/evaluationSheet/${sheet_id}`)
 api.getSchoolTime = () => api.get('/getSchoolTime')
 
 module.exports = api

@@ -65,10 +65,21 @@ Page({
     if(tabid === this.data.currentTabid) {
       return
     }
-    this.setData({
-      currentTabid: tabid
-    })
-    this.getRecords(tabid)
+    this.data.currentTabid = tabid
+    switch (tabid) {
+      case 0:
+        // 待改
+        this.getRecords(tabid)
+
+        break;
+      case 1:
+        this.requestEvaluationSheetList()
+        break
+      case 2:
+        this.requestAnnualReport()
+      default:
+        break;
+    }
   },
 
   // 根据不同的tabid获取不同的记录内容
@@ -76,17 +87,20 @@ Page({
     switch (tabid) {
       case 0:
         this.setData({
-          ec_records: this.data.tobe_ec
+          ec_records: this.data.tobe_ec,
+          currentTabid: 0
         })
         break;
       case 1:
         this.setData({
-          ec_records: this.data.submitted_ec
+          ec_records: this.data.submitted_ec,
+          currentTabid: 1
         })
         break;
       case 2:
         this.setData({
-          ec_records: this.data.annual_report
+          ec_records: this.data.annual_report,
+          currentTabid: 2
         })
         break;
     }
@@ -100,31 +114,62 @@ Page({
     })
   },
 
+  requestEvaluationSheetList: function() {
+    $api.getSubmittedSheetList()
+    .then(res => {
+      console.log(res)
+      // 暂时决定不需要用setData，如果要用的话改一下this.getRecords()的传入参数，一起setData
+      this.data.submitted_ec = res
+      // this.setData({
+      //   submitted_ec: res.eS
+      // })
+      this.getRecords(this.data.currentTabid)
+    })
+    .catch(err => {
+      console.log(err)
+      wx.showToast({
+        title: '加载失败',
+        icon: 'none'
+      })
+    })
+  },
+
+  requestAnnualReport: function() {
+    $api.getSubmittedAnnualReport()
+    .then(res => {
+      console.log(res)
+      this.data.annual_report = res
+      this.getRecords(this.data.currentTabid)
+    })
+    .catch(err => {
+      console.log(err)
+      wx.showToast({
+        title: '加载失败',
+        icon: 'none'
+      })
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      currentTabid: parseInt(options.theme_id)  // 因为传入的theme_id是字符串类型，所以parseInt()成数字类型
-    })
-
-    $api.getSubmittedSheetsList()
-      .then(res => {
-        console.log(res)
-        // 暂时决定不需要用setData，如果要用的话改一下this.getRecords()的传入参数，一起setData
-        this.data.submitted_ec = res.eS
-        // this.setData({
-        //   submitted_ec: res.eS
-        // })
-        this.getRecords(this.data.currentTabid)
-      })
-      .catch(err => {
-        console.log(err)
-        wx.showToast({
-          title: '加载失败',
-          icon: 'none'
-        })
-      })
+    this.data.currentTabid = parseInt(options.theme_id)
+    console.log(this.data.currentTabid)
+    switch (this.data.currentTabid) {
+      case 0:
+        
+        break;
+      case 1:
+        this.requestEvaluationSheetList()
+        break
+      case 2:
+        this.requestAnnualReport()
+        break
+      default:
+        break;
+    }
+    
 
   },
 
