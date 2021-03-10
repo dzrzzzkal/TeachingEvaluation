@@ -62,7 +62,7 @@
             <view class="flex-item kcb-item" bindtap="showCardView" data-wlist='{{item}}' data-index='{{index}}' style="margin-left:{{(item.weekday-1)*98}}rpx;margin-top:{{(item.first_section-1)*50+2}}px;height:{{item.section_length*50-5}}px;background-color:{{item.color == '0'?'#FCB8AF':(item.color == '1'?'#81D2FC':'#F8C77A')}}" wx:if="{{item.show == 'true'}}">
               <view class="smalltext" style='-webkit-line-clamp: {{item.section_length == "3"?"4":(item.section_length == "4"?"6":"2")}};'>{{item.course_name}}</view>
               <view class='classRoom'>({{item.classroom == ''?'--':item.classroom}})</view>
-              <view class='logo' style="background-color:{{item.color == '0'?'#FA7666':(item.color == '1'?'#3CB9FB':'#F39C13')}}">{{item.color == '0'?'必':(item.color == '1'?'选':'其')}}</view>
+              <view class='logo' style="background-color:{{item.color == '0'?'#FA7666':(item.color == '1'?'#3CB9FB':'#F39C13')}}">{{item.color == '0'?'自':(item.color == '1'?'评':'教')}}</view>
               <!-- weekday代表星期几上课，first_section是开始上课的第一节，section_length上课长度，course_name课程名，classroom教室编号 -->
             </view>
           </view>
@@ -108,8 +108,7 @@
       </view>
       <view>
         <view class='noidle-item'>
-          <label class='noidle-item-prefix'>教师：{{cardView.teacher_id}}</label>
-          <!-- <label class='noidle-item-content'>江峰</label> -->
+          <label class='noidle-item-prefix'>教师：{{cardView.teacher_name}}</label>
         </view>
         <view class='noidle-item'>
           <label class='noidle-item-prefix'>教室：</label>
@@ -129,6 +128,13 @@
           <!-- <label class='noidle-item-content'>第1,2,3,4节次 (08:30~09:45)</label> -->
           <label class='noidle-item-content'>{{cardView.week}}</label>
         </view>
+        <!-- 只有自定义课程才能设置 是否为待评估课程 的(在首页显示)提醒 -->
+        <view class='noidle-item' wx:if="{{!cardView.class_id}}">
+          <label class='noidle-item-prefix'>是否为待评估课程：</label>
+          <checkbox-group bind:change="setTobeEvaluatedCourse" data-coursename="{{cardView.course_name}}" data-field="isTobeEvaluatedCourse">
+            <checkbox class="checkbox" value="true" checked="{{cardView.isTobeEvaluatedCourse === 'true'}}">是</checkbox>
+          </checkbox-group>
+        </view>
         <view class='noidle-item'>
           <label class='noidle-item-prefix'>备注：</label>
           <label class='noidle-item-content'>
@@ -136,13 +142,13 @@
           </label>
         </view>
         <view class="scrol-buttons">
-          <view class='scroll-button' wx:if="{{cardView.isCustomCourse}}" catch:tap="deleteCustomCourse" style="font-size: 26rpx; color: gray;">
+          <view class='scroll-button' wx:if="{{!cardView.class_id}}" catch:tap="deleteCustomCourse" style="font-size: 26rpx; color: gray;">
             删除
           </view>
         </view>
         
       </view>
-      <view class='drawer_logo' style="background-color:{{cardView.color == '0'?'#FA7666':(cardView.color == '1'?'#3CB9FB':'#F39C13')}}">{{cardView.color == '0'?'必':(cardView.color == '1'?'选':'其')}}</view>
+      <view class='drawer_logo' style="background-color:{{cardView.color == '0'?'#FA7666':(cardView.color == '1'?'#3CB9FB':'#F39C13')}}">{{cardView.color == '0'?'自':(cardView.color == '1'?'评':'教')}}</view>
     </view>
   </view>
 

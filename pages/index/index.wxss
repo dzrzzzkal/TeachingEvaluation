@@ -53,17 +53,17 @@
   margin: 35rpx 15rpx;
 }
 
-/* 今日评估课程栏样式 */  /* today-evaluation-courses */
+/* 今日评估课程栏样式 */  /* tobe-evaluation-courses */
 /* 包含了下面 听课任务情况栏 中的 待提交报告课程 的一些样式 */
-.today-ec-container {
+.tobe-ec-container {
   margin-bottom: 10rpx;
 }
 
-.today-ec {
+.tobe-ec {
   margin: 10rpx 0;
 }
 
-.today-ec image {
+.tobe-ec image {
   display: inline-block;
 
   width: 30rpx;
@@ -71,7 +71,7 @@
   margin: 0 10rpx 3rpx;
 }
 
-.today-ec text, .tobeSubmitted-ec text {
+.tobe-ec text, .tobeSubmitted-ec text {
   display: inline-block;
   
   overflow: hidden;
@@ -80,11 +80,11 @@
 }
 
 .ec-name {
-  width: 230rpx;
+  width: 200rpx;
 }
 
-.ec-time, .ec-teacher {
-  width: 150rpx;
+.ec-time, .ec-week, .ec-teacher {
+  width: 100rpx;
 }
 
 .ec-location, .tobeSubmitted-ec-process {

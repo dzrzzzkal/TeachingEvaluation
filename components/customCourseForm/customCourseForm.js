@@ -73,8 +73,8 @@ Component({
           // [`formData.time`]: e.detail.value
           [`formData.time`]: timeArray[0][index[0]] + section
         })
-        console.log(e.detail.value)
-        console.log(this.data.formData.time)
+        // console.log(e.detail.value)
+        // console.log(this.data.formData.time)
     },
     bindWeekChange: function (e) {
       let index = e.detail.value
@@ -94,16 +94,16 @@ Component({
           weekIndex: index,
           [`formData.week`]: week
         })
-      console.log(e.detail.value)
-      console.log('week: ' + this.data.formData.week)
+      // console.log(e.detail.value)
+      // console.log('week: ' + this.data.formData.week)
     },
 
     formInputChange(e) {
       const {field} = e.currentTarget.dataset
       this.setData({
-          [`formData.${field}`]: e.detail.value
+        [`formData.${field}`]: typeof(e.detail.value) === 'boolean' ? String(e.detail.value) : e.detail.value  // 如果是Boolean类型，转成String类型
       })
-      console.log(this.data.formData)
+      // console.log(this.data.formData)
     },
 
     submitData: function() {
@@ -140,17 +140,17 @@ Component({
           }else {
             min_ = max_ = week_
           }
-          console.log('min_-max_   min-max : ')
-          console.log(min_ + '-' + max_ + ' ' + min + '-' + max )
+          // console.log('min_-max_   min-max : ')
+          // console.log(min_ + '-' + max_ + ' ' + min + '-' + max )
           if(max_ < min || max < min_) {  // 提交的自定义课程的周，和现有课程表的课程的周 完全不重合
-            console.log('周数不重合')
+            // console.log('周数不重合')
             continue  // 提交的周数 与 找到的该节课周数 不重合，不会发生冲突，因此不需要往下判断节次是否重合，直接跳入下一循环
           }else if((min_ >= min && max_ <= max)  || (min >= min_ && max <= max_)) { // 总体week/week_更大，全部包含对方，完全重合
-            console.log('week或week_完全包含对方，直接进行下一步course_time是否重合判断即可。')
+            // console.log('week或week_完全包含对方，直接进行下一步course_time是否重合判断即可。')
           }else if(max_ >= min && max_ < max) { // 总体week更大，部分重合，此时不可能完全包含了
-            console.log('部分重合：' + min + '-' + max_)
+            // console.log('部分重合：' + min + '-' + max_)
           }else if(max >= min_ && max < max_) { // 总体week_更大，部分重合，此时不可能完全包含了
-            console.log('部分重合：' + min_ + '-' + max)
+            // console.log('部分重合：' + min_ + '-' + max)
           }
 
           // 提交的周数 与 找到的该节课周数 存在重合，可能存在冲突，需要继续判断节次是否重合
@@ -165,7 +165,7 @@ Component({
           }
           for(let j of checkStr) {
             if(checkedStr.indexOf(j) >= 0) {
-              console.log(`与课程 ${i.course_name} ${i.week} ${i.time} 冲突`)
+              // console.log(`与课程 ${i.course_name} ${i.week} ${i.time} 冲突`)
               return `与 ${i.course_name} ${i.week} ${i.time} 冲突`   // 存在冲突，不能提交表单，直接结束整个函数，返回失败原因
             }
           }
@@ -193,7 +193,7 @@ Component({
 
     submitForm() {
       this.selectComponent('#form').validate((valid, errors) => {
-        console.log('valid', valid, errors)
+        // console.log('valid', valid, errors)
         if (!valid) {
           const firstError = Object.keys(errors)
           if (firstError.length) {

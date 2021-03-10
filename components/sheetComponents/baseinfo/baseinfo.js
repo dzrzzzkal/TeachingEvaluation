@@ -101,6 +101,7 @@ Component({
       let classid = this.properties.classid
       $api.getClass(classid)
         .then(res => {
+          console.log(res)
           // let time = util.formatTime(new Date()).split(' ')[0].split('/')
           let daytime = util.formatTime(new Date()).split(' ')[0]
 
@@ -122,9 +123,11 @@ Component({
           query.selectAll('.initialization').fields({
               dataset: true,
             },
-            function(res) {
-              // console.log(res)
-              res.forEach(item => {
+            function(result) {
+              // console.log(result)
+              let teacher_id = { 'baseinfo.teacher_id': that.data.classinfo.teacher_id }
+              that.triggerEvent('inputChange', teacher_id)
+              result.forEach(item => {
                 let field = item.dataset.field
 
                 // 要先classinfo，因为classinfo和courseinfo中都有id，要的是开课班号classid
@@ -137,11 +140,13 @@ Component({
                   that.setData({
                     [field]: that.data.courseinfo[field]
                   })
-                }else {
+                }else if(field === 'date') { // date
                   that.setData({
-                    [field]: 'waiting for modify...'
+                    [field]: that.data.daytime
                   })
                 }
+                // console.log(field)
+                // console.log(that.data[field])
                 let obj = { [`baseinfo.${field}`]: that.data[field] }
                 that.triggerEvent('inputChange', obj)
               })
@@ -150,7 +155,7 @@ Component({
         }).catch(err => console.log(err))
 
       // 发送本自定义组件中的field，用来检验本组件中未填的field
-      this.triggerEvent('sendFields', {baseinfo: ['setupUnit', 'name', 'id', 'teacher', 'date', 'start_time', 'end_time', 'place', 'attend_num', 'actual_num', 'role']})
+      this.triggerEvent('sendFields', {baseinfo: ['setupUnit', 'name', 'id', 'teacher_id', 'teacher_name', 'date', 'start_time', 'end_time', 'place', 'attend_num', 'actual_num', 'role']})
     }
   }
 })

@@ -1,0 +1,17 @@
+/* pages/tobeEvaluatedCourse/tobeEvaluatedCourse.wxss */
+/* pages/evaluationRecord/evaluationRecord.wxss */
+.container {
+  padding: 0;
+}
+
+/* content样式 */
+.content {
+  padding: 3rpx 5rpx;
+}
+
+.box {
+  height: 200rpx;
+  margin: 7rpx 0;
+  background-color: #fff;
+  border-radius: 10rpx;
+}

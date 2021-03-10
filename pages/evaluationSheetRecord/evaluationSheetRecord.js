@@ -1,6 +1,7 @@
 // pages/evaluationSheetRecord/evaluationSheetRecord.js
 
 const $api = require('../../api/api')
+const downloadAndOpenDocument = require('../../utils/downloadAndOpenDocument')
 
 Page({
 
@@ -10,6 +11,10 @@ Page({
   data: {
     sheet_id: '',
     sheet: {},
+  },
+
+  download: function() {
+    downloadAndOpenDocument('/api/downloadEvaluationSheet/' + this.data.sheet_id)
   },
 
   /**

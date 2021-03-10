@@ -19,7 +19,7 @@ Page({
     weekList: [],
     showWeeks: false,
 
-    date: '', // onLoad onShow时会被设置为new Date()，但如果进行了切换周数，date会被设置为不会流动的时分秒固定的的时间对象，值为切换前的时间±(7 * 切换前后周数差值)，随着周数的切换改变年月日。直到重新onLoad onShow重新设为new Date()
+    date: '', // onLoad时会被设置为new Date()，但如果进行了切换周数，date会被设置为不会流动的时分秒固定的的时间对象，值为切换前的时间±(7 * 切换前后周数差值)，随着周数的切换改变年月日。直到重新onLoad重新设为new Date()
     addDate: 0,
     // 只有是在当前学年和学期下切换周才改变日期
     weekdayAndDate: [
@@ -87,6 +87,8 @@ Page({
     cardCourseIndex: -1,  // 当前cardView的数据 在this.data.wlist中对应的index
 
     customCourseArray: [],  // getStorage获取的自定义课程
+
+    timer: {},  // 定时器，用于延迟写备注后写入storage，减少重复调用wx.setStorageSync
   },
 
   clickHideWeeks: function (e) {
@@ -102,20 +104,40 @@ Page({
       course_name: e.currentTarget.dataset.wlist.course_name,
       color: e.currentTarget.dataset.wlist.color,
       classroom: e.currentTarget.dataset.wlist.classroom,
-      teacher_id: e.currentTarget.dataset.wlist.teacher_id,
+      teacher_name: e.currentTarget.dataset.wlist.teacher_name ? e.currentTarget.dataset.wlist.teacher_name : e.currentTarget.dataset.wlist.teacher,  // 自定义课程中保存的变量是teacher
       classroom: e.currentTarget.dataset.wlist.classroom,
       time: e.currentTarget.dataset.wlist.time,
       week: e.currentTarget.dataset.wlist.week,
       custom_notes: e.currentTarget.dataset.wlist.custom_notes,
       description: e.currentTarget.dataset.wlist.description, // 可能删掉
-      isCustomCourse: e.currentTarget.dataset.wlist.isCustomCourse  // 用于判断是否为自定义课程
+      // isCustomCourse: e.currentTarget.dataset.wlist.isCustomCourse,  // 用于判断是否为自定义课程
+      isTobeEvaluatedCourse: e.currentTarget.dataset.wlist.isTobeEvaluatedCourse
     }
     this.setData({
       cardView: cardView,
       cardCourseIndex: parseInt(e.currentTarget.dataset.index)
     })
     this.util("open");
+  },
 
+  // 只有自定义课程才能设置 是否为待评估课程 的(在首页显示)提醒
+  setTobeEvaluatedCourse(e) {
+    const {field} = e.currentTarget.dataset
+    let cardCourseIndex = this.data.cardCourseIndex
+    this.setData({
+      [`cardView.${field}`]: e.detail.value[0] ? e.detail.value[0] : 'false',
+      [`wlist[${cardCourseIndex}].${field}`]: e.detail.value[0] ? e.detail.value[0] : 'false',
+      [`wlist[${cardCourseIndex}].color`]: e.detail.value[0] === 'true' ? 0 : 1
+    })
+    let course_name = e.currentTarget.dataset.coursename
+    let customCourseArray = wx.getStorageSync('customCourse')
+    for(let i of customCourseArray) {
+      if(course_name === i.course_name) {
+        i.isTobeEvaluatedCourse = e.detail.value[0] ? e.detail.value[0] : 'false'
+        wx.setStorageSync('customCourse', customCourseArray)
+        break
+      }
+    }
   },
 
   hideModal() {
@@ -375,48 +397,50 @@ Page({
   // 在card中设置课程备注
   formInputChange(e) {
     const {field, classid, coursename} = e.currentTarget.dataset
-    console.log(e.currentTarget.dataset)
     let cardCourseIndex = this.data.cardCourseIndex
     this.setData({
       [`cardView.${field}`]: e.detail.value,
       [`wlist[${cardCourseIndex}].${field}`]: e.detail.value
     })
 
-    if(classid) {   // 是设置向服务器请求的课程的备注，因为服务器传来的开课编号是唯一的
-      let courseNotes = {
-        class_id: classid,
-        custom_notes: e.detail.value
-      }
-      let courseNotesArray = wx.getStorageSync('courseNotes')
-      if(!courseNotesArray || !courseNotesArray.length) { // courseNotesArray未设置或为[]
-        courseNotesArray = []
-        courseNotesArray.push(courseNotes)
-        wx.setStorageSync('courseNotes', courseNotesArray)
-      }else {
-        for(let i in courseNotesArray) {
-          if(courseNotesArray[i].class_id === classid) {
-            if(!e.detail.value.length) {
-              courseNotesArray.splice(i, 1)
-            }else {
-              courseNotesArray[i].custom_notes = e.detail.value
+    clearTimeout(this.data.timer)
+    this.data.timer = setTimeout(() => {
+      if(classid) {   // 是设置向服务器请求的课程的备注，因为服务器传来的开课编号是唯一的
+        let courseNotes = {
+          class_id: classid,
+          custom_notes: e.detail.value
+        }
+        let courseNotesArray = wx.getStorageSync('courseNotes')
+        if(!courseNotesArray || !courseNotesArray.length) { // courseNotesArray未设置或为[]
+          courseNotesArray = []
+          courseNotesArray.push(courseNotes)
+          wx.setStorageSync('courseNotes', courseNotesArray)
+        }else {
+          for(let i in courseNotesArray) {
+            if(courseNotesArray[i].class_id === classid) {
+              if(!e.detail.value.length) {
+                courseNotesArray.splice(i, 1)
+              }else {
+                courseNotesArray[i].custom_notes = e.detail.value
+              }
+              wx.setStorageSync('courseNotes', courseNotesArray)
+              return
             }
-            wx.setStorageSync('courseNotes', courseNotesArray)
+          }
+          courseNotesArray.push(courseNotes)
+          wx.setStorageSync('courseNotes', courseNotesArray)
+        }
+      }else { // 是设置自定义课程的备注
+        let customCourseArray = wx.getStorageSync('customCourse')
+        for(let i of customCourseArray) {
+          if(i.course_name === coursename && i.schoolYear === this.data.schoolYear && i.semester === this.data.semester) {
+            i.custom_notes = e.detail.value
+            wx.setStorageSync('customCourse', customCourseArray)
             return
           }
         }
-        courseNotesArray.push(courseNotes)
-        wx.setStorageSync('courseNotes', courseNotesArray)
       }
-    }else { // 是设置自定义课程的备注
-      let customCourseArray = wx.getStorageSync('customCourse')
-      for(let i of customCourseArray) {
-        if(i.course_name === coursename && i.schoolYear === this.data.schoolYear && i.semester === this.data.semester) {
-          i.custom_notes = e.detail.value
-          wx.setStorageSync('customCourse', customCourseArray)
-          return
-        }
-      }
-    }
+    }, 3000);
 
     // console.log(this.data.cardView)
     // console.log(this.data.wlist[cardCourseIndex])
@@ -492,7 +516,15 @@ Page({
         // let item = i // 坑！这样内循环中的item始终指向的是i的地址，即使内循环设置不同的i.first_section=xxx或yyy等，在同一个内循环中item的first_section数值总为最后一个设置的i.first_section=yyy
         let item = JSON.parse(JSON.stringify(i))
         // 将first_section等写入api请求来的课程，以展示
-        item.color = 2
+        let color
+        if(item.id) { // 服务器请求课程
+          color = 2
+        }else if(item.isTobeEvaluatedCourse === 'true') {  //自定义课程中的待评估课程
+          color = 0
+        }else { //自定义课程中的非待评估课程
+          color = 1
+        }
+        item.color = color
         item.weekday = weekday
         item.first_section = first_section
         item.section_length = section_length
@@ -528,7 +560,7 @@ Page({
     let customCourseArray = wx.getStorageSync('customCourse')
     this.data.customCourseArray = customCourseArray
     for(let item of customCourseArray) {
-      item.isCustomCourse = true  // 因为customCourseArray要写入this.data.wlist，用于判断this.data.wlist中的item哪个是自定义课程，以增加一个删除自定义课程功能
+      // item.isCustomCourse = true  // 因为customCourseArray要写入this.data.wlist，用于判断this.data.wlist中的item哪个是自定义课程，以增加一个删除自定义课程功能
       if(item.schoolYear === this.data.schoolYear && item.semester === this.data.semester) {
         courseArray.push(item)
       }
@@ -570,8 +602,6 @@ Page({
   deleteCustomCourse: function(e) {
     const that = this
     wx.showModal({
-      // cancelColor: 'cancelColor',
-      // title: '确定删除该自定义课程吗',
       content: '确定删除该自定义课程吗',
       success(res) {
         if (res.confirm) {
@@ -686,11 +716,6 @@ Page({
     //   currPage.data.getNewCustomCourse = false
     // }
 
-    this.data.date = new Date()
-    let {weekdayAndDate} = this.getShowDate('now')
-    this.setData({
-      weekdayAndDate
-    })
   },
 
   /**

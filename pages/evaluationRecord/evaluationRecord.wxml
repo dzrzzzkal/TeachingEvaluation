@@ -7,17 +7,28 @@
       </view>
     </block>
   </view>
-  <view class="content">
-    <view wx:if="{{ec_records[0] == null}}">没有记录喔</view>
-    <view wx:else>
-      <block wx:for="{{ec_records}}" wx:key="index" >
-        <view class="box" bind:tap="evaluationSheetClick" data-sheetid="{{item.id}}">
-          <text>{{item.course_name}}</text>
-          <text>{{item.classification}}</text>
-          <view>{{item.teacher_id}}</view>
-          <view>createdAt：{{item.createdAt}}</view>
-        </view>
-      </block>
+  <view class='search-container'>
+    <view class="inputView" >
+      <input type="search" bind:input="searchInput" name="" placeholder="{{placeholder}}" class='input' placeholder-style="font-size: 32rpx;" bind:confirm="search"/>
+    </view>
+    <view class="imageView" bind:tap="search">
+      <image src='/images/search.jpg' class='image' />
     </view>
   </view>
+  <view>
+    <scroll-view class="content" scroll-y="true" scroll-x="false" style="height: 100vh;" bindscrolltolower='scrollToLower' enable-back-to-top="true">
+      <view wx:if="{{ec_records[0] == null}}">没有记录喔</view>
+      <view wx:else>
+        <block wx:for="{{ec_records}}" wx:key="index" >
+          <view class="box" bind:tap="recordClick" data-id="{{item.id}}">
+            <text>{{item.course_name}}</text>
+            <text>{{item.classification}}</text>
+            <view>{{item.teacher_id}}</view>
+            <view>createdAt：{{item.createdAt}}</view>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+  </view>
+  
 </view>

@@ -39,12 +39,12 @@ Page({
             title: '没有搜索到相关课程哦',
             icon: 'none'
           })
-          return
-        }
-        for(let i of res) {
-          let {time, classroom} = i
-          i.time = time.substring(0, time.length - 1)
-          i.classroom = classroom.substring(0, classroom.length - 1)
+        }else {
+          for(let i of res) {
+            let {time, classroom} = i
+            i.time = time.substring(0, time.length - 1)
+            i.classroom = classroom.substring(0, classroom.length - 1)
+          }
         }
         that.setData({
           classes: res

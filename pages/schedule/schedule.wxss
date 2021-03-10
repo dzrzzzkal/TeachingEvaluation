@@ -1,5 +1,29 @@
 /* pages/schedule/schedule.wxss */
 
+/* checkbox .wx-checkbox-input{ */
+.checkbox .wx-checkbox-input{
+  width: 30rpx; 
+  height: 30rpx;
+  border-radius: 50%
+}
+/*checkbox选中后样式  */
+.checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+  background: rgb(175, 226, 92);
+  border-color:rgb(175, 226, 92);
+}
+/*checkbox选中后图标样式  */
+.checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+  width: 20rpx;
+  height: 20rpx;  
+  line-height: 20rpx;
+  text-align: center;
+  font-size: 22rpx;
+  color: #fff;
+  background: transparent;
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
+}
+
 .scroll-buttons {
   margin-top: 2%;
   display: flex;

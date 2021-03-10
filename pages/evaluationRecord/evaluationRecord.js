@@ -1,6 +1,7 @@
 // pages/evaluationRecord/evaluationRecord.js
 
 const $api = require('../../api/api')
+const downloadAndOpenDocument = require('../../utils/downloadAndOpenDocument')
 
 Page({
 
@@ -12,8 +13,13 @@ Page({
     tab_control_item: ['待评估', '已评估','年度报告'],
     currentTabid: 0,
 
+    placeholder: '',
+
     // 请求返回的内容
     // issuccess: true,
+
+    keyword: '',
+
     ec_records: '',
     tobe_ec: [
       {
@@ -57,6 +63,10 @@ Page({
         content: 'annual_report_record2',
       },
     ],
+
+    currentPage: 1,
+    pageSize: 8,
+    totalPage: 0,
   },
 
   // 点击tab-control
@@ -66,16 +76,27 @@ Page({
       return
     }
     this.data.currentTabid = tabid
+    this.data.currentPage = 1
+    this.totalPage = 0
+    this.distinguishRequestContent(tabid)
+  },
+
+  distinguishRequestContent: function(tabid) {
     switch (tabid) {
       case 0:
         // 待改
         this.getRecords(tabid)
-
         break;
       case 1:
+        this.setData({
+          placeholder: '输入 班号/课程编号/教师/课程名/日期(yyyy/mm/dd)'
+        })
         this.requestEvaluationSheetList()
         break
       case 2:
+        this.setData({
+          placeholder: '输入 日期(yyyy/mm/dd)'
+        })
         this.requestAnnualReport()
       default:
         break;
@@ -107,25 +128,70 @@ Page({
   },
 
   // 点击查看某个具体的evaluationSheet内容
-  evaluationSheetClick: function(e) {
-    let sheet_id = e.currentTarget.dataset.sheetid
-    wx.navigateTo({
-      url: `../evaluationSheetRecord/evaluationSheetRecord?sheet_id=${sheet_id}`
+  recordClick: function(e) {
+    let id = e.currentTarget.dataset.id
+    switch (this.data.currentTabid) {
+      case 0:
+        
+        break;
+      case 1:
+        wx.navigateTo({
+          url: `../evaluationSheetRecord/evaluationSheetRecord?sheet_id=${id}`
+        })
+        break;
+      case 2:
+        downloadAndOpenDocument('/api/annualReport/' + id)
+      default:
+        break;
+    }
+    
+  },
+
+  searchInput: function(e) {
+    this.setData({
+      keyword: e.detail.value
     })
   },
 
+  search: function() {
+    if(!this.data.keyword) {
+      wx.showToast({
+        title: '请输入搜索关键字哦',
+        icon: 'none'
+      })
+      return
+    }
+    this.distinguishRequestContent(this.data.currentTabid)
+  },
+
   requestEvaluationSheetList: function() {
-    $api.getSubmittedSheetList()
-    .then(res => {
-      console.log(res)
+    wx.showLoading({
+      title: 'Loading',
+    })
+    $api.getSubmittedSheetList(this.data.keyword, this.data.currentPage, this.data.pageSize)
+    .then(result => {
+      console.log(result)
+      let res = result.rows
+      this.data.totalPage = Math.ceil(result.count / this.data.pageSize)
       // 暂时决定不需要用setData，如果要用的话改一下this.getRecords()的传入参数，一起setData
-      this.data.submitted_ec = res
+      // this.data.submitted_ec = res
+      if(this.data.currentPage == 1) {
+        this.data.submitted_ec = res
+      }else {
+        this.data.submitted_ec = [...this.data.submitted_ec, ...res]
+      }
       // this.setData({
       //   submitted_ec: res.eS
       // })
       this.getRecords(this.data.currentTabid)
+      wx.hideLoading({
+        success: (res) => {},
+      })
     })
     .catch(err => {
+      wx.hideLoading({
+        success: (res) => {},
+      })
       console.log(err)
       wx.showToast({
         title: '加载失败',
@@ -135,13 +201,28 @@ Page({
   },
 
   requestAnnualReport: function() {
-    $api.getSubmittedAnnualReport()
-    .then(res => {
-      console.log(res)
-      this.data.annual_report = res
+    wx.showLoading({
+      title: 'Loading',
+    })
+    $api.getSubmittedAnnualReport(this.data.keyword, this.data.currentPage, this.data.pageSize)
+    .then(result => {
+      console.log(result)
+      let res = result.rows
+      this.data.totalPage = Math.ceil(result.count / this.data.pageSize)
+      if(this.data.currentPage === 1) {
+        this.data.annual_report = res
+      }else {
+        this.data.annual_report = [...this.data.annual_report, ...res]
+      }
       this.getRecords(this.data.currentTabid)
+      wx.hideLoading({
+        success: (res) => {},
+      })
     })
     .catch(err => {
+      wx.hideLoading({
+        success: (res) => {},
+      })
       console.log(err)
       wx.showToast({
         title: '加载失败',
@@ -150,27 +231,27 @@ Page({
     })
   },
 
+  scrollToLower: function() {
+    if(this.data.totalPage <= this.data.currentPage) {
+      // if(this.data.currentPage == 1) {
+      //   return
+      // }
+      // wx.showToast({
+      //   title: '没有下一页数据了',
+      //   icon: 'none'
+      // })
+      return
+    }
+    ++this.data.currentPage
+    this.distinguishRequestContent(this.data.currentTabid)
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     this.data.currentTabid = parseInt(options.theme_id)
-    console.log(this.data.currentTabid)
-    switch (this.data.currentTabid) {
-      case 0:
-        
-        break;
-      case 1:
-        this.requestEvaluationSheetList()
-        break
-      case 2:
-        this.requestAnnualReport()
-        break
-      default:
-        break;
-    }
-    
-
+    this.distinguishRequestContent(this.data.currentTabid)
   },
 
   /**
@@ -212,7 +293,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    
   },
 
   /**

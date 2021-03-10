@@ -54,15 +54,15 @@
       </view>
       <view class="time">
         <label for="">
-          <input bind:input="inputChange" data-field="year" placeholder="year" />
+          <input bind:input="inputChange" data-field="year" placeholder="year" value="{{year}}" bind:change="inputChange" disabled="true"/>
           年
         </label>
         <label for="">
-          <input bind:input="inputChange" data-field="month" placeholder="month" />
+          <input bind:input="inputChange" data-field="month" placeholder="month" value="{{month}}" bind:change="inputChange" disabled="true"/>
           月
         </label>
         <label for="">
-          <input bind:input="inputChange" data-field="day" placeholder="day" />
+          <input bind:input="inputChange" data-field="day" placeholder="day" value="{{day}}" bind:change="inputChange" disabled="true"/>
           日
         </label>
       </view>

@@ -28,6 +28,34 @@
   border-bottom: 1rpx solid var(--theme-orange);
 }
 
+/* 搜索框样式 */
+.search-container{
+  width: 100%;
+  margin: 5rpx 0;
+  padding: 0 5rpx;
+  /* height: 85rpx; */
+  background-color: white;
+  display: flex;
+}
+.inputView{
+  border-radius: 6rpx;
+  background-color: #F5F7F9;
+  width: 88%;
+}
+.input{
+  padding-left: 20rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.imageView{
+  width: 12%;
+}
+.image{
+  width: 50rpx;
+  height: 50rpx;
+}
+
 /* content样式 */
 .content {
   padding: 3rpx 5rpx;

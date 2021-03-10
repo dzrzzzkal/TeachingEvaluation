@@ -15,6 +15,7 @@ function identityFilter(pageObj) {
         wx.redirectTo({
           url: '/pages/login/login ',
         })
+        console.log('redirect to loginPage')
       }, 
       // service.identityCheck(() => {
       //   // 跳转到登录页
@@ -22,11 +23,20 @@ function identityFilter(pageObj) {
       //     url: '/pages/login/login',
       //   })
       // },
-      () => {
+
+      (() => {
         // 获取页面实例，防止this劫持
         let currentInstance = getPageInstance()
         _onShow.call(currentInstance) // ?
-      })
+      })()
+      // () => {
+      // console.log('!!!!!!!!')
+      //   // 获取页面实例，防止this劫持
+      //   let currentInstance = getPageInstance()
+      //   _onShow.call(currentInstance) // ?
+      //   console.log('......')
+      // }
+      )
     }
   }
   return pageObj

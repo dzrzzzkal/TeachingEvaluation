@@ -17,9 +17,9 @@ api.searchClass = (keyword, schoolYear, semester) => api.get(`/class?keyword=${k
 api.getClass = (classid) => api.get(`/classid/${classid}`)
 api.submitForm = (data) => api.post('/submitForm', data)
 api.getEvaluationProgress = () => api.get('/getEvaluationProgress')
-api.getSubmittedSheetList = () => api.get('/getSubmittedSheetList')
+api.getSubmittedSheetList = (keyword, currentPage, pageSize) => api.get(`/getSubmittedSheetList?keyword=${keyword}&page=${currentPage}&size=${pageSize}`)
 api.evaluationSheet = (sheet_id) => api.get(`/evaluationSheet/${sheet_id}`)
-api.getSubmittedAnnualReport = () => api.get('/getSubmittedAnnualReport')
+api.getSubmittedAnnualReport = (keyword, currentPage, pageSize) => api.get(`/getSubmittedAnnualReport?keyword=${keyword}&page=${currentPage}&size=${pageSize}`)
 // api.evaluationSheet = (sheet_id) => api.get(`/evaluationSheet/${sheet_id}`)
 api.getSchoolTime = () => api.get('/getSchoolTime')
 

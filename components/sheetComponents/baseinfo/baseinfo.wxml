@@ -3,25 +3,25 @@
   <!-- <mp-cell prop="username" title="username" ext-class=""></mp-cell> -->
   <label for="">
     开课单位：
-    <input id="setupUnit" bind:input="inputChange" value="{{courseinfo.setupUnit}}" data-field="setupUnit" class="initialization weui-input" placeholder="" type="text" />
+    <input id="setupUnit" bind:input="inputChange" value="{{courseinfo.setupUnit}}" data-field="setupUnit" class="initialization weui-input" placeholder="" type="text" disabled="true"/>
   </label>
   <label for="">
     课程名称：
-    <input bind:input="inputChange" value="{{courseinfo.name}}" data-field="name" class="initialization weui-input" placeholder="" type="text" />
+    <input bind:input="inputChange" value="{{courseinfo.name}}" data-field="name" class="initialization weui-input" placeholder="" type="text" disabled="true"/>
   </label>
   <label for="">
     开课班号：
-    <input bind:input="inputChange" value="{{classinfo.id}}" data-field="id" class="initialization weui-input" placeholder="" type="text" />
+    <input bind:input="inputChange" value="{{classinfo.id}}" data-field="id" class="initialization weui-input" placeholder="" type="text" disabled="true"/>
   </label>
   <label for="">
-    授课教师id(待改成name)：
+    授课教师：
     <!-- 目前是id，待改成name -->
-    <input bind:input="inputChange" value="{{classinfo.teacher_id}}" data-field="teacher" class="initialization weui-input" placeholder="" type="text" />
+    <input bind:input="inputChange" value="{{classinfo.teacher_name}}" data-field="teacher_name" class="initialization weui-input" placeholder="" type="text" disabled="true"/>
   </label>
   <label for="">
     听课时间：
     <!-- 待改，改成匹配课程表上课程的最近日期 或具体课程的日期，因为填表日期可能与听课日期不一致，要么就不设定默认值 -->
-    <input bind:input="inputChange" value="{{daytime}}" data-field="date" class="initialization weui-input" placeholder="" type="text" />
+    <input bind:input="inputChange" value="{{daytime}}" data-field="date" class="initialization weui-input" placeholder="日期格式：yyyy/mm/dd" type="text" />
     <input bind:input="inputChange" data-field="start_time" class="weui-input" placeholder="start-time" type="text" />~
     <input bind:input="inputChange" data-field="end_time" class="weui-input" placeholder="end-time" type="text" />(具体时分)
   </label>
@@ -42,7 +42,7 @@
     听课类型：
     <radio-group bind:change="radioChange" data-field="role" data-fieldData="roleItems">
       <label for="" wx:for="{{roleItems}}" wx:key="value" >
-        <radio value="{{item.value}}" checked="{{item.checked}}" />
+        <radio value="{{item.value}}" checked="{{item.checked}}" disabled="true"/>
         {{item.name}}
       </label>
     </radio-group>

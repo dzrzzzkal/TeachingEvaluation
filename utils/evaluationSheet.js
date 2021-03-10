@@ -90,6 +90,19 @@ const checkRules = (that, evaluationComponentName) => {
       }else {
         let arr = that.data.componentFields[i]
         for(let j of arr) {
+          if(i === 'baseinfo') {
+            if(j === 'attend_num' || j === 'actual_num') {
+              if(that.data.contentData[i][j] != parseInt(that.data.contentData[i][j])) {
+                err = j + ' 不是数字类型 或'
+                break
+              }
+            }else if(j === 'date') {
+              if(!that.data.contentData[i][j] || !that.data.contentData[i][j].match(/^[0-9]{4}\/[0-9]{2}\/[0-9]{2}/)) {
+                err = j + '没有按照格式：yyyy/mm/dd填写 或'
+                break
+              }
+            }
+          }
           if(!that.data.contentData[i][j] || that.data.contentData == '') {
             err = j
             break
@@ -157,6 +170,10 @@ const dealAndSubmitForm = (that, evaluationComponentName) => {
           console.log(res)
           wx.showToast({
             title: '提交成功!',
+            duration: 2000
+          })
+          wx.navigateBack({
+            delta: 1,
           })
         })
         .catch(err => {

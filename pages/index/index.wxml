@@ -10,16 +10,17 @@
     </block>
   </view>
 
-  <!-- 今日评估课程栏 -->  <!-- today-evaluation-courses -->
-  <view class="today-ec-container module-container">
-    <view class="module-title">今日评估课程栏</view>
+  <!-- 待评估课程栏 -->  <!-- tobe-evaluation-courses -->
+  <view class="tobe-ec-container module-container" bind:tap="tobeECClick">
+    <view class="module-title">待评估课程栏</view>
     <view class="module-content">
-      <block wx:for="{{today_ec}}" wx:key="index">
-        <view class="today-ec">
-          <image wx:if="{{item.issubmitted}}" src="images/completed.png"></image>
+      <block wx:for="{{tobe_ec}}" wx:key="index">
+        <view class="tobe-ec">
+          <image wx:if="{{item.isPastTime}}" src="images/completed.png"></image>
           <image wx:else src="images/not_completed.png"></image>
           <text class="ec-name">{{item.ec_name}}</text>
-          <text class="ec-time">第 {{item.ec_time}} 节</text>
+          <text class="ec-week">{{item.ec_week}}</text>
+          <text class="ec-time">{{item.ec_time}}</text>
           <text class="ec-location">{{item.ec_location}}</text>
         </view>
       </block>

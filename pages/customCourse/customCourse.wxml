@@ -1,24 +1,24 @@
-<!--components/customCourseForm/customCourseForm.wxml-->
+<!--pages/customCourse/customCourse.wxml-->
 <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
-  <view class="page__hd">
+  <!-- <view class="page__hd">
     <view class="page__title">Form</view>
     <view class="page__desc">添加课程</view>
-  </view>
+  </view> -->
   <view class="page__bd">
     <mp-form id="form" rules="{{rules}}" models="{{formData}}">
       <mp-cells title="表单" footer="">
         <mp-cell prop="course_name" title="事件名" ext-class="">
-          <input bindinput="formInputChange" data-field="course_name" class="weui-input" placeholder="事件名"/>
+          <input bindinput="formInputChange" data-field="course_name" class="weui-input" placeholder="事件名" value="{{formData.course_name}}"/>
         </mp-cell>
         <mp-cell prop="teacher" title="教师" ext-class="">
-          <input bindinput="formInputChange" data-field="teacher" class="weui-input" placeholder="教师(选填)"/>
+          <input bindinput="formInputChange" data-field="teacher" class="weui-input" placeholder="教师(选填)" value="{{formData.teacher}}"/>
         </mp-cell>
         <mp-cell prop="classroom" title="教室" ext-class="">
-          <input bindinput="formInputChange" data-field="classroom" class="weui-input" placeholder="教室(选填)"/>
+          <input bindinput="formInputChange" data-field="classroom" class="weui-input" placeholder="教室(选填)" value="{{formData.classroom}}"/>
         </mp-cell>
         <mp-cell prop="description" title="描述" ext-class="">
-          <input bindinput="formInputChange" data-field="description" class="weui-input" placeholder="班号、课程信息等(选填)"/>
+          <input bindinput="formInputChange" data-field="description" class="weui-input" placeholder="班号、课程信息等(选填)" value="{{formData.description}}"/>
         </mp-cell>
         <mp-cell prop="time" title="时间" ext-class="">
           <picker data-field="date" mode="multiSelector" value="{{timeIndex}}" range="{{timeArray}}" bindchange="bindTimePickerChange" bindcolumnchange="">
@@ -31,7 +31,7 @@
           </picker>
         </mp-cell>
         <mp-cell prop="isTobeEvaluatedCourse" title="是否为评估课程" ext-class="">
-          <switch bind:change="formInputChange" data-field="isTobeEvaluatedCourse" checked=""></switch>
+          <switch bind:change="formInputChange" data-field="isTobeEvaluatedCourse" checked="{{formData.isTobeEvaluatedCourse === 'true'}}"></switch>
         </mp-cell>
       </mp-cells>
       <!-- <mp-cell> -->
@@ -40,7 +40,7 @@
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
             <view class="weui-cell__bd">
-              <textarea prop="custom_notes" bindinput="formInputChange" data-field="custom_notes" maxlength="100" class="weui-textarea" placeholder="备注信息...(选填)" style="height: 3.3em"></textarea>
+              <textarea prop="custom_notes" bindinput="formInputChange" data-field="custom_notes" maxlength="100" class="weui-textarea" placeholder="备注信息...(选填)" style="height: 3.3em" value="{{formData.custom_notes}}"></textarea>
               <view class="weui-textarea-counter">{{formData.custom_notes.length || '0'}}/100</view>
             </view>
         </view>
