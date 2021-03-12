@@ -81,7 +81,7 @@ Component({
               try {
                 if(!(userinfo && token)) {
                   wx.showToast({
-                    title: '验证失败。',
+                    title: '登录失败。',
                     icon: 'none',
                   })
                   return
@@ -91,7 +91,10 @@ Component({
                 wx.showToast({
                   title: '登录成功',
                 })
-                wx.switchTab({
+                // wx.switchTab({
+                //   url: '../index/index',
+                // })
+                wx.reLaunch({
                   url: '../index/index',
                 })
               } catch (error) {

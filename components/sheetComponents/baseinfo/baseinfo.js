@@ -28,7 +28,10 @@ Component({
    */
   data: {
     // 自动填充baseinfo
-    daytime: '',
+    // daytime: '',
+    date: '',
+    start_time: '08:00',
+    end_time: '10:00',
     role: '',
 
     classinfo: {},
@@ -89,7 +92,23 @@ Component({
 
     inputChange(e){
       formInputChange(e, this, 'baseinfo')
-    }
+    },
+
+    bindDateChange: function(e) {
+      console.log('picker发送选择改变，携带值为', e.detail.value)
+      this.setData({
+        date: e.detail.value
+      })
+      this.inputChange(e)
+    },
+
+    bindTimeChange: function(e) {
+      console.log('picker发送选择改变，携带值为', e.detail.value)
+      this.setData({
+        time: e.detail.value
+      })
+      this.inputChange(e)
+    },
   },
 
   lifetimes: {
@@ -102,8 +121,8 @@ Component({
       $api.getClass(classid)
         .then(res => {
           console.log(res)
-          // let time = util.formatTime(new Date()).split(' ')[0].split('/')
           let daytime = util.formatTime(new Date()).split(' ')[0]
+          let date = daytime.replace(/\//g, '-')
 
           wx.getStorage({
             key: 'userinfo',
@@ -116,8 +135,10 @@ Component({
           that.setData({
             classinfo: res,
             courseinfo: res.course,
-            daytime,
+            // daytime,
+            date,
           })
+          console.log(date)
 
           const query = this.createSelectorQuery()
           query.selectAll('.initialization').fields({
@@ -127,6 +148,13 @@ Component({
               // console.log(result)
               let teacher_id = { 'baseinfo.teacher_id': that.data.classinfo.teacher_id }
               that.triggerEvent('inputChange', teacher_id)
+              let date = {'baseinfo.date': that.data.date }
+              that.triggerEvent('inputChange', date)
+              let start_time = {'baseinfo.start_time': that.data.start_time }
+              that.triggerEvent('inputChange', start_time)
+              let end_time = {'baseinfo.end_time': that.data.end_time }
+              that.triggerEvent('inputChange', end_time)
+
               result.forEach(item => {
                 let field = item.dataset.field
 
@@ -140,11 +168,12 @@ Component({
                   that.setData({
                     [field]: that.data.courseinfo[field]
                   })
-                }else if(field === 'date') { // date
-                  that.setData({
-                    [field]: that.data.daytime
-                  })
                 }
+                // else if(field === 'date') { // date
+                //   that.setData({
+                //     [field]: that.data.daytime
+                //   })
+                // }
                 // console.log(field)
                 // console.log(that.data[field])
                 let obj = { [`baseinfo.${field}`]: that.data[field] }

@@ -79,10 +79,13 @@ const checkRules = (that, evaluationComponentName) => {
   // let {baseinfo, enviornment, overallEvaluation, followUpRecord} = this.data.contentData
   // let componments = ['baseinfo', 'environmentEvaluation', 'theoryEvaluation', 'overallEvaluation']
   let componments = ['baseinfo', 'environmentEvaluation', evaluationComponentName, 'overallEvaluation']
-  if(that.data.contentData.overallEvaluation && that.data.contentData.overallEvaluation.followUp == 'true') {
-    componments.push('followUpRecord')
-  }
+  // if(that.data.contentData.overallEvaluation && that.data.contentData.overallEvaluation.followUp == 'true') {
+  //   componments.push('followUpRecord')
+  // }
   for(let i of componments) {
+    if(that.data.contentData.classification === 'experiment' && i === 'environmentEvaluation') {
+      continue
+    }
     if(that.data.contentData[i]) {
       if(i === evaluationComponentName) {  // 因为this.data[evaluationComponentName].evaluationList为数组
         let t = judgeEvaluationListRule(that.data.contentData[evaluationComponentName].evaluationList)  // 判断 二、评价 中第一个未填的题号
@@ -96,12 +99,13 @@ const checkRules = (that, evaluationComponentName) => {
                 err = j + ' 不是数字类型 或'
                 break
               }
-            }else if(j === 'date') {
-              if(!that.data.contentData[i][j] || !that.data.contentData[i][j].match(/^[0-9]{4}\/[0-9]{2}\/[0-9]{2}/)) {
-                err = j + '没有按照格式：yyyy/mm/dd填写 或'
-                break
-              }
             }
+            // else if(j === 'date') {
+            //   if(!that.data.contentData[i][j] || !that.data.contentData[i][j].match(/^[0-9]{4}\/[0-9]{2}\/[0-9]{2}$/)) {
+            //     err = j + '没有按照格式：yyyy/mm/dd填写 或'
+            //     break
+            //   }
+            // }
           }
           if(!that.data.contentData[i][j] || that.data.contentData == '') {
             err = j
@@ -170,11 +174,13 @@ const dealAndSubmitForm = (that, evaluationComponentName) => {
           console.log(res)
           wx.showToast({
             title: '提交成功!',
-            duration: 2000
+            duration: 1500
           })
-          wx.navigateBack({
-            delta: 1,
-          })
+          setTimeout(() => {
+            wx.navigateBack({
+              delta: 1,
+            })
+          }, 1500);
         })
         .catch(err => {
           console.log(err)

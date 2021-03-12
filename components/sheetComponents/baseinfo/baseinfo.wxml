@@ -18,13 +18,35 @@
     <!-- 目前是id，待改成name -->
     <input bind:input="inputChange" value="{{classinfo.teacher_name}}" data-field="teacher_name" class="initialization weui-input" placeholder="" type="text" disabled="true"/>
   </label>
-  <label for="">
+  <!-- <label for="">
     听课时间：
-    <!-- 待改，改成匹配课程表上课程的最近日期 或具体课程的日期，因为填表日期可能与听课日期不一致，要么就不设定默认值 -->
     <input bind:input="inputChange" value="{{daytime}}" data-field="date" class="initialization weui-input" placeholder="日期格式：yyyy/mm/dd" type="text" />
     <input bind:input="inputChange" data-field="start_time" class="weui-input" placeholder="start-time" type="text" />~
     <input bind:input="inputChange" data-field="end_time" class="weui-input" placeholder="end-time" type="text" />(具体时分)
-  </label>
+  </label> -->
+  <view class="section">
+    <view class="section__title">听课时间：</view>
+    <picker mode="date" value="{{date}}" start="2021-01-01" end="2027-12-30" bindchange="bindDateChange" data-field="date">
+      <view class="picker">
+        日期：{{date}}
+      </view>
+    </picker>
+  </view>
+  <view class="section">
+    <!-- <view class="section__title">时间选择器</view> -->
+    <picker mode="time" value="{{start_time}}" start="08:00" end="22:00" bindchange="bindTimeChange" data-field="start_time">
+      <view class="picker">
+        开始时间: {{start_time}}
+      </view>
+    </picker>
+    <!-- <view class="section__title">时间选择器</view> -->
+    <picker mode="time" value="{{end_time}}" start="08:00" end="22:00" bindchange="bindTimeChange" data-field="end_time">
+      <view class="picker">
+        结束时间: {{end_time}}
+      </view>
+    </picker>
+  </view>
+
   <view></view>
   <label for="">
     地点：

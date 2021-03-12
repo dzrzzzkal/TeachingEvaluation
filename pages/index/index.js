@@ -129,30 +129,32 @@ Page(filter({
   },
   
   onLoad: function(options) {
-    $api.getEvaluationProgress()
-      .then(res => {
-        let {submittedNum,beEvaluatedNum, taskCount, schoolYearAndSemester, nowWeek} = res
-        let {schoolYear, semester} = schoolYearAndSemester
-        this.data.schoolYear = schoolYear
-        this.data.semester = semester
-        this.data.week = nowWeek
-        this.setData({
-          ec_submittedNum: submittedNum,
-          ec_beEvaluatedNum: beEvaluatedNum ? beEvaluatedNum : '',
-          ec_total: taskCount,
-        })
-        this.setTobeEvaluatedCourse()
-      })
-      .catch(err => {
-        console.log(err)
-        wx.showToast({
-          title: '加载失败',
-          icon: 'none'
-        })
-      })
+
   },
 
   onShow: function() {
+    $api.getEvaluationProgress()
+    .then(res => {
+      // console.log(res)
+      let {submittedNum,beEvaluatedNum, taskCount, schoolYearAndSemester, nowWeek} = res
+      let {schoolYear, semester} = schoolYearAndSemester
+      this.data.schoolYear = schoolYear
+      this.data.semester = semester
+      this.data.week = nowWeek
+      this.setData({
+        ec_submittedNum: submittedNum,
+        ec_beEvaluatedNum: beEvaluatedNum ? beEvaluatedNum : '',
+        ec_total: taskCount,
+      })
+      this.setTobeEvaluatedCourse()
+    })
+    .catch(err => {
+      console.log(err)
+      wx.showToast({
+        title: '加载失败',
+        icon: 'none'
+      })
+    })
     this.setTobeEvaluatedCourse()
   }
   

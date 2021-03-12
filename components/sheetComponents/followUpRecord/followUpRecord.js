@@ -39,8 +39,8 @@ Component({
 
   lifetimes: {
     ready: function() {
-      // 发送本自定义组件中的field，用来检验本组件中未填的field
-      this.triggerEvent('sendFields', {followUpRecord: ['followUpDegree', 'followUpParticipantSuggestion', 'followUpParticipant', 'followUpParticipantTime_year', 'followUpParticipantTime_month', 'followUpParticipantTime_day', 'followUpCollegeSuggestion', 'followUpCollege', 'followUpCollegeTime_year', 'followUpCollegeTime_month', 'followUpCollegeTime_day', 'lecturerRectification', 'lecturer', 'lecturerTime_year', 'lecturerTime_month', 'lecturerTime_day', 'followUpUnitSuggestion', 'followUpUnit', 'followUpUnitTime_year', 'followUpUnitTime_month', 'followUpUnitTime_day']})
+      // // 发送本自定义组件中的field，用来检验本组件中未填的field  // 即使选择了'followUpRecord'，在小程序端不设为必填了
+      // this.triggerEvent('sendFields', {followUpRecord: ['followUpDegree', 'followUpParticipantSuggestion', 'followUpParticipant', 'followUpParticipantTime_year', 'followUpParticipantTime_month', 'followUpParticipantTime_day', 'followUpCollegeSuggestion', 'followUpCollege', 'followUpCollegeTime_year', 'followUpCollegeTime_month', 'followUpCollegeTime_day', 'lecturerRectification', 'lecturer', 'lecturerTime_year', 'lecturerTime_month', 'lecturerTime_day', 'followUpUnitSuggestion', 'followUpUnit', 'followUpUnitTime_year', 'followUpUnitTime_month', 'followUpUnitTime_day']})
     }
   }
 })

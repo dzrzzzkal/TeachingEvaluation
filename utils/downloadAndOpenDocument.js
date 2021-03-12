@@ -57,7 +57,7 @@ const downloadAndOpenDocument = (url) => {
       })
       console.log(err)
       wx.showToast({
-        title: '文件下载失败',  // '文件为空，下载失败'
+        title: '文件为空，下载失败',
         icon: 'none'
       })
     }

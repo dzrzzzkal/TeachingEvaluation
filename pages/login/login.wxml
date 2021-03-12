@@ -1,15 +1,34 @@
 <!--pages/login/login.wxml-->
 <view class="container">
-
+  <view class="login-icon"> 
+    <image class="login-img" src="./images/report.jpg"></image> 
+  </view>
   <mp-toptips msg="{{error}}" ext-class="toptips" show="{{error}}"></mp-toptips>
+  <mp-form id="form" rules="{{rules}}" models="{{formData}}" class="login-form">
+    <!-- 账号 -->
+    <view class="inputView">
+      <image class="nameImage" src="./images/account.png"></image>
+      <label class="loginLab">账号</label> 
+      <input bind:input="formInputChange" data-field="username" class="inputText" placeholder="username" type="text" />
+    </view>
+    <!-- 密码 -->
+    <view class="inputView"> 
+      <image class="keyImage" src="./images/password.png"></image> 
+      <label class="loginLab">密码</label> 
+      <input bind:input="formInputChange" data-field="password" class="inputText" placeholder="password" type="password" />
+    </view>
+  </mp-form>
+  <view class="loginBtnView">
+    <button bind:tap="submitForm" id="loginBtn" type="primary" type="primary">确定</button>
+  </view> 
+
+  <!-- <mp-toptips msg="{{error}}" ext-class="toptips" show="{{error}}"></mp-toptips>
   <mp-form id="form" rules="{{rules}}" models="{{formData}}">
-    <!-- <mp-cell prop="username" title="username" ext-class=""> -->
       <input bind:input="formInputChange" data-field="username" class="weui-input" placeholder="username" type="text" />
       <input bind:input="formInputChange" data-field="password" class="weui-input" placeholder="password" type="password" />
-    <!-- </mp-cell> -->
   </mp-form>
   <view class="weui-btn-area">
     <button bind:tap="submitForm" class="weui-btn" type="primary">确定</button>
-  </view>
+  </view> -->
 
 </view>
