@@ -1,6 +1,6 @@
 //app.js
 App({
-  checkLogin() {
+  checkToken() {
     let newPromise = new Promise(function(resolve, reject) {
       // 好像是对自己后台的校验接口的包装，检查登录该页面是否需要系统角色
       // service.identityCheck(resolve, reject) 
