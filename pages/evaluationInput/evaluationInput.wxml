@@ -8,7 +8,7 @@
      <input type="search" bind:input="searchInput" name="" placeholder="输入 班号/课程编号/教师名/课程名/开设单位" class='input' placeholder-style="font-size: 32rpx;" bind:confirm="search"/>
    </view>
    <view class="imageView" bind:tap="search">
-     <image src='/images/search.jpg' class='image' />
+     <image src='/images/search.png' class='image' />
    </view>
 </view>
 

@@ -1,5 +1,5 @@
 <!--components/sheetComponents/followUpRecord/followUpRecord.wxml-->
-<view>
+<view style="background-color: white;">
   <view class="followUpRecord" hidden="{{isHidden}}">
     <view wx:if="{{!classification}}">四、跟进记录</view>
     <view wx:else>三、跟进记录</view>

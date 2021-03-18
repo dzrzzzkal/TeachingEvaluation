@@ -108,7 +108,7 @@ Component({
     // 获取自定义组件中的传值
     getFormChange(e) {
       setFormChange(e, this, 'contentData')
-      console.log(this.data.contentData)
+      // console.log(this.data.contentData)
     },
 
     // 将contentData中各个自定义组件传过来的包裹数据的对象分解，分解出各项数据，写入formData

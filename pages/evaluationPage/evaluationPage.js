@@ -30,8 +30,8 @@ Page({
       classificationItems: items,
       classification: value
     })
-    console.log('classification: ' + this.data.classification)
-    console.log(this.data)
+    // console.log('classification: ' + this.data.classification)
+    // console.log(this.data)
   },
 
   // 暂时没用

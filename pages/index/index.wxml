@@ -14,42 +14,44 @@
   <view class="tobe-ec-container module-container" bind:tap="tobeECClick">
     <view class="module-title">待评估课程栏</view>
     <view class="module-content">
-      <block wx:for="{{tobe_ec}}" wx:key="index">
-        <view class="tobe-ec">
-          <image wx:if="{{item.isPastTime}}" src="images/completed.png"></image>
-          <image wx:else src="images/not_completed.png"></image>
-          <text class="ec-name">{{item.ec_name}}</text>
-          <text class="ec-week">{{item.ec_week}}</text>
-          <text class="ec-time">{{item.ec_time}}</text>
-          <text class="ec-location">{{item.ec_location}}</text>
-        </view>
-      </block>
+      <view wx:if="{{tobe_ec[0] == null}}">暂无待评估课程哦</view>
+      <view wx:else>
+        <block wx:for="{{tobe_ec}}" wx:key="index">
+          <view class="tobe-ec" wx:if="{{!item.isPastTime}}">
+            <!-- <image wx:if="{{item.isPastTime}}" src="images/completed.png"></image>
+            <image wx:else src="images/not_completed.png"></image> -->
+            <text class="ec-name">{{item.ec_name}}</text>
+            <text class="ec-week">{{item.ec_week}}</text>
+            <text class="ec-time">{{item.ec_time}}</text>
+            <text class="ec-location">{{item.ec_location}}</text>
+          </view>
+        </block>
+      </view>
+      
+      <view wx:if="{{tobe_ec.length > 5}}">......</view>
     </view>
   </view>
 
   <!-- 听课任务情况栏 -->
   <view class="evaluation-mission-container module-container">
     <view class="module-title">听课任务情况</view>
-    <view class="module-content">
-      <view class="evaluation-process">
+    <view class="process-finish" style="{{isProcessFinished === '已完成' ? 'color: rgba(49, 170, 49, .8);' : 'color: rgba(255, 96, 0, .85)'}}">
+      {{isProcessFinished}}
+    </view>
+    <view class="module-content" style="display: flex; flex-direction:row; justify-content: space-between;">
+      <view class="process-item">
         评估进度：
-        {{ec_submittedNum}} / {{ec_total}}
-        <view wx:if="{{ec_beEvaluatedNum}}">被听课：{{ec_beEvaluatedNum}} / 1</view>
+        <view class="process-num">
+          {{ec_submittedSheetNum}} / {{ec_total}}
+        </view>
       </view>
-      <view class="tobeSubmitted-ec-box">
-        待提交报告课程：
-        <block>
-          <view class="tobeSubmitted-ec">
-            <text class="ec-name">{{item.ec_name}}</text>
-            <text class="ec-teacher">{{item.ec_teacher}}</text>
-            <text class="tobeSubmitted-ec-process">{{item.ec_submittedNum}} / {{ec_total}}</text>
-            <!-- <text>     待评估课程名    教师名   1 / 3 </text> -->
-          </view>
-        </block>
+      <view class="process-item" wx:if="{{ec_beEvaluatedNum}}">
+        被听课：
+        <view class="process-num">{{ec_beEvaluatedNum}} / {{ec_beEvaluatedTotal}}</view>
       </view>
-      <view>
-        <text>年度总结报告：</text>
-        <text>0 / 1</text>
+      <view class="process-item" wx:if="{{ec_submittedReportNum}}">
+        年度总结报告：
+        <view class="process-num">{{ec_submittedReportNum}} / {{ec_annualReportTotal}}</view>
       </view>
     </view>
   </view>

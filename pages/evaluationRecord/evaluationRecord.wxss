@@ -19,7 +19,7 @@
   display: block;
   height: 70rpx;
   line-height: 70rpx;
-  width: 33.3%;
+  width: 50%;
   text-align: center;
   border-bottom: 1rpx solid transparent;
 }
@@ -34,7 +34,7 @@
   margin: 5rpx 0;
   padding: 0 5rpx;
   /* height: 85rpx; */
-  background-color: white;
+  /* background-color: white; */
   display: flex;
 }
 .inputView{
@@ -66,4 +66,40 @@
   margin: 7rpx 0;
   background-color: #fff;
   border-radius: 10rpx;
+}
+
+.box text {
+  margin: 0 15rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.course_name {
+  width: 56%;
+  display: inline-block;
+}
+
+.classification {
+  float: right;
+  width: 35%;
+  text-align: right;
+}
+
+.teacher_name {
+  width: 40%;
+}
+
+.class_id {
+  float: right;
+  width: 40%;
+  text-align: right;
+}
+
+.submit_time {
+  width: 100%;
+}
+
+.report_name {
+  width: 100%;
 }

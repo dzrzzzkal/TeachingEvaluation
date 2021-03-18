@@ -1,11 +1,102 @@
 <!--pages/evaluationSheetRecord/evaluationSheetRecord.wxml-->
 <view class="container">
-  <button bind:tap="download">download</button>
+  <!-- <button bind:tap="download">下载文档</button> -->
+  <button class='download-btn' bind:tap="download">
+    <image class='download-btnImg' src='/images/icon/download.png'></image>
+    <view>下载文档</view>
+  </button>
   <view>
-    <block wx:for="{{sheet}}" wx:for-index="key" wx:for-item="value" wx:key="key" >
-      <view>
-        {{key}}:   {{value}}
+    <!-- baseinfo -->
+    <view class="title">{{title}}</view>
+    <view>评估人：{{submitter}}</view>
+    <view>开课单位：{{course_setupUnit}}</view>
+    <view>课程名称：{{course_name}}</view>
+    <view>开课班号：{{class_id}}</view>
+    <view>授课教师：{{teacher_name}}</view>
+    <view>听课时间：{{class_time}}</view>
+    <view>地点：{{place}}</view>
+    <view>学生应到人数：{{attend_num}}</view>
+    <view>学生实到人数：{{actual_num}}</view>
+    <view>听课类型：{{role}}听课</view>
+
+    <!-- 有environment的评估表，即除实验课程类型以外的评估表类型 -->
+    <view wx:if="{{environment}}">
+      <view>一、教学环境观察。</view>
+      <view class="border">{{environment}}</view>
+      <view></view>
+      <view>二、评价</view>
+      <view class="border">{{evaluationList}}</view>
+      <view></view>
+      <view>三、总体评价</view>
+      <view>最欣赏的方法：</view>
+      <view class="border">{{appreciateMethod}}</view>
+      <view>给任课教师的具体建议：</view>
+      <view class="border">{{concreteSuggestion}}</view>
+      <view>本人对听课的课程的内容熟悉程度：</view>
+      <view class="border">{{familiarity}}</view>
+      <view>建议推广主讲教师教学方法：</view>
+      <view class="border">{{extension}}</view>
+      <view>建议主讲教师提升教学能力，学院（部、中心）继续听课跟进：</view>
+      <view class="border">{{followUp}}</view>
+      <view>其他建议：</view>
+      <view class="border">{{otherSuggestion}}</view>
+      <view class="border">听课人：{{participant}}  日期：{{submit_time}}</view>
+      <view></view>
+      <view wx:if="{{followUp == 'true' || followUp == true}}">四、跟进记录
+        <view class="border">{{followUpDegree ? followUpDegree : ''}}</view>
+        <view>（跟进听课）听课教师意见及建议：</view>
+        <view class="border">{{followUpParticipantSuggestion ? followUpParticipantSuggestion : ''}}</view>
+        <view>（签名）：{{followUpParticipant ? followUpParticipant : ''}} 日期：{{followUpParticipantTime ? followUpParticipantTime : ''}}</view>
+        <view>学院（部、中心）跟进意见：</view>
+        <view class="border">{{followUpCollegeSuggestion ? followUpCollegeSuggestion : ''}}</view>
+        <view>（签名）：{{followUpCollege ? followUpCollege : ''}} 日期：{{followUpCollegeTime ? followUpCollegeTime : ''}}</view>
+        <view>主讲教师反思及整改方案：</view>
+        <view class="border">{{lecturerRectification ? lecturerRectification : ''}}</view>
+        <view>（签名）：{{lecturer ? lecturer : ''}} 日期：{{lecturerTime ? lecturerTime : ''}}</view>
+        <view>教学管理、服务部门意见：</view>
+        <view class="border">{{followUpUnitSuggestion ? followUpUnitSuggestion : ''}}</view>
+        <view>（签名）：{{followUpUnit ? followUpUnit : ''}} 日期：{{followUpUnitTime ? followUpUnitTime : ''}}</view>
       </view>
-    </block>
+    </view>
+    <!-- 无environment的评估表，即除实验课程评估表 -->
+    <view wx:else>
+      <view>一、观察清单</view>
+      <view class="border">{{evaluationList}}</view>
+      <view></view>
+      <view>二、总体评价</view>
+      <view>最欣赏的方法：</view>
+      <view class="border">{{appreciateMethod}}</view>
+      <view>给任课教师的具体建议：</view>
+      <view class="border">{{concreteSuggestion}}</view>
+      <view>本人对听课的课程的内容熟悉程度：</view>
+      <view class="border">{{familiarity}}</view>
+      <view>建议推广主讲教师教学方法：</view>
+      <view class="border">{{extension}}</view>
+      <view>建议主讲教师提升教学能力，学院（部、中心）继续听课跟进：</view>
+      <view class="border">{{followUp}}</view>
+      <view>其他建议：</view>
+      <view class="border">{{otherSuggestion}}</view>
+      <view>听课人：</view>
+      <view class="border">{{participant}}</view>
+      <view>日期</view>
+      <view class="border">{{submit_time}}</view>
+      <view></view>
+      <view wx:if="{{followUp == 'true' || followUp == true}}">三、跟进记录
+        <view class="border">{{followUpDegree ? followUpDegree : ''}}</view>
+        <view>（跟进听课）听课教师意见及建议：</view>
+        <view class="border">{{followUpParticipantSuggestion ? followUpParticipantSuggestion : ''}}</view>
+        <view>（签名）：{{followUpParticipant ? followUpParticipant : ''}} 日期：{{followUpParticipantTime ? followUpParticipantTime : ''}}</view>
+        <view>学院（部、中心）跟进意见：</view>
+        <view class="border">{{followUpCollegeSuggestion ? followUpCollegeSuggestion : ''}}</view>
+        <view>（签名）：{{followUpCollege ? followUpCollege : ''}} 日期：{{followUpCollegeTime ? followUpCollegeTime : ''}}</view>
+        <view>主讲教师反思及整改方案：</view>
+        <view class="border">{{lecturerRectification ? lecturerRectification : ''}}</view>
+        <view>（签名）：{{lecturer ? lecturer : ''}} 日期：{{lecturerTime ? lecturerTime : ''}}</view>
+        <view>教学管理、服务部门意见：</view>
+        <view class="border">{{followUpUnitSuggestion ? followUpUnitSuggestion : ''}}</view>
+        <view>（签名）：{{followUpUnit ? followUpUnit : ''}} 日期：{{followUpUnitTime ? followUpUnitTime : ''}}</view>
+      </view>
+    </view>
+
   </view>
 </view>

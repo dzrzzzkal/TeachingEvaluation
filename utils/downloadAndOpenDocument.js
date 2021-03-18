@@ -10,6 +10,7 @@ const downloadAndOpenDocument = (url) => {
       'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       // 'content-type': 'application/octet-stream',
       // 'cotent-type': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      // 'charset': 'utf-8',
     },
     success(res) {
       wx.hideLoading({

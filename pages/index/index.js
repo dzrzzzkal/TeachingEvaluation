@@ -15,18 +15,17 @@ Page(filter({
     themes: [
       { theme_id: 0, theme_icon: 'images/theme@1.png', theme_name: '听课表录入'},
       { theme_id: 1, theme_icon: 'images/theme@2.png', theme_name: '年度报告提交'},
-      { theme_id: 2, theme_icon: 'images/theme@3.png', theme_name: '课程搜索'},
-      { theme_id: 3, theme_icon: 'images/theme@4.png', theme_name: '单位信息'},
-    ],
-    tobe_ec: [
-      { ec_name: '排球', ec_time: '34', ec_location: '体育场', isPastTime: true },
-      { ec_name: '数据库原理', ec_time: '890', ec_location: 'E座303', isPastTime: false },
-      { ec_name: '整合思维', ec_time: 'AB', ec_location: 'G座102', isPastTime: false }
     ],
 
     // 听课任务情况
-    ec_submittedNum: 0,
+    ec_submittedSheetNum: 0,
     ec_total: 0,
+    // ec_beEvaluatedNum  // 这里不设置，用以index.wxml中wx:if判断
+    ec_beEvaluatedTotal: 1,
+    // ec_submittedReportNum: 0,
+    ec_annualReportTotal: 1,
+
+    // isProcessFinished: false,
   },
   //事件处理函数
 
@@ -47,12 +46,6 @@ Page(filter({
           break
         }
         toUrl = '../annualReport/annualReport'
-        break;
-      case 2:
-        toUrl = '../courseSearch/courseSearch'
-        break;
-      case 3:
-        toUrl = '../unitsInfo/unitsInfo'
         break;
     }
     wx.navigateTo({
@@ -124,7 +117,7 @@ Page(filter({
   tobeECClick: function() {
     console.log(this.data.tobe_ec)
     wx.navigateTo({
-      url: `/pages/tobeEvaluatedCourse/tobeEvaluatedCourse?schoolYear=${this.data.schoolYear}&semester=${this.data.semester}`,
+      url: `/pages/tobeEvaluatedCourse/tobeEvaluatedCourse?schoolYear=${this.data.schoolYear}&semester=${this.data.semester}&week=${this.data.week}`,
     })
   },
   
@@ -136,15 +129,28 @@ Page(filter({
     $api.getEvaluationProgress()
     .then(res => {
       // console.log(res)
-      let {submittedNum,beEvaluatedNum, taskCount, schoolYearAndSemester, nowWeek} = res
+      let {submittedSheetNum, beEvaluatedNum, taskCount, submittedReportNum, schoolYearAndSemester, nowWeek} = res
       let {schoolYear, semester} = schoolYearAndSemester
       this.data.schoolYear = schoolYear
       this.data.semester = semester
       this.data.week = nowWeek
+
+      let isProcessFinished = false
+      if(submittedSheetNum >= taskCount) {
+        isProcessFinished = true
+        if(beEvaluatedNum && beEvaluatedNum < this.data.ec_beEvaluatedTotal) {
+          isProcessFinished = false
+        }
+        if(submittedSheetNum && submittedSheetNum < this.data.ec_annualReportTotal) {
+          isProcessFinished = false
+        }
+      }
       this.setData({
-        ec_submittedNum: submittedNum,
+        isProcessFinished: isProcessFinished ? '已完成' : '未完成',
+        ec_submittedSheetNum: submittedSheetNum,
         ec_beEvaluatedNum: beEvaluatedNum ? beEvaluatedNum : '',
         ec_total: taskCount,
+        ec_submittedReportNum: submittedReportNum
       })
       this.setTobeEvaluatedCourse()
     })

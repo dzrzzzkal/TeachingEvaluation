@@ -68,20 +68,6 @@ Page({
     tempSchoolYearIndex: -1, // 用于记录schoolYear&semesterScroll中暂时点击的数据，以便下一步的确认或取消
     tempSemesterIndex: -1,
 
-    // wlist: [
-    //   { "weekday": 1, "first_section": 1, "section_length": 4, "course_name": "高等数学啊实打实大大说阿大声道亚特兰蒂斯号", "classroom": "A301", "color": 0, "week": "1-16", "time": "Mon1234", "course_time": "Mon1234"},
-    //   { "weekday": 1, "first_section": 5, "section_length": 3, "course_name": "高等数学", "classroom": "A-302", "color": 0 , "week": "9-16", "time": "Mon567", "course_time": "Mon567"},
-    //   { "weekday": 2, "first_section": 1, "section_length": 3, "course_name": "高等数学啊实打实大大说阿大声道", "classroom": "A303", "color": 1, "week": "2-8", "time": "Tue123", "course_time": "Tue123"},
-    //   { "weekday": 2, "first_section": 8, "section_length": 2, "course_name": "计算机应用技术", "classroom": "A304", "color": 1, "week": "1-16", "time": "Tue89", "course_time": "Tue89"},
-    //   { "weekday": 3, "first_section": 2, "section_length": 3, "course_name": "普通物理学", "classroom": "A305", "color": 0, "week": "3-4", "time": "Wed234", "course_time": "Wed234"},
-    //   { "weekday": 3, "first_section": 8, "section_length": 2, "course_name": "计算机网络", "classroom": "A306", "color": 2, "week": "7-16", "time": "Wed89", "course_time": "Wed89"},
-    //   { "weekday": 3, "first_section": 5, "section_length": 2, "course_name": "女士形象设计", "classroom": "A307", "color": 0, "week": "14-16", "time": "Wed56", "course_time": "Wed56"},
-    //   { "weekday": 4, "first_section": 2, "section_length": 3, "course_name": "高等数学", "classroom": "A308", "color": 1, "week": "1-16", "time": "Thur234", "course_time": "Thur234"},
-    //   { "weekday": 4, "first_section": 8, "section_length": 2, "course_name": "排球", "classroom": "A309", "color": 2, "week": "9", "time": "Thur89", "course_time": "Thur89"},
-    //   { "weekday": 5, "first_section": 6, "section_length": 2, "course_name": "计算机网络", "classroom": "A310", "color": 1, "week": "1-16", "time": "Fri67", "course_time": "Fri67"},
-    //   { "weekday": 6, "first_section": 3, "section_length": 2, "course_name": "数据库原理", "classroom": "A311", "color": 2, "week": "1", "time": "Sat34", "course_time": "Sat34"},
-    //   { "weekday": 7, "first_section": 5, "section_length": 3, "course_name": "声乐巡游", "classroom": "", "color": 0, "week": "1-3", "time": "Sun567", "course_time": "Sun567"},
-    // ],
     wlist: [],
 
     cardCourseIndex: -1,  // 当前cardView的数据 在this.data.wlist中对应的index
@@ -101,16 +87,15 @@ Page({
   showCardView: function (e) {
     let cardView = {
       class_id: e.currentTarget.dataset.wlist.id, // 用于区分是自定义课程还是向服务器请求的课程
+      index: e.currentTarget.dataset.wlist.index, // 自定义课程才有
       course_name: e.currentTarget.dataset.wlist.course_name,
       color: e.currentTarget.dataset.wlist.color,
-      classroom: e.currentTarget.dataset.wlist.classroom,
       teacher_name: e.currentTarget.dataset.wlist.teacher_name ? e.currentTarget.dataset.wlist.teacher_name : e.currentTarget.dataset.wlist.teacher,  // 自定义课程中保存的变量是teacher
       classroom: e.currentTarget.dataset.wlist.classroom,
       time: e.currentTarget.dataset.wlist.time,
       week: e.currentTarget.dataset.wlist.week,
       custom_notes: e.currentTarget.dataset.wlist.custom_notes,
       description: e.currentTarget.dataset.wlist.description, // 可能删掉
-      // isCustomCourse: e.currentTarget.dataset.wlist.isCustomCourse,  // 用于判断是否为自定义课程
       isTobeEvaluatedCourse: e.currentTarget.dataset.wlist.isTobeEvaluatedCourse
     }
     this.setData({
@@ -440,7 +425,7 @@ Page({
           }
         }
       }
-    }, 3000);
+    }, 1000);
 
     // console.log(this.data.cardView)
     // console.log(this.data.wlist[cardCourseIndex])
@@ -513,7 +498,7 @@ Page({
         }
         // console.log('first_section: ' + first_section)
 
-        // let item = i // 坑！这样内循环中的item始终指向的是i的地址，即使内循环设置不同的i.first_section=xxx或yyy等，在同一个内循环中item的first_section数值总为最后一个设置的i.first_section=yyy
+        // let item = i // 坑！这样内循环中的item始终指向的是i的地址，即使内循环for(j)中设置不同的i.first_section=xxx或yyy等，在同一个内循环中item的first_section数值总为最后一个设置的i.first_section=yyy
         let item = JSON.parse(JSON.stringify(i))
         // 将first_section等写入api请求来的课程，以展示
         let color
@@ -559,8 +544,9 @@ Page({
     // 获取自定义课程
     let customCourseArray = wx.getStorageSync('customCourse')
     this.data.customCourseArray = customCourseArray
-    for(let item of customCourseArray) {
-      // item.isCustomCourse = true  // 因为customCourseArray要写入this.data.wlist，用于判断this.data.wlist中的item哪个是自定义课程，以增加一个删除自定义课程功能
+    for(let index in customCourseArray) {
+      let item = customCourseArray[index]
+      item.index = index
       if(item.schoolYear === this.data.schoolYear && item.semester === this.data.semester) {
         courseArray.push(item)
       }
@@ -630,6 +616,16 @@ Page({
         }
       }
     })
+  },
+
+  // 点击card编辑对应的自定义课程
+  editCustomCourse: function(e) {
+    let cardCourseIndex = this.data.cardCourseIndex
+    let {index} = this.data.wlist[cardCourseIndex]
+    wx.navigateTo({
+      url: `/pages/customCourse/customCourse?index=${index}`,
+    })
+    // 因为同步问题，storage改写后，在/pages/customCourse/customCourse中，使用prevPage修改本界面展示，即改wlist中index该项
   },
 
   /**
@@ -716,6 +712,41 @@ Page({
     //   currPage.data.getNewCustomCourse = false
     // }
 
+    // 不想每次onshow都重新刷新请求服务器，这里决定每次onshow只检测/pages/my/my中的有无删除所有自定义事件 和 删除课程备注 的storage，且这里不是更改storage，只是改界面setData
+    let customCourseArray = wx.getStorageSync('customCourse')
+    let courseNotes = wx.getStorageSync('courseNotes')
+    let wlist = this.data.wlist
+    if(!courseNotes) {
+      if(wlist && wlist.length) {
+        for(let i of wlist) {
+          if(i.id) { // 删除的是向服务器请求的课程的备注，有开课班号id
+            i.custom_notes = ''
+          }
+        }
+      }
+    }
+    if(!customCourseArray) {
+      if(wlist && wlist.length) {
+        for(let i = 0; i < wlist.length; i++) {
+          let item = wlist[i]
+          if(!item.id) {  // 删除自定义事件，有开课班号id
+            wlist.splice(i, 1)
+            i -= 1
+          }
+        }
+      }
+    }
+    if(!courseNotes || !customCourseArray) {
+      let cardView = this.data.cardView
+      let data = { wlist }
+      if(this.data.showModalStatus == true && !customCourseArray && !cardView.class_id) { // cardView.class_id 即 wlist.id 开课班号
+        data.showModalStatus = false
+      }else if(this.data.showModalStatus == true && !courseNotes && cardView.class_id) {
+        cardView.custom_notes = ''
+        data.cardView = cardView
+      }
+      this.setData(data)
+    }
   },
 
   /**

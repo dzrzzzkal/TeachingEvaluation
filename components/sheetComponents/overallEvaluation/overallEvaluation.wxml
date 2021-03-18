@@ -1,5 +1,5 @@
 <!--components/sheetComponents/overallEvaluation/overallEvaluation.wxml-->
-<view>
+<view style="background-color: white;">
   <view class="overallEvaluation">
     <view wx:if="{{!classification}}">三、总体评价</view>
     <view wx:else>二、总体评价</view>

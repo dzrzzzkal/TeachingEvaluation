@@ -33,7 +33,7 @@ Page({
     let that = this
     $api.searchClass(this.data.keyword, this.data.schoolYear, this.data.semester)
       .then(res => {
-        console.log(res)
+        // console.log(res)
         if(!res.length) {
           wx.showToast({
             title: '没有搜索到相关课程哦',

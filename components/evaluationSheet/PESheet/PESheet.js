@@ -53,7 +53,7 @@ Component({
     // 获取自定义组件中的传值
     getFormChange(e) {
       setFormChange(e, this, 'contentData')
-      console.log(this.data.contentData)
+      // console.log(this.data.contentData)
     },
 
     // 获取自定义组件传来的fields，写入this.data.componentFields

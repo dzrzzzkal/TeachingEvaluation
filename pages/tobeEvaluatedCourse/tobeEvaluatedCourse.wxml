@@ -5,13 +5,18 @@
     <view wx:else>
       <block wx:for="{{tobe_ec}}" wx:key="index" >
         <view class="box" bind:tap="tobeECClick" data-index="{{item.index}}">
-          <text>{{item.course_name}}</text>
-          <text>{{item.week}}</text>
-          <view>{{item.time}}</view>
-          <view>{{item.teacher}}</view>
-          <view>{{item.classroom}}</view>
-          <view>{{item.description}}</view>
-          <view>isPastTime: {{item.isPastTime}}</view>
+          <text style="margin-right: 30rpx; width: 400rpx;">事件：{{item.course_name}}</text>
+          <text>第{{item.week}}周 {{item.time}}</text>
+          <!-- <view>
+            <text style="margin-right: 40rpx; min-width: 250rpx">周数：{{item.week}}</text>
+            <text>时间：{{item.time}}</text>
+          </view> -->
+          <view style="display: flex; justify-content: space-around;">
+            <text style="width: 30%;">教师：{{item.teacher}}</text>
+            <text style="width: 30%;">教室：{{item.classroom}}</text>
+            <text style="width: 30%;">已过时：{{item.isPastTime == true ? '是' : '否'}}</text>
+          </view>
+          <view style="width: 100%">描述：{{item.description}}</view>
         </view>
       </block>
     </view>

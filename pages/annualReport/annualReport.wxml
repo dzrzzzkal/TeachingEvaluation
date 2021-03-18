@@ -4,12 +4,12 @@
     <!-- <button class='download-btn' open-type='openSetting' bind:tap="downloadFile"></button> -->
     <button class='download-btn' bind:tap="download">
       <image class='download-btnImg' src='/images/icon/download.png'></image>
-      <view>下载</view>
+      <view>下载年度报告模板</view>
     </button>
-    <button class='download-btn' bind:tap="downloadAndSaveFile">
+    <!-- <button class='download-btn' bind:tap="downloadAndSaveFile">
       <image class='download-btnImg' src='/images/icon/download.png'></image>
       <view>下载并缓存</view>
-    </button>
+    </button> -->
 
     <view class="link">
       <view class="tips">(可以将链接复制到浏览器中打开下载哦。)</view>
@@ -30,7 +30,7 @@
 
     <button class='upload-btn' bind:tap="upload">
       <image class='upload-btnImg' src='/images/icon/upload.png'></image>
-      <view>上传年度总结报告</view>
+      <view>上传年度报告</view>
     </button>
 
   </view>

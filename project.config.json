@@ -63,12 +63,6 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/test/test",
-          "pathName": "pages/test/test",
-          "query": "",
-          "scene": null
-        },
-        {
           "name": "pages/index/index",
           "pathName": "pages/index/index",
           "query": "",
@@ -87,12 +81,6 @@
           "scene": null
         },
         {
-          "name": "pages/notice/notice",
-          "pathName": "pages/notice/notice",
-          "query": "",
-          "scene": null
-        },
-        {
           "name": "pages/schedule/schedule",
           "pathName": "pages/schedule/schedule",
           "query": "",
@@ -101,18 +89,6 @@
         {
           "name": "pages/login/login",
           "pathName": "pages/login/login",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/logs/logs",
-          "pathName": "pages/logs/logs",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/getUserInfo/getUserInfo",
-          "pathName": "pages/getUserInfo/getUserInfo",
           "query": "",
           "scene": null
         },

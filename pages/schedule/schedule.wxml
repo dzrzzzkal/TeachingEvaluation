@@ -19,15 +19,20 @@
         <view class="schoolYear-title" style="margin-left: 20rpx; width: 320rpx" bind:tap="showSchoolYearAndSemesterPicker">
           {{schoolYearList[schoolYearIndex]}} {{semesterList[semesterIndex]}}
         </view>
+        <image class="addCustomCourse" src="./images/add.png" bind:tap="addCustomCourse"></image>
       </view>
-      
-      <view class='title_right'>
+      <!-- <view class='title_right'>
         <view class="tab-item" bindtap="addCustomCourse">
           添加课程
         </view>
-      </view>
+      </view> -->
+
       <scroll-view class="show" scroll-x="true" wx:if="{{showWeeks}}">
-        <view class="show_week" catch:tap="clickShowWeeks" data-week="{{item}}" data-index="{{index}}" wx:for="{{weekList}}" wx:key="index">{{item}}</view>
+        <view class="show_week" catch:tap="clickShowWeeks" data-week="{{item}}" data-index="{{index}}" wx:for="{{weekList}}" wx:key="index">
+          <view class="show_week_item">
+            {{item}}
+          </view>
+        </view>
       </scroll-view>
       <view class="top">
         <view class='left' style="padding-bottom: 20rpx">节\周</view>
@@ -141,8 +146,11 @@
             <textarea bind:input="formInputChange" data-classid="{{cardView.class_id}}" data-coursename="{{cardView.course_name}}" data-field="custom_notes" name="custom_notes" id="custom_notes" maxlength="95" cols="" rows="" style="border: 1rpx solid #FFFFF0; height: 250rpx; width: 430rpx" value="{{cardView.custom_notes}}"></textarea>
           </label>
         </view>
-        <view class="scrol-buttons">
-          <view class='scroll-button' wx:if="{{!cardView.class_id}}" catch:tap="deleteCustomCourse" style="font-size: 26rpx; color: gray;">
+        <view class="scroll-buttons">
+          <view class='scroll-button' wx:if="{{!cardView.class_id}}" catch:tap="editCustomCourse">
+            编辑
+          </view>
+          <view class='scroll-button' wx:if="{{!cardView.class_id}}" catch:tap="deleteCustomCourse">
             删除
           </view>
         </view>

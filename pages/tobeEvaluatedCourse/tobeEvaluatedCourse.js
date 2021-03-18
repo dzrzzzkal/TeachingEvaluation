@@ -60,11 +60,11 @@ Page({
     this.setData({
       tobe_ec: tobeEvaluatedCourseArray
     })
-    console.log(this.data.tobe_ec)
+    // console.log(this.data.tobe_ec)
   },
 
   tobeECClick: function(e) {
-    console.log(e.currentTarget.dataset)
+    // console.log(e.currentTarget.dataset)
     let {index} = e.currentTarget.dataset
     wx.navigateTo({
       url: `/pages/customCourse/customCourse?index=${index}`,
@@ -75,6 +75,7 @@ Page({
   onLoad: function(options) {
     this.data.schoolYear = options.schoolYear
     this.data.semester = options.semester
+    this.data.week = options.week
     // this.setTobeEvaluatedCourse()
   },
 

@@ -7,11 +7,11 @@
   border: 1rpx solid blue;
 }
 
-.time label {
-  /* display: inline-block; */
-}
+/* .time label {
+  display: inline-block;
+} */
 
-.time label input {
+/* .time label input {
   width: 100rpx;
   display: inline-block;
-}
+} */

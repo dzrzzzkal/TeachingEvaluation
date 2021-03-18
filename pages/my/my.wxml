@@ -2,7 +2,12 @@
 <view class="container">
   <!-- user-info -->
   <view class="user-info module-container">
-      <image src="{{avatarUrl}}"></image>
+    <image wx:if="{{!hasUserInfo && canIUse}}" src="{{avatarUrl}}"></image>
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
     <view class="user-info-name">
       {{userinfo.name}}
     </view>
@@ -33,8 +38,8 @@
   </view>
   <!-- my-setting -->
   <view class="my-setting module-container">
-    <block wx:for="{{['系统设置', '清除缓存', '版本日志','关于我们', '……']}}" wx:key="index">
-      <view class="my-setting-item">
+    <block wx:for="{{['清除自定义事件', '清除课程备注', '……']}}" wx:key="index">
+      <view class="my-setting-item" bind:tap="settingClick" data-index="{{index}}">
         {{item}}
         <view class="split-line" wx:if="{{index != 2}}"></view>
       </view>

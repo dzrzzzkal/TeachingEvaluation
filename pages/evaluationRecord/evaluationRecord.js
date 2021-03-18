@@ -2,6 +2,7 @@
 
 const $api = require('../../api/api')
 const downloadAndOpenDocument = require('../../utils/downloadAndOpenDocument')
+const {matchClassification} = require('../../utils/matchClassificationToChinese')
 
 Page({
 
@@ -10,7 +11,7 @@ Page({
    */
   data: {
     // tab-control
-    tab_control_item: ['待评估', '已评估','年度报告'],
+    tab_control_item: ['已评估','年度报告'],
     currentTabid: 0,
 
     placeholder: '',
@@ -21,48 +22,8 @@ Page({
     keyword: '',
 
     ec_records: '',
-    tobe_ec: [
-      {
-        id: 0,
-        content: 'tobe_ec_record0',
-      },
-      {
-        id: 1,
-        content: 'tobe_ec_record1',
-      },
-      {
-        id: 2,
-        content: 'tobe_ec_record2',
-      },
-    ],
-    submitted_ec: [
-      {
-        id: 0,
-        content: 'submitted_record0',
-      },
-      {
-        id: 1,
-        content: 'submitted_record1',
-      },
-      {
-        id: 2,
-        content: 'submitted_record2',
-      },
-    ],
-    annual_report: [
-      {
-        id: 0,
-        content: 'annual_report_record0',
-      },
-      {
-        id: 1,
-        content: 'annual_report_record1',
-      },
-      {
-        id: 2,
-        content: 'annual_report_record2',
-      },
-    ],
+    submitted_ec: [],
+    annual_report: [],
 
     currentPage: 1,
     pageSize: 8,
@@ -84,16 +45,12 @@ Page({
   distinguishRequestContent: function(tabid) {
     switch (tabid) {
       case 0:
-        // 待改
-        this.getRecords(tabid)
-        break;
-      case 1:
         this.setData({
           placeholder: '输入 班号/课程编号/教师/课程名/日期(yyyy/mm/dd)'
         })
         this.requestEvaluationSheetList()
         break
-      case 2:
+      case 1:
         this.setData({
           placeholder: '输入 日期(yyyy/mm/dd)'
         })
@@ -108,20 +65,14 @@ Page({
     switch (tabid) {
       case 0:
         this.setData({
-          ec_records: this.data.tobe_ec,
+          ec_records: this.data.submitted_ec,
           currentTabid: 0
         })
         break;
       case 1:
         this.setData({
-          ec_records: this.data.submitted_ec,
-          currentTabid: 1
-        })
-        break;
-      case 2:
-        this.setData({
           ec_records: this.data.annual_report,
-          currentTabid: 2
+          currentTabid: 1
         })
         break;
     }
@@ -132,15 +83,22 @@ Page({
     let id = e.currentTarget.dataset.id
     switch (this.data.currentTabid) {
       case 0:
-        
-        break;
-      case 1:
         wx.navigateTo({
           url: `../evaluationSheetRecord/evaluationSheetRecord?sheet_id=${id}`
         })
         break;
-      case 2:
-        downloadAndOpenDocument('/api/annualReport/' + id)
+      case 1:
+        wx.showModal({
+          content: '确定下载该年度报告吗',
+          success(res) {
+            if (res.confirm) {
+              downloadAndOpenDocument('/api/annualReport/' + id)
+            }
+            // else if (res.cancel) {
+            // }
+          }
+        })
+        break;
       default:
         break;
     }
@@ -154,13 +112,13 @@ Page({
   },
 
   search: function() {
-    if(!this.data.keyword) {
-      wx.showToast({
-        title: '请输入搜索关键字哦',
-        icon: 'none'
-      })
-      return
-    }
+    // if(!this.data.keyword) {
+    //   wx.showToast({
+    //     title: '请输入搜索关键字哦',
+    //     icon: 'none'
+    //   })
+    //   return
+    // }
     this.distinguishRequestContent(this.data.currentTabid)
   },
 
@@ -172,6 +130,9 @@ Page({
     .then(result => {
       console.log(result)
       let res = result.rows
+      for(let i of res) {
+        i.classification = matchClassification(i.classification)
+      }
       this.data.totalPage = Math.ceil(result.count / this.data.pageSize)
       // 暂时决定不需要用setData，如果要用的话改一下this.getRecords()的传入参数，一起setData
       // this.data.submitted_ec = res
@@ -208,6 +169,9 @@ Page({
     .then(result => {
       console.log(result)
       let res = result.rows
+      for(let i of res) {
+        i.submit_time.slice(0, 10)
+      }
       this.data.totalPage = Math.ceil(result.count / this.data.pageSize)
       if(this.data.currentPage === 1) {
         this.data.annual_report = res

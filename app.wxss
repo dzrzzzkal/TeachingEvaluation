@@ -35,6 +35,6 @@ textarea {
 
 /* 二、评价 xxEvaluation 组件中 */
 .evaluationList {
-  border: 1rpx solid red;
+  border: 1rpx solid rgb(177, 170, 170);
   font-size: 32rpx;
 }

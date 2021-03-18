@@ -1,9 +1,9 @@
 <!--components/sheetComponents/theoryOfPublicWelfareEvaluation/theoryOfPublicWelfareEvaluation.wxml-->
-<view>
+<view style="background-color: white;">
   <view>二、评价</view>
   <view>*评价等级：优、良、中、合格、不合格、不适用（含+、-）</view>
   <view class="evaluationList" wx:for="{{evaluationListData}}" wx:key="index">
-    index: {{index}}
+    {{index}}、
     <view>{{item.event}}</view>
     <view>{{item.content}}</view>
     <view>{{item.recommend}}</view>

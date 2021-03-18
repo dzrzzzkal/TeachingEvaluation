@@ -1,15 +1,6 @@
 <!--pages/evaluationPage/evaluationPage.wxml-->
-<view class="container">
+<view class="container" style="background-color: white;">
   <view class="classification-radio">
-    <!-- 内容和它下面的那个一样，只是多了样式 -->
-    <!-- <radio-group bind:change="radioChange">
-      <label for="" class="weui-cell weui-check__label" wx:for="{{radioItems}}" wx:key="value">
-        <view class="weui-cell__hd">
-          <radio value="{{item.value}}" checked="{{item.checked}}"/>
-        </view>
-        <view class="weui-cell__bd">{{item.name}}</view>
-      </label>
-    </radio-group> -->
     <radio-group id="classification" bind:change="radioChange" data-field="classification" data-fieldData="classificationItems" class="radio-group">
       <label for="" wx:for="{{classificationItems}}" wx:key="index">
           <radio value="{{item.value}}" checked="{{item.checked}}"/>
@@ -24,8 +15,4 @@
   <pe-sheet wx:if="{{classification === 'PE'}}" classid="{{classid}}" classification="{{classification}}" bind:sendForm="getForm"></pe-sheet>
   <theory-of-public-welfare-sheet wx:if="{{classification === 'theory of public welfare'}}" classid="{{classid}}" classification="{{classification}}" bind:sendForm="getForm"></theory-of-public-welfare-sheet>
   <practice-of-public-welfare-sheet wx:if="{{classification === 'practice of public welfare'}}" classid="{{classid}}" classification="{{classification}}" bind:sendForm="getForm"></practice-of-public-welfare-sheet>
-
-  <!-- <view class="weui-btn-area">
-    <button bind:tap="submitForm" class="weui-btn" type="primary">evaluationPage-确定</button>
-  </view> -->
 </view>

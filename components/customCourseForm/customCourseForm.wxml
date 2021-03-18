@@ -2,12 +2,11 @@
 <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
   <view class="page__hd">
-    <view class="page__title">Form</view>
-    <view class="page__desc">添加课程</view>
+    <view class="page__title title">添加自定义事件</view>
   </view>
   <view class="page__bd">
     <mp-form id="form" rules="{{rules}}" models="{{formData}}">
-      <mp-cells title="表单" footer="">
+      <mp-cells title="事件信息" footer="">
         <mp-cell prop="course_name" title="事件名" ext-class="">
           <input bindinput="formInputChange" data-field="course_name" class="weui-input" placeholder="事件名"/>
         </mp-cell>

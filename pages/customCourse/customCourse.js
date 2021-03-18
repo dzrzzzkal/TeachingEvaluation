@@ -241,6 +241,44 @@ Page({
 
     this.data.customCourseArray[this.data.customCourseIndex] = this.data.formData
     wx.setStorageSync('customCourse', this.data.customCourseArray)  // 修改后的自定义课程写入storage
+    let pages = getCurrentPages() // 当前页面
+    let prevPage = pages[pages.length - 2]  // 上一页面
+    if(prevPage.route === 'pages/schedule/schedule') { // 如果是课表调用，来修改自定义课程数组
+      let that = prevPage
+      let editedCustomCourse = this.data.formData
+      editedCustomCourse.index = this.data.customCourseIndex
+      let {cardCourseIndex} = that.data
+      that.data.wlist[cardCourseIndex] = editedCustomCourse
+
+      let {course_name, teacher, classroom, description, time, week, isTobeEvaluatedCourse, custom_notes} = this.data.formData
+      let cardView = {
+        index: this.data.customCourseIndex, // 自定义课程才有
+        course_name,
+        color: isTobeEvaluatedCourse === 'true' ? 0 : 1,
+        teacher_name: teacher,  // 自定义课程中保存的变量是teacher
+        classroom,
+        time,
+        week,
+        custom_notes,
+        description,
+        isTobeEvaluatedCourse
+      }
+      that.setData({
+        cardView,
+        // 不知道为什么以下两种都不行，schedule中显示不出该customCourse
+        // [`wlist[${cardCourseIndex}]`]: editedCustomCourse,
+        // wlist,
+        [`wlist[${cardCourseIndex}].course_name`]: course_name,
+        [`wlist[${cardCourseIndex}].teacher`]: teacher,
+        [`wlist[${cardCourseIndex}].classroom`]: classroom,
+        [`wlist[${cardCourseIndex}].description`]: description,
+        [`wlist[${cardCourseIndex}].time`]: time,
+        [`wlist[${cardCourseIndex}].week`]: week,
+        [`wlist[${cardCourseIndex}].isTobeEvaluatedCourse`]: isTobeEvaluatedCourse,
+        [`wlist[${cardCourseIndex}].color`]: isTobeEvaluatedCourse === 'true' ? 0 : 1,
+        [`wlist[${cardCourseIndex}].custom_notes`]: custom_notes,
+      })
+    }
  
     wx.navigateBack({
       delta: 1,

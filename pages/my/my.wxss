@@ -3,7 +3,7 @@
 /* module样式 */
 .module-container {
   /* width: 100%; */
-  min-height: 250rpx;
+  min-height: 280rpx;
   background-color: #fff;
   border-radius: 20rpx;
   margin-bottom: 10rpx;
@@ -29,6 +29,17 @@
   color: #7F8389;
 }
 
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
 .user-info image {
   width: 150rpx;
   height: 150rpx;
@@ -42,7 +53,7 @@
 /* 主题栏样式（待重新命名） */
 .themes-container {
   width: 100%;
-  height: 130rpx;
+  height: 200rpx;
   display: inline-flex;
   background-color: #fff;
   justify-content: space-evenly;
@@ -56,9 +67,9 @@
   justify-content: center;
   align-items: center;
   margin: 20rpx;
-  width: 28%;
-  height: 150rpx;
-  border: 1rpx solid var(--theme-orange);
+  width: 35%;
+  height: 180rpx;
+  /* border: 1rpx solid var(--theme-orange); */
 }
 
 .theme-icon {

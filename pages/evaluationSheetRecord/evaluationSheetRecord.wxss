@@ -1,1 +1,38 @@
 /* pages/evaluationSheetRecord/evaluationSheetRecord.wxss */
+.container {
+  background-color: #fff;
+}
+
+.download-btn {
+  width: 80%;
+  margin: 30rpx;
+  background-color: #ee7b33;
+  color: white;
+  border-radius: 98rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.download-btnImg {
+  margin-right: 8rpx;
+  width: 46rpx;
+  height: 46rpx;
+}
+
+.download-btn::after {
+  border-radius: 98rpx;
+  border: 0; 
+}
+
+.title {
+  font-weight: bold;
+  font-size: 40rpx;
+  text-align: center;
+  width: 100%;
+}
+
+.border {
+  margin-bottom: 15rpx;
+}

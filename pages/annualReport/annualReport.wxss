@@ -36,7 +36,7 @@
   color: #7F8389;
 }
 .copylink-btn {
-  background-color: paleturquoise;
+  background-color: rgb(102, 226, 226);
 }
 
 .select {
@@ -54,7 +54,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background-color: rgb(104, 238, 104);
+  background-color: rgb(133, 238, 133);
   width: 50rpx;
   font-size: 30rpx;
 }
@@ -65,9 +65,11 @@
   height: 80rpx;
   display: inline-block;
   text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .upload-btn {
-  background-color: navajowhite;
+  background-color: rgb(247, 191, 109);
 }
 

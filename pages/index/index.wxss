@@ -3,7 +3,7 @@
 /* 主题栏样式 */
 .theme-container {
   width: 100%;
-  height: 200rpx;
+  height: 230rpx;
   display: inline-flex;
   background-color: #fff;
   justify-content: space-evenly;
@@ -81,21 +81,49 @@
 
 .ec-name {
   width: 200rpx;
+  margin-left: 10rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .ec-time, .ec-week, .ec-teacher {
   width: 100rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .ec-location, .tobeSubmitted-ec-process {
   width: 200rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 /* 听课任务情况栏样式 */
+.process-finish {
+  font-size: 50rpx;
+  font-weight: bold;
+  color: rgb(241, 113, 113);
+  color: rgb(49, 170, 49);
+}
+
 .tobeSubmitted-ec-box {
   margin: 25rpx 0;
 }
 
 .tobeSubmitted-ec {
   margin: 10rpx 0;
+}
+
+.process-item {
+  margin-bottom: 10rpx;
+}
+
+.process-num {
+  font-size: 70rpx;
+  color: orange;
+  text-align: center;
+  font-weight: bold;
 }

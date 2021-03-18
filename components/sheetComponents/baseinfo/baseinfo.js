@@ -120,7 +120,7 @@ Component({
       let classid = this.properties.classid
       $api.getClass(classid)
         .then(res => {
-          console.log(res)
+          // console.log(res)
           let daytime = util.formatTime(new Date()).split(' ')[0]
           let date = daytime.replace(/\//g, '-')
 
@@ -138,7 +138,7 @@ Component({
             // daytime,
             date,
           })
-          console.log(date)
+          // console.log(date)
 
           const query = this.createSelectorQuery()
           query.selectAll('.initialization').fields({
