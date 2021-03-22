@@ -1,22 +1,37 @@
 <!--pages/evaluationRecord/evaluationRecord.wxml-->
 <view class="container">
-  <view class="tab-control">
+  <!-- <view class="tab-control">
     <block wx:for="{{tab_control_item}}" wx:key="index">
       <view class="tab-control-item {{currentTabid === index ? 'tab-control-item-selected' : ''}}" data-tabid="{{index}}" bind:tap="tabClick">
         {{item}}
       </view>
     </block>
-  </view>
-  <view class='search-container'>
+  </view> -->
+  <!-- <view class='search-container'>
     <view class="inputView" >
       <input type="search" bind:input="searchInput" name="" placeholder="{{placeholder}}" class='input' placeholder-style="font-size: 32rpx;" bind:confirm="search" focus="true"/>
     </view>
     <view class="imageView" bind:tap="search">
       <image src='/images/search.png' class='image' />
     </view>
-  </view>
-  <view>
+  </view> -->
+  <!-- <view> -->
     <scroll-view class="content" scroll-y="true" scroll-x="false" style="height: 100vh;" bindscrolltolower='scrollToLower' enable-back-to-top="true">
+      <view class="tab-control">
+        <block wx:for="{{tab_control_item}}" wx:key="index">
+          <view class="tab-control-item {{currentTabid === index ? 'tab-control-item-selected' : ''}}" data-tabid="{{index}}" bind:tap="tabClick">
+            {{item}}
+          </view>
+        </block>
+      </view>
+      <view class='search-container'>
+        <view class="inputView" >
+          <input type="search" bind:input="searchInput" name="" placeholder="{{placeholder}}" class='input' placeholder-style="font-size: 32rpx;" bind:confirm="search" value="{{keyword}}"/>
+        </view>
+        <view class="imageView" bind:tap="search">
+          <image src='/images/search.png' class='image' />
+        </view>
+      </view>
       <view wx:if="{{ec_records[0] == null}}">没有记录喔</view>
       <view wx:else>
         <block wx:for="{{ec_records}}" wx:key="index" >
@@ -36,6 +51,6 @@
         </block>
       </view>
     </scroll-view>
-  </view>
+  <!-- </view> -->
   
 </view>

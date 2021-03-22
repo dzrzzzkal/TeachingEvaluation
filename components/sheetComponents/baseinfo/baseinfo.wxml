@@ -1,33 +1,26 @@
 <!--components/sheetComponents/baseinfo/baseinfo.wxml-->
 <view class="baseinfo">
   <!-- <mp-cell prop="username" title="username" ext-class=""></mp-cell> -->
-  <label for="">
+  <label for="" class="label">
     开课单位：
-    <input id="setupUnit" bind:input="inputChange" value="{{courseinfo.setupUnit}}" data-field="setupUnit" class="initialization weui-input" placeholder="" type="text" disabled="true"/>
+    <input id="setupUnit" bind:input="inputChange" value="{{courseinfo.setupUnit}}" data-field="setupUnit" class="initialization weui-input input-box" placeholder="" type="text" disabled="true"/>
   </label>
-  <label for="">
+  <label for="" class="label">
     课程名称：
-    <input bind:input="inputChange" value="{{courseinfo.name}}" data-field="name" class="initialization weui-input" placeholder="" type="text" disabled="true"/>
+    <input bind:input="inputChange" value="{{courseinfo.name}}" data-field="name" class="initialization weui-input input-box" placeholder="" type="text" disabled="true"/>
   </label>
-  <label for="">
+  <label for="" class="label">
     开课班号：
-    <input bind:input="inputChange" value="{{classinfo.id}}" data-field="id" class="initialization weui-input" placeholder="" type="text" disabled="true"/>
+    <input bind:input="inputChange" value="{{classinfo.id}}" data-field="id" class="initialization weui-input input-box" placeholder="" type="text" disabled="true"/>
   </label>
-  <label for="">
+  <label for="" class="label">
     授课教师：
-    <!-- 目前是id，待改成name -->
-    <input bind:input="inputChange" value="{{classinfo.teacher_name}}" data-field="teacher_name" class="initialization weui-input" placeholder="" type="text" disabled="true"/>
+    <input bind:input="inputChange" value="{{classinfo.teacher_name}}" data-field="teacher_name" class="initialization weui-input input-box" placeholder="" type="text" disabled="true"/>
   </label>
-  <!-- <label for="">
-    听课时间：
-    <input bind:input="inputChange" value="{{daytime}}" data-field="date" class="initialization weui-input" placeholder="日期格式：yyyy/mm/dd" type="text" />
-    <input bind:input="inputChange" data-field="start_time" class="weui-input" placeholder="start-time" type="text" />~
-    <input bind:input="inputChange" data-field="end_time" class="weui-input" placeholder="end-time" type="text" />(具体时分)
-  </label> -->
   <view class="section">
-    <view class="section__title">听课时间：</view>
+    <view class="section__title">选择听课时间：</view>
     <picker mode="date" value="{{date}}" start="2021-01-01" end="2027-12-30" bindchange="bindDateChange" data-field="date">
-      <view class="picker">
+      <view class="picker underline">
         日期：{{date}}
       </view>
     </picker>
@@ -35,30 +28,30 @@
   <view class="section">
     <!-- <view class="section__title">时间选择器</view> -->
     <picker mode="time" value="{{start_time}}" start="08:00" end="22:00" bindchange="bindTimeChange" data-field="start_time">
-      <view class="picker">
+      <view class="picker underline">
         开始时间: {{start_time}}
       </view>
     </picker>
     <!-- <view class="section__title">时间选择器</view> -->
     <picker mode="time" value="{{end_time}}" start="08:00" end="22:00" bindchange="bindTimeChange" data-field="end_time">
-      <view class="picker">
+      <view class="picker underline">
         结束时间: {{end_time}}
       </view>
     </picker>
   </view>
 
   <view></view>
-  <label for="">
+  <label for="" class="label">
     地点：
-    <input bind:input="inputChange" value="{{}}" data-field="place" class="weui-input" placeholder="" type="text" />
+    <input bind:input="inputChange" value="{{}}" data-field="place" class="weui-input input-box underline" style="width: 500rpx" placeholder="" type="text" />
   </label>
-  <label for="">
+  <label for="" class="label">
     学生应到人数：
-    <input bind:input="inputChange" data-field="attend_num" class="weui-input" placeholder="" type="text" />
+    <input bind:input="inputChange" data-field="attend_num" class="weui-input input-box underline" placeholder="" type="text" />
   </label>
-  <label for="">
+  <label for="" class="label">
     学生实到人数：
-    <input bind:input="inputChange" data-field="actual_num" class="weui-input" placeholder="" type="text" />
+    <input bind:input="inputChange" data-field="actual_num" class="weui-input input-box underline" placeholder="" type="text" />
   </label>
   <view>
     听课类型：

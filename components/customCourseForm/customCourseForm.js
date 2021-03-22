@@ -172,9 +172,11 @@ Component({
         }
       }
       this.data.customCourseArray.push(this.data.formData)
+      let index = this.data.customCourseArray.length - 1
+      this.data.formData.index = index
       wx.setStorageSync('customCourse', this.data.customCourseArray)  // 新增加的自定义课程写入storage
       prevPage.setData({
-        getNewCustomCourse: true,
+        // getNewCustomCourse: true,
         newCustomCourse: this.data.formData
       })
 

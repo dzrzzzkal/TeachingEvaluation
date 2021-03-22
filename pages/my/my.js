@@ -9,7 +9,7 @@ Page({
     avatarUrl: './images/user-unlogin.png',
     themes: [
       // { theme_icon: 'images/theme@1.png', theme_name: '待评估', theme_id: 0 },
-      { theme_icon: 'images/theme@2.png', theme_name: '已评估', theme_id: 0 },
+      { theme_icon: 'images/theme@2.png', theme_name: '评估表', theme_id: 0 },
       { theme_icon: 'images/theme@3.png', theme_name: '年度报告', theme_id: 1 }
     ],
     // userinfo: {
@@ -36,7 +36,7 @@ Page({
   settingClick: function(e) {
     // console.log(wx.getStorageInfoSync())
     let {index} = e.currentTarget.dataset
-    if(index === 1) {
+    if(index === 0) {
       wx.showModal({
         content: '确定删除所有自定义课程吗',
         success(res) {
@@ -49,7 +49,7 @@ Page({
           }
         }
       })
-    }else if(index === 2) {
+    }else if(index === 1) {
       wx.showModal({
         content: '确定删除所有课程备注吗（指课表中从服务器请求来的课程）',
         success(res) {
@@ -77,9 +77,11 @@ Page({
           wx.showToast({
             title: '登出成功',
           })
-          wx.reLaunch({
-            url: '/pages/login/login',
-          })
+          setTimeout(function() {
+            wx.reLaunch({
+              url: '/pages/login/login',
+            })    
+          }, 200)
         }else if (res.cancel) {
         }
       }

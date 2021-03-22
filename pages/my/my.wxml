@@ -17,7 +17,7 @@
       {{userinfo.dept}}
     </view>
     <view>{{userinfo.role}}</view>
-    <view>{{userinfo.dean ? '系主任' : ''}}</view>
+    <view>{{userinfo.dean == 'true' ? '系主任' : ''}}</view>
   </view>
 
   <!-- evaluation-record-wrapper -->
@@ -38,10 +38,10 @@
   </view>
   <!-- my-setting -->
   <view class="my-setting module-container">
-    <block wx:for="{{['清除自定义事件', '清除课程备注', '……']}}" wx:key="index">
+    <block wx:for="{{['清除自定义事件', '清除课程备注']}}" wx:key="index">
       <view class="my-setting-item" bind:tap="settingClick" data-index="{{index}}">
         {{item}}
-        <view class="split-line" wx:if="{{index != 2}}"></view>
+        <view class="split-line" wx:if="{{index != 1}}"></view>
       </view>
     </block>
   </view>

@@ -1,6 +1,7 @@
 /* pages/evaluationRecord/evaluationRecord.wxss */
 .container {
-  padding: 0;
+  display: flex;
+  justify-items: center;
 }
 
 /* tab-control样式 */
@@ -9,10 +10,11 @@
   /* justify-content: space-around; */
   /* align-items: center; */
   height: 70rpx;
-  width: 100%;
+  width: 98.5%;
   background-color: #fff;
   font-size: 30rpx;
   font-size: #7F8389;
+  /* position: absolute; */
 }
 
 .tab-control-item {
@@ -30,7 +32,7 @@
 
 /* 搜索框样式 */
 .search-container{
-  width: 100%;
+  width: 98.5%;
   margin: 5rpx 0;
   padding: 0 5rpx;
   /* height: 85rpx; */

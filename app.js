@@ -11,9 +11,9 @@ App({
         wx.reLaunch({
           url: '/pages/login/login',
         })
-        reject()
+        // reject()
       } else {
-        resolve()
+        // resolve()
       }
     })
     this.globalData.promise = newPromise
@@ -24,6 +24,8 @@ App({
     // var logs = wx.getStorageSync('logs') || []
     // logs.unshift(Date.now())
     // wx.setStorageSync('logs', logs)
+
+    // this.checkToken()
 
     // 登录
     wx.login({

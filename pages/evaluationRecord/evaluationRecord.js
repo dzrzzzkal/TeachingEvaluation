@@ -5,20 +5,14 @@ const downloadAndOpenDocument = require('../../utils/downloadAndOpenDocument')
 const {matchClassification} = require('../../utils/matchClassificationToChinese')
 
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-    // tab-control
-    tab_control_item: ['已评估','年度报告'],
+    tab_control_item: ['评估表','年度报告'],
     currentTabid: 0,
 
     placeholder: '',
-
-    // 请求返回的内容
-    // issuccess: true,
-
     keyword: '',
 
     ec_records: '',
@@ -162,6 +156,15 @@ Page({
   },
 
   requestAnnualReport: function() {
+    let {dean} = wx.getStorageSync('userinfo')
+    if(dean !== 'true') {
+      this.getRecords(this.data.currentTabid)
+      wx.showToast({
+        title: '您不是系主任，没有年度报告记录哦',
+        icon: 'none'
+      })
+      return
+    }
     wx.showLoading({
       title: 'Loading',
     })
@@ -215,6 +218,11 @@ Page({
    */
   onLoad: function (options) {
     this.data.currentTabid = parseInt(options.theme_id)
+    if(options.keyword) {
+      this.setData({
+        keyword: options.keyword
+      })
+    }
     this.distinguishRequestContent(this.data.currentTabid)
   },
 

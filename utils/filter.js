@@ -12,7 +12,7 @@ function identityFilter(pageObj) {
     let _onShow = pageObj.onShow
     pageObj.onShow = function() {
 
-      app.checkToken()
+      // app.checkToken()
       appData.promise.then((result) => {
         // 获取页面实例，防止this劫持
         let currentInstance = getPageInstance()

@@ -2,3 +2,22 @@
 .baseinfo {
   background-color: #fff;
 }
+
+.label {
+  display: block;
+  /* margin: 10rpx 0; */
+}
+
+.input-box {
+  display: inline-block;
+}
+
+.underline {
+  border-bottom: 0.5rpx solid rgb(181, 187, 181);
+  width: 350rpx;
+
+  display: inline-block;
+  height: 80rpx;
+  vertical-align: middle;
+  border-bottom: 0.5rpx solid rgb(181, 187, 181);
+}

@@ -14,7 +14,7 @@
           <view style="display: flex; justify-content: space-around;">
             <text style="width: 30%;">教师：{{item.teacher}}</text>
             <text style="width: 30%;">教室：{{item.classroom}}</text>
-            <text style="width: 30%;">已过时：{{item.isPastTime == true ? '是' : '否'}}</text>
+            <text style="width: 30%;">未过时：<text style="color: {{item.isPastTime != true ? 'orange' : 'black'}};">{{item.isPastTime != true ? '√' : '×'}}</text></text>
           </view>
           <view style="width: 100%">描述：{{item.description}}</view>
         </view>

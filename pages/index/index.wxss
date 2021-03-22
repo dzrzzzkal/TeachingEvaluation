@@ -89,9 +89,11 @@
 
 .ec-time, .ec-week, .ec-teacher {
   width: 100rpx;
+  display: inline-block;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  margin: 0 10rpx;
 }
 
 .ec-location, .tobeSubmitted-ec-process {

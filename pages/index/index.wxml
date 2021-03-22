@@ -33,23 +33,23 @@
   </view>
 
   <!-- 听课任务情况栏 -->
-  <view class="evaluation-mission-container module-container">
+  <view class="evaluation-mission-container module-container" bind:tap="evaluationProgressClick">
     <view class="module-title">听课任务情况</view>
     <view class="process-finish" style="{{isProcessFinished === '已完成' ? 'color: rgba(49, 170, 49, .8);' : 'color: rgba(255, 96, 0, .85)'}}">
       {{isProcessFinished}}
     </view>
-    <view class="module-content" style="display: flex; flex-direction:row; justify-content: space-between;">
+    <view class="module-content" style="display: flex; flex-direction:row; justify-content: space-evenly;">
       <view class="process-item">
         评估进度：
         <view class="process-num">
           {{ec_submittedSheetNum}} / {{ec_total}}
         </view>
       </view>
-      <view class="process-item" wx:if="{{ec_beEvaluatedNum}}">
+      <view class="process-item" wx:if="{{ec_beEvaluatedNum || ec_beEvaluatedNum === 0}}">
         被听课：
         <view class="process-num">{{ec_beEvaluatedNum}} / {{ec_beEvaluatedTotal}}</view>
       </view>
-      <view class="process-item" wx:if="{{ec_submittedReportNum}}">
+      <view class="process-item" wx:if="{{ec_submittedReportNum || ec_submittedReportNum === 0}}">
         年度总结报告：
         <view class="process-num">{{ec_submittedReportNum}} / {{ec_annualReportTotal}}</view>
       </view>

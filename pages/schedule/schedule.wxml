@@ -79,24 +79,26 @@
   <!-- schoolYear & semester drawer -->
   <view class="drawer_screen" data-statu="close" wx:if="{{showScrollModalStatus}}" catchtouchmove='preventTouchMove' bindtap=''></view>
 
-  <view class="drawer_box" wx:if="{{showScrollModalStatus}}" catchtouchmove='preventTouchMove' style="height: 500rpx;">
+  <view class="drawer_box" wx:if="{{showScrollModalStatus}}" catchtouchmove='preventTouchMove' style="height: 700rpx;">
     <view class="do_drawer_content" style="color: black; background-color: white; height: 100%;">
-      <scroll-view class="" scroll-y="true" style="overflow:hidden; overflow-y: auto; height: 80%;">
-        <view style="margin-top: 30rpx; border: 1rpx solid green"></view>
+      <scroll-view class="drawer_scroll" scroll-y="true">
+        <!-- <view style="margin-top: 30rpx; border-bottom: 0.1rpx solid #7F8389"></view> -->
+        <view style="margin-top: 15rpx;"></view>
         <view class="" wx:for="{{schoolYearList}}"  wx:for-item="schoolYearItem" wx:for-index="schoolYearIndex" wx:key="schoolYearIndex">
-          <view class="" catch:tap="chooseSchoolYearAndSemester" wx:for="{{semesterList}}" wx:for-item="semesterItem" wx:for-index="semesterIndex" wx:key="semesterIndex" data-schoolyearindex="{{schoolYearIndex}}" data-semesterindex="{{semesterIndex}}" style="border-top: 1rpx solid gray; border-bottom: 1rpx solid gray; height: 70rpx; width: 95%; margin: 0 2.5%">
+          <view class="" catch:tap="chooseSchoolYearAndSemester" wx:for="{{semesterList}}" wx:for-item="semesterItem" wx:for-index="semesterIndex" wx:key="semesterIndex" data-schoolyearindex="{{schoolYearIndex}}" data-semesterindex="{{semesterIndex}}" style="border-bottom: 0.1rpx solid #7F8389; height: 70rpx; width: 95%; margin: 0 2.5%">
             {{schoolYearItem}}   {{semesterItem}}
-            <text hidden="{{!(schoolYearIndex == tempSchoolYearIndex && semesterIndex == tempSemesterIndex)}}" style="background-color: yellowgreen; height: 50rpx; width: 50rpx; border-radius: 50%;">√</text>
+            <!-- <text hidden="{{!(schoolYearIndex == tempSchoolYearIndex && semesterIndex == tempSemesterIndex)}}" style="background-color: yellowgreen; height: 50rpx; width: 50rpx; border-radius: 50%;">√</text> -->
+            <image hidden="{{!(schoolYearIndex == tempSchoolYearIndex && semesterIndex == tempSemesterIndex)}}" src="images/selected.png" style="height: 35rpx; width: 35rpx"></image>
             <text wx:if="{{schoolYearItem == thisSchoolYear && semesterItem == thisSemester}}" style="color: gray; font-size: 24rpx; float: right;">今年学年学期</text>
           </view>
         </view>
-        <view style="margin-bottom: 30rpx; border: 1rpx solid green"></view>
+        <!-- <view style="margin-bottom: 30rpx; border-bottom: 0.1rpx solid #7F8389"></view> -->
       </scroll-view>
       <view class="scroll-buttons">
         <view class="scroll-button" catch:tap="cancelChangeScroll">
           取消
         </view>
-        <view class="scroll-button" catch:tap="confirmChangeScroll" style="background-color: yellowgreen">
+        <view class="scroll-button" catch:tap="confirmChangeScroll" style="background-color: rgba(255, 96, 0, .7); color: black;">
           确定
         </view>
       </view>

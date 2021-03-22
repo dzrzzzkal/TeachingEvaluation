@@ -584,11 +584,11 @@ Page({
       })
   },
 
-  // 点击card删除对应的自定义课程
+  // 点击card删除对应的自定义事件
   deleteCustomCourse: function(e) {
     const that = this
     wx.showModal({
-      content: '确定删除该自定义课程吗',
+      content: '确定删除该自定义事件吗',
       success(res) {
         if (res.confirm) {
           let cardCourseIndex = that.data.cardCourseIndex

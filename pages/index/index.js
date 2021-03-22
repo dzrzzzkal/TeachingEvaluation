@@ -5,8 +5,8 @@ const filter = require('../../utils/filter').identityFilter
 const $api = require('../../api/api')
 const {getSchoolWeek} = require('../../utils/getSchoolYearAndSemester')
 
-Page(filter({
-// Page({
+// Page(filter({
+Page({
   data: {
     schoolYear: '',
     semester: '',
@@ -85,7 +85,7 @@ Page(filter({
           ec_name: i.course_name,
           ec_time: i.time,
           ec_week: i.week,
-          ec_location: 'location',
+          ec_location: i.classroom,
           isPastTime,
         }
         tobeEvaluatedCourseArray.push(tobe_ec)
@@ -115,9 +115,17 @@ Page(filter({
   },
 
   tobeECClick: function() {
-    console.log(this.data.tobe_ec)
+    // console.log(this.data.tobe_ec)
     wx.navigateTo({
       url: `/pages/tobeEvaluatedCourse/tobeEvaluatedCourse?schoolYear=${this.data.schoolYear}&semester=${this.data.semester}&week=${this.data.week}`,
+    })
+  },
+
+  evaluationProgressClick: function() {
+    console.log('evaluationProgressClick')
+    let year = new Date().getFullYear() // 当前年份
+    wx.navigateTo({
+      url: `/pages/evaluationRecord/evaluationRecord?theme_id=0&keyword=${year}`,
     })
   },
   
@@ -138,10 +146,10 @@ Page(filter({
       let isProcessFinished = false
       if(submittedSheetNum >= taskCount) {
         isProcessFinished = true
-        if(beEvaluatedNum && beEvaluatedNum < this.data.ec_beEvaluatedTotal) {
+        if((beEvaluatedNum || beEvaluatedNum == 0) && beEvaluatedNum < this.data.ec_beEvaluatedTotal) {
           isProcessFinished = false
         }
-        if(submittedSheetNum && submittedSheetNum < this.data.ec_annualReportTotal) {
+        if((submittedReportNum || submittedReportNum == 0) && submittedReportNum < this.data.ec_annualReportTotal) {
           isProcessFinished = false
         }
       }
@@ -164,5 +172,5 @@ Page(filter({
     this.setTobeEvaluatedCourse()
   }
   
-// })
-}))
+})
+// }))

@@ -53,7 +53,7 @@
   border-radius: 20rpx;
 
   /* width: 280rpx; */
-  width: 35%;
+  width: 32%;
   height:100rpx;
   display: flex;
   align-items: center;
@@ -94,7 +94,7 @@
   border-radius: 20rpx;
 
   /* width: 280rpx; */
-  min-width: 45%;
+  min-width: 50%;
   height:100rpx;
   display: flex;
   align-items: center;
@@ -118,8 +118,8 @@ page{
   height: 100%;
   display: flex;
   flex-direction: row;
-  /* align-items: center;
-  justify-content: space-around; */
+  align-items: center;
+  justify-content: space-around;
 }
 
 /* 按周显示课表(学生) */
@@ -371,7 +371,7 @@ page{
   z-index: 1001;
   background: white;
   margin: -140px 100rpx 100rpx 80rpx;
-  border-radius: 3px;
+  border-radius: 15rpx;
 }
 .do_drawer_content {
   font-size: 30rpx;
@@ -379,6 +379,12 @@ page{
   text-align: justify;
   padding-bottom: 40rpx;
 }
+.drawer_scroll {
+  overflow: hidden; 
+  overflow-y: auto; 
+  height: 85%;
+}
+
 .drawer_top{
   display: flex;
   flex-direction: row;

@@ -47,22 +47,22 @@
         </label>
       </view>
       <view class="participant">
-        听课人：
-        <label for="">
-          <input bind:input="inputChange" data-field="participant" type="text" />
+        <label for="participant" class="label">
+          听课人：
+          <input bind:input="inputChange" data-field="participant" type="text" class="participant-input-box" id="participant"/>
         </label>
       </view>
       <view class="time">
-        <label for="">
-          <input bind:input="inputChange" data-field="year" placeholder="year" value="{{year}}" bind:change="inputChange" disabled="true"/>
+        <label for="" class="label">
+          <input bind:input="inputChange" data-field="year" placeholder="year" value="{{year}}" bind:change="inputChange" disabled="true" class="underline-input-box"/>
           年
         </label>
-        <label for="">
-          <input bind:input="inputChange" data-field="month" placeholder="month" value="{{month}}" bind:change="inputChange" disabled="true"/>
+        <label for="" class="label">
+          <input bind:input="inputChange" data-field="month" placeholder="month" value="{{month}}" bind:change="inputChange" disabled="true" class="underline-input-box"/>
           月
         </label>
-        <label for="">
-          <input bind:input="inputChange" data-field="day" placeholder="day" value="{{day}}" bind:change="inputChange" disabled="true"/>
+        <label for="" class="label">
+          <input bind:input="inputChange" data-field="day" placeholder="day" value="{{day}}" bind:change="inputChange" disabled="true" class="underline-input-box"/>
           日
         </label>
       </view>
